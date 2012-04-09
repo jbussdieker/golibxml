@@ -1,9 +1,9 @@
 package xmltree
-// xmlAddChild
-// xmlAddChildList
-// xmlAddNextSibling
-// xmlAddPrevSibling
-// xmlAddSibling
+// * xmlAddChild
+// * xmlAddChildList
+// * xmlAddNextSibling
+// * xmlAddPrevSibling
+// * xmlAddSibling
 // xmlAttrSerializeTxtContent
 // xmlBufferAdd
 // xmlBufferAddHead
@@ -82,9 +82,9 @@ package xmltree
 // xmlNewCharRef
 // xmlNewChild
 // xmlNewComment
-// xmlNewDoc
-// xmlNewDocComment
-// xmlNewDocFragment
+// * xmlNewDoc
+// * xmlNewDocComment
+// * xmlNewDocFragment
 // xmlNewDocNode
 // xmlNewDocNodeEatName
 // xmlNewDocPI
