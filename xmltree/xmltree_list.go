@@ -100,10 +100,10 @@ package xmltree
 // xmlNewNsProp
 // xmlNewNsPropEatName
 // xmlNewPI
-// xmlNewProp
+// * xmlNewProp
 // xmlNewReference
-// xmlNewText
-// xmlNewTextChild
+// * xmlNewText
+// * xmlNewTextChild
 // xmlNewTextLen
 // xmlNextElementSibling
 // xmlNodeAddContent

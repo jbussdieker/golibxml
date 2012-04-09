@@ -305,6 +305,34 @@ func (node *NodePtr) NewNs(href string, prefix string) *NsPtr {
 	return &NsPtr{C.xmlNewNs(node.Ptr, C.to_xmlcharptr(ptrh), C.to_xmlcharptr(ptrp))}
 }
 
+// xmlNewProp
+func (node *NodePtr) NewProp(name string, value string) (*AttrPtr) {
+	ptrn := C.CString(name)
+	defer C.free_string(ptrn)
+	ptrv := C.CString(value)
+	defer C.free_string(ptrv)
+	return &AttrPtr{C.xmlNewProp(node.Ptr, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrv))}
+}
+
+// xmlNewText
+func NewText(content string) (*NodePtr) {
+	ptr := C.CString(content)
+	defer C.free_string(ptr)
+	return &NodePtr{C.xmlNewText(C.to_xmlcharptr(ptr))}
+}
+
+// xmlNewTextChild
+func (node *NodePtr) NewTextChild(ns *NsPtr, name string, content string) (*NodePtr) {
+	ptrn := C.CString(name)
+	defer C.free_string(ptrn)
+	ptrc := C.CString(content)
+	defer C.free_string(ptrc)
+	if ns == nil {
+		return &NodePtr{C.xmlNewTextChild(node.Ptr, nil, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc))}
+	}
+	return &NodePtr{C.xmlNewTextChild(node.Ptr, ns.Ptr, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc))}
+}
+
 // xmlNodeDump
 func (doc *DocPtr) NodeDump(buf *Buffer, cur *NodePtr, level int, format int) int {
 	return int(C.xmlNodeDump(buf.Ptr, doc.Ptr, cur.Ptr, C.int(level), C.int(format)))
