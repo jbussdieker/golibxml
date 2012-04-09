@@ -50,8 +50,8 @@ package xmltree
 // xmlDocDumpMemory
 // xmlDocDumpMemoryEnc
 // xmlDocFormatDump
-// xmlDocGetRootElement
-// xmlDocSetRootElement
+// * xmlDocGetRootElement
+// * xmlDocSetRootElement
 // xmlElemDump
 // xmlFirstElementChild
 // xmlFreeDoc

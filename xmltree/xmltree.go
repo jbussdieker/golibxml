@@ -163,6 +163,16 @@ func (node *NodePtr) Copy(extended int) (*NodePtr) {
 	return &NodePtr{C.xmlCopyNode(node.Ptr, C.int(extended))}
 }
 
+// xmlDocGetRootElement
+func (doc *DocPtr) GetRootElement() (*NodePtr) {
+	return &NodePtr{C.xmlDocGetRootElement(doc.Ptr)}
+}
+
+// xmlDocSetRootElement
+func (doc *DocPtr) SetRootElement(root *NodePtr) (*NodePtr) {
+	return &NodePtr{C.xmlDocSetRootElement(doc.Ptr, root.Ptr)}
+}
+
 // xmlNewComment
 func NewComment(content string) (*NodePtr) {
 	ptr := C.CString(content)
