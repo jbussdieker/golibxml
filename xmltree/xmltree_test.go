@@ -109,6 +109,7 @@ func TestBufferContent(t *testing.T) {
 // Advanced/Combo tests
 func TestNewDocAdv(t *testing.T) {
 	doc := NewDoc("1.0")
+	defer doc.Free()
 	buffer := NewBuffer()
 	result := doc.NodeDump(buffer, doc.Node, 0, 0)
 
@@ -118,6 +119,7 @@ func TestNewDocAdv(t *testing.T) {
 
 func TestNewNode(t *testing.T) {
 	doc := NewDoc("1.0")
+	defer doc.Free()
 	node := NewNode(nil, "div")
 	doc.AddChild(node)
 	buffer := NewBuffer()
@@ -129,6 +131,7 @@ func TestNewNode(t *testing.T) {
 
 func TestNewComment(t *testing.T) {
 	doc := NewDoc("1.0")
+	defer doc.Free()
 	comment := doc.NewComment("this is a comment")
 	doc.AddChild(comment)
 	buffer := NewBuffer()
