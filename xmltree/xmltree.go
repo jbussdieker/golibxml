@@ -53,6 +53,11 @@ func (cur NodePtr) AddSibling(elem NodePtr) (NodePtr) {
 	return NodePtr{C.xmlAddSibling(cur.Ptr, elem.Ptr)}
 }
 
+// xmlBufferContent
+func (buffer Buffer) BufferContent() string {
+	return C.GoString(C.to_charptr(C.xmlBufferContent(buffer.Ptr)))
+}
+
 // xmlBufferCreate
 func BufferCreate() Buffer {
 	return Buffer{C.xmlBufferCreate()}
