@@ -85,11 +85,11 @@ package xmltree
 // * xmlNewDoc
 // * xmlNewDocComment
 // * xmlNewDocFragment
-// xmlNewDocNode
+// * xmlNewDocNode
 // xmlNewDocNodeEatName
 // xmlNewDocPI
-// xmlNewDocProp
-// xmlNewDocRawNode
+// * xmlNewDocProp
+// * xmlNewDocRawNode
 // xmlNewDocText
 // xmlNewDocTextLen
 // xmlNewDtd

@@ -17,6 +17,10 @@ import "unsafe"
 
 type AllocationScheme int
 
+type AttrPtr struct {
+	Ptr C.xmlAttrPtr
+}
+
 type NodePtr struct {
 	Ptr C.xmlNodePtr
 }
@@ -225,6 +229,39 @@ func (doc *DocPtr) NewComment(content string) (*NodePtr) {
 // xmlNewDocFragment
 func (doc *DocPtr) NewFragment() (*NodePtr) {
 	return &NodePtr{C.xmlNewDocFragment(doc.Ptr)}
+}
+
+// xmlNewDocNode
+func (doc *DocPtr) NewNode(ns *NsPtr, name string, content string) (*NodePtr) {
+	ptrn := C.CString(name)
+	defer C.free_string(ptrn)
+	ptrc := C.CString(content)
+	defer C.free_string(ptrc)
+	if ns != nil {
+		return &NodePtr{C.xmlNewDocNode(doc.Ptr, ns.Ptr, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc))}
+	}
+	return &NodePtr{C.xmlNewDocNode(doc.Ptr, nil, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc))}	
+}
+
+// xmlNewDocProp
+func (doc *DocPtr) NewProp(name string, value string) (*AttrPtr) {
+	ptrn := C.CString(name)
+	defer C.free_string(ptrn)
+	ptrv := C.CString(value)
+	defer C.free_string(ptrv)
+	return &AttrPtr{C.xmlNewDocProp(doc.Ptr, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrv))}
+}
+
+// xmlNewDocRawNode
+func (doc *DocPtr) NewRawNode(ns *NsPtr, name string, content string) (*NodePtr) {
+	ptrn := C.CString(name)
+	defer C.free_string(ptrn)
+	ptrc := C.CString(content)
+	defer C.free_string(ptrc)
+	if ns != nil {
+		return &NodePtr{C.xmlNewDocRawNode(doc.Ptr, ns.Ptr, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc))}
+	}
+	return &NodePtr{C.xmlNewDocRawNode(doc.Ptr, nil, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc))}	
 }
 
 // xmlNewNode
