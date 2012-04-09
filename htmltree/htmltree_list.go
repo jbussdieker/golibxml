@@ -1,0 +1,19 @@
+package htmltree
+// htmlDocContentDumpFormatOutput
+// htmlDocContentDumpOutput
+// htmlDocDump
+// htmlDocDumpMemory
+// htmlDocDumpMemoryFormat
+// htmlGetMetaEncoding
+// htmlIsBooleanAttr
+// htmlNewDoc
+// htmlNewDocNoDtD
+// * htmlNodeDump
+// htmlNodeDumpFile
+// htmlNodeDumpFileFormat
+// htmlNodeDumpFormatOutput
+// htmlNodeDumpOutput
+// htmlSaveFile
+// htmlSaveFileEnc
+// htmlSaveFileFormat
+// htmlSetMetaEncoding

@@ -1,4 +1,4 @@
-package golibxml
+package xmltree
 
 // * xmlAddChild
 // * xmlAddChildList

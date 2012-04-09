@@ -1,10 +1,24 @@
-include $(GOROOT)/src/Make.inc
+all:
+	cd xmltree && go build -x .
+	cd xmlparser && go build -x .
+	cd htmltree && go build -x .
+	cd htmlparser && go build -x .
 
-TARG=golibxml/xmltree
+install:
+	cd xmltree && go install -x .
+	cd xmlparser && go install -x .
+	cd htmltree && go install -x .
+	cd htmlparser && go install -x .
 
-CGOFILES=\
-  xmltree.go\
-  xmlparser.go\
+test:
+	cd xmltree && go test -v .
+	cd xmlparser && go test -v .
+	cd htmltree && go test -v .
+	cd htmlparser && go test -v .
 
-include $(GOROOT)/src/Make.pkg
+fmt_all:
+	cd xmltree && go fmt .
+	cd xmlparser && go fmt .
+	cd htmltree && go fmt .
+	cd htmlparser && go fmt .
 
