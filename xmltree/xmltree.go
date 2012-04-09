@@ -11,6 +11,8 @@ static inline char *to_charptr(const xmlChar *s) { return (char *)s; }
 import "C"
 import "unsafe"
 
+type AllocationScheme int
+
 type NodePtr struct {
 	Ptr C.xmlNodePtr
 }
@@ -27,6 +29,13 @@ type NsPtr struct {
 type Buffer struct {
 	Ptr C.xmlBufferPtr
 }
+
+const (
+    XML_BUFFER_ALLOC_DOUBLEIT = 1 //: double each time one need to grow
+    XML_BUFFER_ALLOC_EXACT = 2 //: grow only to the minimal size
+    XML_BUFFER_ALLOC_IMMUTABLE = 3 //: immutable buffer
+    XML_BUFFER_ALLOC_IO = 4 //: special allocation scheme used for I/O
+)
 
 // xmlAddChild
 func (parent *NodePtr) AddChild(cur NodePtr) (NodePtr) {
@@ -94,6 +103,11 @@ func (buffer *Buffer) Length() int {
 // xmlBufferResize
 func (buffer *Buffer) Resize(size int) int {
 	return int(C.xmlBufferResize(buffer.Ptr, C.uint(size)))
+}
+
+// xmlBufferSetAllocationScheme
+func (buffer *Buffer) SetAllocationScheme(scheme AllocationScheme) {
+	C.xmlBufferSetAllocationScheme(buffer.Ptr, C.xmlBufferAllocationScheme(scheme))
 }
 
 // xmlBufferShrink

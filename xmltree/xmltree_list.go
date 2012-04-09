@@ -18,7 +18,7 @@ package xmltree
 // * xmlBufferGrow
 // * xmlBufferLength
 // * xmlBufferResize
-// xmlBufferSetAllocationScheme
+// * xmlBufferSetAllocationScheme
 // * xmlBufferShrink
 // * xmlBufferWriteCHAR
 // * xmlBufferWriteChar
