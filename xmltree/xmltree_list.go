@@ -94,7 +94,7 @@ package xmltree
 // xmlNewDocTextLen
 // xmlNewDtd
 // xmlNewGlobalNs
-// xmlNewNode
+// * xmlNewNode
 // xmlNewNodeEatName
 // * xmlNewNs
 // xmlNewNsProp

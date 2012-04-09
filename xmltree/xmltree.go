@@ -73,6 +73,13 @@ func xmlNewDocFragment(doc xmlDocPtr) (xmlNodePtr) {
 	return xmlNodePtr{C.xmlNewDocFragment(doc.Ptr)}
 }
 
+// xmlNewNode
+func xmlNewNode(ns xmlNsPtr, name string) (xmlNodePtr) {
+	ptr := C.CString(name)
+	defer C.free_string(ptr)
+	return xmlNodePtr{C.xmlNewNode(ns.Ptr, C.to_xmlcharptr(ptr))}
+}
+
 // xmlNewNs
 func xmlNewNs(node xmlNodePtr, href string, prefix string) xmlNsPtr {
 	ptrh := C.CString(href)
