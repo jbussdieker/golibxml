@@ -10,82 +10,82 @@ static inline xmlChar *to_xmlcharptr(const char *s) { return (xmlChar *)s; }
 import "C"
 //import "unsafe"
 
-type xmlNodePtr struct {
+type NodePtr struct {
 	Ptr C.xmlNodePtr
 }
 
-type xmlDocPtr struct {
+type DocPtr struct {
 	Ptr C.xmlDocPtr
 }
 
-type xmlNsPtr struct {
+type NsPtr struct {
 	Ptr C.xmlNsPtr
 }
 
 // xmlAddChild
-func (parent xmlNodePtr) xmlAddChild(cur xmlNodePtr) (xmlNodePtr) {
-	return xmlNodePtr{C.xmlAddChild(parent.Ptr, cur.Ptr)}
+func (parent NodePtr) AddChild(cur NodePtr) (NodePtr) {
+	return NodePtr{C.xmlAddChild(parent.Ptr, cur.Ptr)}
 }
 
 // xmlAddChildList
-func (parent xmlNodePtr) xmlAddChildList(cur xmlNodePtr) (xmlNodePtr) {
-	return xmlNodePtr{C.xmlAddNextSibling(parent.Ptr, cur.Ptr)}
+func (parent NodePtr) AddChildList(cur NodePtr) (NodePtr) {
+	return NodePtr{C.xmlAddNextSibling(parent.Ptr, cur.Ptr)}
 }
 
 // xmlAddNextSibling
-func (cur xmlNodePtr) xmlAddNextSibling(elem xmlNodePtr) (xmlNodePtr) {
-	return xmlNodePtr{C.xmlAddNextSibling(cur.Ptr, elem.Ptr)}
+func (cur NodePtr) AddNextSibling(elem NodePtr) (NodePtr) {
+	return NodePtr{C.xmlAddNextSibling(cur.Ptr, elem.Ptr)}
 }
 
 // xmlAddPrevSibling
-func (cur xmlNodePtr) xmlAddPrevSibling(elem xmlNodePtr) (xmlNodePtr) {
-	return xmlNodePtr{C.xmlAddPrevSibling(cur.Ptr, elem.Ptr)}
+func (cur NodePtr) AddPrevSibling(elem NodePtr) (NodePtr) {
+	return NodePtr{C.xmlAddPrevSibling(cur.Ptr, elem.Ptr)}
 }
 
 // xmlAddSibling
-func (cur xmlNodePtr) xmlAddSibling(elem xmlNodePtr) (xmlNodePtr) {
-	return xmlNodePtr{C.xmlAddSibling(cur.Ptr, elem.Ptr)}
+func (cur NodePtr) AddSibling(elem NodePtr) (NodePtr) {
+	return NodePtr{C.xmlAddSibling(cur.Ptr, elem.Ptr)}
 }
 
 // xmlNewComment
-func xmlNewComment(content string) (xmlNodePtr) {
+func NewComment(content string) (NodePtr) {
 	ptr := C.CString(content)
 	defer C.free_string(ptr)
-	return xmlNodePtr{C.xmlNewComment(C.to_xmlcharptr(ptr))}
+	return NodePtr{C.xmlNewComment(C.to_xmlcharptr(ptr))}
 }
 
 // xmlNewDoc
-func xmlNewDoc(version string) (xmlDocPtr) {
+func NewDoc(version string) (DocPtr) {
 	ptr := C.CString(version)
 	defer C.free_string(ptr)
-	return xmlDocPtr{C.xmlNewDoc(C.to_xmlcharptr(ptr))}
+	return DocPtr{C.xmlNewDoc(C.to_xmlcharptr(ptr))}
 }
 
 // xmlNewDocComment
-func xmlNewDocComment(doc xmlDocPtr, content string) (xmlNodePtr) {
+func (doc DocPtr) NewDocComment(content string) (NodePtr) {
 	ptr := C.CString(content)
 	defer C.free_string(ptr)
-	return xmlNodePtr{C.xmlNewDocComment(doc.Ptr, C.to_xmlcharptr(ptr))}
+	return NodePtr{C.xmlNewDocComment(doc.Ptr, C.to_xmlcharptr(ptr))}
 }
 
 // xmlNewDocFragment
-func xmlNewDocFragment(doc xmlDocPtr) (xmlNodePtr) {
-	return xmlNodePtr{C.xmlNewDocFragment(doc.Ptr)}
+func (doc DocPtr) NewDocFragment() (NodePtr) {
+	return NodePtr{C.xmlNewDocFragment(doc.Ptr)}
 }
 
 // xmlNewNode
-func xmlNewNode(ns xmlNsPtr, name string) (xmlNodePtr) {
+func NewNode(ns NsPtr, name string) (NodePtr) {
 	ptr := C.CString(name)
 	defer C.free_string(ptr)
-	return xmlNodePtr{C.xmlNewNode(ns.Ptr, C.to_xmlcharptr(ptr))}
+	return NodePtr{C.xmlNewNode(ns.Ptr, C.to_xmlcharptr(ptr))}
 }
 
 // xmlNewNs
-func xmlNewNs(node xmlNodePtr, href string, prefix string) xmlNsPtr {
+func (node NodePtr) NewNs(href string, prefix string) NsPtr {
 	ptrh := C.CString(href)
 	defer C.free_string(ptrh)
 	ptrp := C.CString(prefix)
 	defer C.free_string(ptrp)
-	return xmlNsPtr{C.xmlNewNs(node.Ptr, C.to_xmlcharptr(ptrh), C.to_xmlcharptr(ptrp))}
+	return NsPtr{C.xmlNewNs(node.Ptr, C.to_xmlcharptr(ptrh), C.to_xmlcharptr(ptrp))}
 }
 
