@@ -70,6 +70,11 @@ func BufferCreate() Buffer {
 	return Buffer{C.xmlBufferCreate()}
 }
 
+// xmlBufferEmpty
+func (buffer Buffer) BufferEmpty() {
+	C.xmlBufferEmpty(buffer.Ptr)
+}
+
 // xmlBufferWriteChar/xmlBufferWriteCHAR
 func (buffer Buffer) BufferWriteChar(str string) {
 	ptr := C.CString(str)

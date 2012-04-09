@@ -13,7 +13,7 @@ package xmltree
 // * xmlBufferCreate
 // xmlBufferCreateStatic
 // xmlBufferDump
-// xmlBufferEmpty
+// * xmlBufferEmpty
 // xmlBufferFree
 // xmlBufferGrow
 // xmlBufferLength
