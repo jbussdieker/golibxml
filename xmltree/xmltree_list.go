@@ -108,7 +108,7 @@ package xmltree
 // xmlNodeAddContent
 // xmlNodeAddContentLen
 // xmlNodeBufGetContent
-// xmlNodeDump
+// * xmlNodeDump
 // xmlNodeDumpOutput
 // xmlNodeGetBase
 // * xmlNodeGetContent

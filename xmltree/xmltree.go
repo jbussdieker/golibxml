@@ -112,7 +112,14 @@ func (node NodePtr) NewNs(href string, prefix string) NsPtr {
 	return NsPtr{C.xmlNewNs(node.Ptr, C.to_xmlcharptr(ptrh), C.to_xmlcharptr(ptrp))}
 }
 
+// xmlNodeDump
+func (doc DocPtr) NodeDump(buf Buffer, cur NodePtr, level int, format int) int {
+	return int(C.xmlNodeDump(buf.Ptr, doc.Ptr, cur.Ptr, C.int(level), C.int(format)))
+}
+
+// xmlNodeGetContent
 func (node NodePtr) NodeGetContent() string {
 	return C.GoString(C.to_charptr(C.xmlNodeGetContent(node.Ptr)))
 }
+
 
