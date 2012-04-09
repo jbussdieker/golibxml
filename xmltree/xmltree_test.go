@@ -12,25 +12,31 @@ func testNewBuffer(t *testing.T) (buffer Buffer) {
 	return
 }
 
-func TestNewBuffer(t *testing.T) {
-	testNewBuffer(t)
-}
-
-func TestBufferFree(t *testing.T) {
-	buffer := testNewBuffer(t)
+func testBufferFree(t *testing.T, buffer *Buffer) {
 	buffer.Free()
 	if buffer.Ptr != nil {
 		t.Fail()
 	}
 }
 
+func TestNewBuffer(t *testing.T) {
+	testNewBuffer(t)
+}
+
+func TestBufferFree(t *testing.T) {
+	buffer := testNewBuffer(t)
+	defer testBufferFree(t, &buffer)
+}
+
 func TestBufferWriteChar(t *testing.T) {
 	buffer := testNewBuffer(t)
+	defer testBufferFree(t, &buffer)
 	buffer.WriteChar("test")
 }
 
 func TestBufferEmpty(t *testing.T) {
 	buffer := testNewBuffer(t)
+	defer testBufferFree(t, &buffer)
 	buffer.WriteChar("test")
 	buffer.Empty()
 	if buffer.Content() != "" {
@@ -40,11 +46,13 @@ func TestBufferEmpty(t *testing.T) {
 
 func TestBufferCat(t *testing.T) {
 	buffer := testNewBuffer(t)
+	defer testBufferFree(t, &buffer)
 	buffer.Cat("test")
 }
 
 func TestBufferContent(t *testing.T) {
 	buffer := testNewBuffer(t)
+	defer testBufferFree(t, &buffer)
 	buffer.WriteChar("test")
 	if buffer.Content() != "test" {
 		t.Fail()
