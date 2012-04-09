@@ -202,14 +202,14 @@ func NewDoc(version string) (*DocPtr) {
 }
 
 // xmlNewDocComment
-func (doc *DocPtr) NewDocComment(content string) (*NodePtr) {
+func (doc *DocPtr) NewComment(content string) (*NodePtr) {
 	ptr := C.CString(content)
 	defer C.free_string(ptr)
 	return &NodePtr{C.xmlNewDocComment(doc.Ptr, C.to_xmlcharptr(ptr))}
 }
 
 // xmlNewDocFragment
-func (doc *DocPtr) NewDocFragment() (*NodePtr) {
+func (doc *DocPtr) NewFragment() (*NodePtr) {
 	return &NodePtr{C.xmlNewDocFragment(doc.Ptr)}
 }
 

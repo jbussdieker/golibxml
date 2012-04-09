@@ -129,7 +129,7 @@ func TestNewNode(t *testing.T) {
 
 func TestNewComment(t *testing.T) {
 	doc := NewDoc("1.0")
-	comment := doc.NewDocComment("this is a comment")
+	comment := doc.NewComment("this is a comment")
 	doc.AddChild(comment)
 	buffer := NewBuffer()
 	result := doc.NodeDump(buffer, doc.NodePtr, 0, 0)
