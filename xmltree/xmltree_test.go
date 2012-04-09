@@ -18,27 +18,27 @@ func TestBufferCreate(t *testing.T) {
 
 func TestBufferWriteChar(t *testing.T) {
 	buffer := testNewBuffer(t)
-	buffer.BufferWriteChar("test")
+	buffer.WriteChar("test")
 }
 
 func TestBufferEmpty(t *testing.T) {
 	buffer := testNewBuffer(t)
-	buffer.BufferWriteChar("test")
-	buffer.BufferEmpty()
-	if buffer.BufferContent() != "" {
+	buffer.WriteChar("test")
+	buffer.Empty()
+	if buffer.Content() != "" {
 		t.Fail()
 	}
 }
 
 func TestBufferCat(t *testing.T) {
 	buffer := testNewBuffer(t)
-	buffer.BufferCat("test")
+	buffer.Cat("test")
 }
 
 func TestBufferContent(t *testing.T) {
 	buffer := testNewBuffer(t)
-	buffer.BufferWriteChar("test")
-	if buffer.BufferContent() != "test" {
+	buffer.WriteChar("test")
+	if buffer.Content() != "test" {
 		t.Fail()
 	}
 }
@@ -51,7 +51,7 @@ func TestNewDocAdv(t *testing.T) {
 	result := doc.NodeDump(buffer, doc.NodePtr, 0, 0)
 
 	println("Result Size:", result)
-	println("Result:", buffer.BufferContent())
+	println("Result:", buffer.Content())
 }
 
 func TestNewNode(t *testing.T) {
@@ -62,7 +62,7 @@ func TestNewNode(t *testing.T) {
 	result := doc.NodeDump(buffer, doc.NodePtr, 0, 0)
 
 	println("Result Size:", result)
-	println("Result:", buffer.BufferContent())
+	println("Result:", buffer.Content())
 }
 
 func TestNewComment(t *testing.T) {
@@ -73,6 +73,6 @@ func TestNewComment(t *testing.T) {
 	result := doc.NodeDump(buffer, doc.NodePtr, 0, 0)
 
 	println("Result Size:", result)
-	println("Result:", buffer.BufferContent())
+	println("Result:", buffer.Content())
 }
 

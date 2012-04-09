@@ -54,14 +54,14 @@ func (cur NodePtr) AddSibling(elem NodePtr) (NodePtr) {
 }
 
 // xmlBufferCat/xmlBufferCCat
-func (buffer Buffer) BufferCat(str string) int {
+func (buffer Buffer) Cat(str string) int {
 	ptr := C.CString(str)
 	defer C.free_string(ptr)
 	return int(C.xmlBufferCCat(buffer.Ptr, ptr))
 }
 
 // xmlBufferContent
-func (buffer Buffer) BufferContent() string {
+func (buffer Buffer) Content() string {
 	return C.GoString(C.to_charptr(C.xmlBufferContent(buffer.Ptr)))
 }
 
@@ -71,12 +71,12 @@ func BufferCreate() Buffer {
 }
 
 // xmlBufferEmpty
-func (buffer Buffer) BufferEmpty() {
+func (buffer Buffer) Empty() {
 	C.xmlBufferEmpty(buffer.Ptr)
 }
 
 // xmlBufferWriteChar/xmlBufferWriteCHAR
-func (buffer Buffer) BufferWriteChar(str string) {
+func (buffer Buffer) WriteChar(str string) {
 	ptr := C.CString(str)
 	defer C.free_string(ptr)
 	C.xmlBufferWriteChar(buffer.Ptr, ptr)
