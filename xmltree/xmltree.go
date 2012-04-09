@@ -139,6 +139,25 @@ func (buffer *Buffer) WriteChar(str string) {
 	C.xmlBufferWriteChar(buffer.Ptr, ptr)
 }
 
+// xmlChildElementCount
+func (node *NodePtr) ChildElementCount() int {
+	return int(C.xmlChildElementCount(node.Ptr))
+}
+
+// xmlCopyDoc
+func (doc *DocPtr) Copy(recursive int) (DocPtr) {
+	docptr := C.xmlCopyDoc(doc.Ptr, C.int(recursive))
+	return DocPtr{
+		Ptr: docptr, 
+		NodePtr: NodePtr{C.xmlNodePtr(unsafe.Pointer(docptr))},
+	}
+}
+
+// xmlCopyNode
+func (node *NodePtr) Copy(extended int) (NodePtr) {
+	return NodePtr{C.xmlCopyNode(node.Ptr, C.int(extended))}
+}
+
 // xmlNewComment
 func NewComment(content string) (NodePtr) {
 	ptr := C.CString(content)

@@ -25,12 +25,12 @@ package xmltree
 // * xmlBufferWriteChar
 // xmlBufferWriteQuotedString
 // xmlBuildQName
-// xmlChildElementCount
-// xmlCopyDoc
+// * xmlChildElementCount
+// * xmlCopyDoc
 // xmlCopyDtd
 // xmlCopyNamespace
 // xmlCopyNamespaceList
-// xmlCopyNode
+// * xmlCopyNode
 // xmlCopyNodeList
 // xmlCopyProp
 // xmlCopyPropList
