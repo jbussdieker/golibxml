@@ -140,4 +140,3 @@ func TestNewComment(t *testing.T) {
 	println("Result Size:", result)
 	println("Result:", buffer.Content())
 }
-

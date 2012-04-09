@@ -51,10 +51,10 @@ type Buffer struct {
 ////////////////////////////////////////////////////////////////////////////////
 
 const (
-    XML_BUFFER_ALLOC_DOUBLEIT AllocationScheme = 1 //: double each time one need to grow
-    XML_BUFFER_ALLOC_EXACT = 2 //: grow only to the minimal size
-    XML_BUFFER_ALLOC_IMMUTABLE = 3 //: immutable buffer
-    XML_BUFFER_ALLOC_IO = 4 //: special allocation scheme used for I/O
+	XML_BUFFER_ALLOC_DOUBLEIT  AllocationScheme = 1 //: double each time one need to grow
+	XML_BUFFER_ALLOC_EXACT                      = 2 //: grow only to the minimal size
+	XML_BUFFER_ALLOC_IMMUTABLE                  = 3 //: immutable buffer
+	XML_BUFFER_ALLOC_IO                         = 4 //: special allocation scheme used for I/O
 )
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -62,27 +62,27 @@ const (
 ////////////////////////////////////////////////////////////////////////////////
 
 // xmlAddChild
-func (parent *Node) AddChild(cur *Node) (*Node) {
+func (parent *Node) AddChild(cur *Node) *Node {
 	return &Node{C.xmlAddChild(parent.Ptr, cur.Ptr)}
 }
 
 // xmlAddChildList
-func (parent *Node) AddChildList(cur Node) (*Node) {
+func (parent *Node) AddChildList(cur Node) *Node {
 	return &Node{C.xmlAddNextSibling(parent.Ptr, cur.Ptr)}
 }
 
 // xmlAddNextSibling
-func (cur *Node) AddNextSibling(elem Node) (*Node) {
+func (cur *Node) AddNextSibling(elem Node) *Node {
 	return &Node{C.xmlAddNextSibling(cur.Ptr, elem.Ptr)}
 }
 
 // xmlAddPrevSibling
-func (cur *Node) AddPrevSibling(elem Node) (*Node) {
+func (cur *Node) AddPrevSibling(elem Node) *Node {
 	return &Node{C.xmlAddPrevSibling(cur.Ptr, elem.Ptr)}
 }
 
 // xmlAddSibling
-func (cur *Node) AddSibling(elem Node) (*Node) {
+func (cur *Node) AddSibling(elem Node) *Node {
 	return &Node{C.xmlAddSibling(cur.Ptr, elem.Ptr)}
 }
 
@@ -99,12 +99,12 @@ func (buffer *Buffer) Content() string {
 }
 
 // xmlBufferCreate
-func NewBuffer() (*Buffer) {
+func NewBuffer() *Buffer {
 	return &Buffer{C.xmlBufferCreate()}
 }
 
 // xmlBufferCreateSize
-func NewBufferSize(size int) (*Buffer) {
+func NewBufferSize(size int) *Buffer {
 	return &Buffer{C.xmlBufferCreateSize(C.size_t(size))}
 }
 
@@ -157,61 +157,61 @@ func (node *Node) ChildCount() int {
 }
 
 // xmlCopyDoc
-func (doc *Document) Copy(recursive int) (*Document) {
+func (doc *Document) Copy(recursive int) *Document {
 	docptr := C.xmlCopyDoc(doc.Ptr, C.int(recursive))
 	return &Document{
-		Ptr: docptr, 
+		Ptr:  docptr,
 		Node: &Node{C.xmlNodePtr(unsafe.Pointer(docptr))},
 	}
 }
 
 // xmlCopyDtd
-func (dtd *Dtd) Copy() (*Dtd) {
+func (dtd *Dtd) Copy() *Dtd {
 	return &Dtd{C.xmlCopyDtd(dtd.Ptr)}
 }
 
 // xmlCopyNamespace
-func (ns *Namespace) Copy(extended int) (*Namespace) {
+func (ns *Namespace) Copy(extended int) *Namespace {
 	return &Namespace{C.xmlCopyNamespace(ns.Ptr)}
 }
 
 // xmlCopyNamespaceList
-func (ns *Namespace) CopyList(extended int) (*Namespace) {
+func (ns *Namespace) CopyList(extended int) *Namespace {
 	return &Namespace{C.xmlCopyNamespaceList(ns.Ptr)}
 }
 
 // xmlCopyNode
-func (node *Node) Copy(extended int) (*Node) {
+func (node *Node) Copy(extended int) *Node {
 	return &Node{C.xmlCopyNode(node.Ptr, C.int(extended))}
 }
 
 // xmlCopyNodeList
-func (node *Node) CopyList() (*Node) {
+func (node *Node) CopyList() *Node {
 	return &Node{C.xmlCopyNodeList(node.Ptr)}
 }
 
 // xmlCopyProp
-func (attr *Attribute) Copy(target *Node) (*Attribute) {
+func (attr *Attribute) Copy(target *Node) *Attribute {
 	return &Attribute{C.xmlCopyProp(target.Ptr, attr.Ptr)}
 }
 
 // xmlCopyPropList
-func (attr *Attribute) CopyList(target *Node) (*Attribute) {
+func (attr *Attribute) CopyList(target *Node) *Attribute {
 	return &Attribute{C.xmlCopyPropList(target.Ptr, attr.Ptr)}
 }
 
 // xmlDocGetRootElement
-func (doc *Document) Root() (*Node) {
+func (doc *Document) Root() *Node {
 	return &Node{C.xmlDocGetRootElement(doc.Ptr)}
 }
 
 // xmlDocSetRootElement
-func (doc *Document) SetRoot(root *Node) (*Node) {
+func (doc *Document) SetRoot(root *Node) *Node {
 	return &Node{C.xmlDocSetRootElement(doc.Ptr, root.Ptr)}
 }
 
 // xmlFirstElementChild
-func (node *Node) FirstChild() (*Node) {
+func (node *Node) FirstChild() *Node {
 	return &Node{C.xmlFirstElementChild(node.Ptr)}
 }
 
@@ -289,41 +289,41 @@ func (node *Node) NewChild(ns *Namespace, name string, content string) *Node {
 	if ns != nil {
 		return &Node{C.xmlNewChild(node.Ptr, ns.Ptr, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc))}
 	}
-	return &Node{C.xmlNewChild(node.Ptr, nil, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc))}	
+	return &Node{C.xmlNewChild(node.Ptr, nil, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc))}
 }
 
 // xmlNewComment
-func NewComment(content string) (*Node) {
+func NewComment(content string) *Node {
 	ptr := C.CString(content)
 	defer C.free_string(ptr)
 	return &Node{C.xmlNewComment(C.to_xmlcharptr(ptr))}
 }
 
 // xmlNewDoc
-func NewDoc(version string) (*Document) {
+func NewDoc(version string) *Document {
 	ptr := C.CString(version)
 	defer C.free_string(ptr)
 	doc := C.xmlNewDoc(C.to_xmlcharptr(ptr))
 	return &Document{
-		Ptr: doc, 
+		Ptr:  doc,
 		Node: &Node{C.xmlNodePtr(unsafe.Pointer(doc))},
 	}
 }
 
 // xmlNewDocComment
-func (doc *Document) NewComment(content string) (*Node) {
+func (doc *Document) NewComment(content string) *Node {
 	ptr := C.CString(content)
 	defer C.free_string(ptr)
 	return &Node{C.xmlNewDocComment(doc.Ptr, C.to_xmlcharptr(ptr))}
 }
 
 // xmlNewDocFragment
-func (doc *Document) NewFragment() (*Node) {
+func (doc *Document) NewFragment() *Node {
 	return &Node{C.xmlNewDocFragment(doc.Ptr)}
 }
 
 // xmlNewDocNode
-func (doc *Document) NewNode(ns *Namespace, name string, content string) (*Node) {
+func (doc *Document) NewNode(ns *Namespace, name string, content string) *Node {
 	ptrn := C.CString(name)
 	defer C.free_string(ptrn)
 	ptrc := C.CString(content)
@@ -331,11 +331,11 @@ func (doc *Document) NewNode(ns *Namespace, name string, content string) (*Node)
 	if ns != nil {
 		return &Node{C.xmlNewDocNode(doc.Ptr, ns.Ptr, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc))}
 	}
-	return &Node{C.xmlNewDocNode(doc.Ptr, nil, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc))}	
+	return &Node{C.xmlNewDocNode(doc.Ptr, nil, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc))}
 }
 
 // xmlNewDocProp
-func (doc *Document) NewProp(name string, value string) (*Attribute) {
+func (doc *Document) NewProp(name string, value string) *Attribute {
 	ptrn := C.CString(name)
 	defer C.free_string(ptrn)
 	ptrv := C.CString(value)
@@ -344,7 +344,7 @@ func (doc *Document) NewProp(name string, value string) (*Attribute) {
 }
 
 // xmlNewDocRawNode
-func (doc *Document) NewRawNode(ns *Namespace, name string, content string) (*Node) {
+func (doc *Document) NewRawNode(ns *Namespace, name string, content string) *Node {
 	ptrn := C.CString(name)
 	defer C.free_string(ptrn)
 	ptrc := C.CString(content)
@@ -352,29 +352,29 @@ func (doc *Document) NewRawNode(ns *Namespace, name string, content string) (*No
 	if ns != nil {
 		return &Node{C.xmlNewDocRawNode(doc.Ptr, ns.Ptr, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc))}
 	}
-	return &Node{C.xmlNewDocRawNode(doc.Ptr, nil, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc))}	
+	return &Node{C.xmlNewDocRawNode(doc.Ptr, nil, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc))}
 }
 
 // xmlNewDocText
-func (doc *Document) NewText(content string) (*TextNode) {
+func (doc *Document) NewText(content string) *TextNode {
 	ptr := C.CString(content)
 	defer C.free_string(ptr)
 	return &TextNode{&Node{C.xmlNewDocText(doc.Ptr, C.to_xmlcharptr(ptr))}}
 }
 
 // xmlNewDtd
-func (doc *Document) NewDtd(name string, ExternalID string, SystemID string) (*Dtd) {
+func (doc *Document) NewDtd(name string, ExternalID string, SystemID string) *Dtd {
 	ptrn := C.CString(name)
 	defer C.free_string(ptrn)
 	ptre := C.CString(ExternalID)
 	defer C.free_string(ptre)
 	ptrs := C.CString(SystemID)
 	defer C.free_string(ptrs)
-	return &Dtd{C.xmlNewDtd(doc.Ptr, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptre), C.to_xmlcharptr(ptrs))}	
+	return &Dtd{C.xmlNewDtd(doc.Ptr, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptre), C.to_xmlcharptr(ptrs))}
 }
 
 // xmlNewNode
-func NewNode(ns *Namespace, name string) (*Node) {
+func NewNode(ns *Namespace, name string) *Node {
 	ptr := C.CString(name)
 	defer C.free_string(ptr)
 	if ns != nil {
@@ -393,7 +393,7 @@ func (node *Node) NewNs(href string, prefix string) *Namespace {
 }
 
 // xmlNewProp
-func (node *Node) NewProp(name string, value string) (*Attribute) {
+func (node *Node) NewProp(name string, value string) *Attribute {
 	ptrn := C.CString(name)
 	defer C.free_string(ptrn)
 	ptrv := C.CString(value)
@@ -402,14 +402,14 @@ func (node *Node) NewProp(name string, value string) (*Attribute) {
 }
 
 // xmlNewText
-func NewText(content string) (*TextNode) {
+func NewText(content string) *TextNode {
 	ptr := C.CString(content)
 	defer C.free_string(ptr)
 	return &TextNode{&Node{C.xmlNewText(C.to_xmlcharptr(ptr))}}
 }
 
 // xmlNewTextChild
-func (node *Node) NewTextChild(ns *Namespace, name string, content string) (*TextNode) {
+func (node *Node) NewTextChild(ns *Namespace, name string, content string) *TextNode {
 	ptrn := C.CString(name)
 	defer C.free_string(ptrn)
 	ptrc := C.CString(content)
@@ -503,4 +503,3 @@ func (node *Node) UnsetProp(name string) {
 	defer C.free_string(ptr)
 	C.xmlUnsetProp(node.Ptr, C.to_xmlcharptr(ptr))
 }
-

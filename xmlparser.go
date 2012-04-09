@@ -20,7 +20,7 @@ func ParseDoc(cur string) *Document {
 	defer C.free_string(ptr)
 	doc := C.xmlParseDoc(C.to_xmlcharptr(ptr))
 	return &Document{
-		Ptr: C.xmlDocPtr(doc), 
+		Ptr:  C.xmlDocPtr(doc),
 		Node: &Node{C.xmlNodePtr(unsafe.Pointer(doc))},
 	}
 }
