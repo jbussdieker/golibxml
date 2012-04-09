@@ -148,11 +148,11 @@ package xmltree
 // xmlSplitQName3
 // xmlStringGetNodeList
 // xmlStringLenGetNodeList
-// xmlTextConcat
-// xmlTextMerge
+// * xmlTextConcat
+// * xmlTextMerge
 // * xmlUnlinkNode
 // xmlUnsetNsProp
-// xmlUnsetProp
+// * xmlUnsetProp
 // xmlValidateNCName
 // xmlValidateNMToken
 // xmlValidateName

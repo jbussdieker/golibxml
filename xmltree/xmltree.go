@@ -384,8 +384,27 @@ func (doc *Document) SetCompressMode(mode int) {
 	C.xmlSetDocCompressMode(doc.Ptr, C.int(mode))
 }
 
+// xmlTextConcat
+func (node *Node) TextConcat(content string) int {
+	ptr := C.CString(content)
+	defer C.free_string(ptr)
+	return int(C.xmlTextConcat(node.Ptr, C.to_xmlcharptr(ptr), C.int(len(content))))
+}
+
+// xmlTextMerge
+func (first *Node) TextMerge(second *Node) *Node {
+	return &Node{C.xmlTextMerge(first.Ptr, second.Ptr)}
+}
+
 // xmlUnlinkNode
 func (node *Node) Unlink() {
 	C.xmlUnlinkNode(node.Ptr)
+}
+
+// xmlUnsetProp
+func (node *Node) UnsetProp(name string) {
+	ptr := C.CString(name)
+	defer C.free_string(ptr)
+	C.xmlUnsetProp(node.Ptr, C.to_xmlcharptr(ptr))
 }
 
