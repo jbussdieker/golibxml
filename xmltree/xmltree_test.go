@@ -3,6 +3,10 @@ package xmltree
 import "testing"
 
 func TestSomething(t *testing.T) {
-	NewDoc("1.0")
+	doc := NewDoc("1.0")
+	buffer := BufferCreate()
+	result := doc.NodeDump(buffer, doc.NodePtr, 0, 0)
+	println("Result Size:", result)
+	println("Result:", buffer.BufferContent())
 }
 
