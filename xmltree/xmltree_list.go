@@ -28,7 +28,7 @@ package xmltree
 // * xmlChildElementCount
 // * xmlCopyDoc
 // xmlCopyDtd
-// xmlCopyNamespace
+// * xmlCopyNamespace
 // xmlCopyNamespaceList
 // * xmlCopyNode
 // xmlCopyNodeList

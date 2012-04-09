@@ -4,7 +4,7 @@ import "testing"
 
 //
 // Buffer tests
-func testNewBuffer(t *testing.T) (buffer Buffer) {
+func testNewBuffer(t *testing.T) (buffer *Buffer) {
 	buffer = NewBuffer()
 	if buffer.Ptr == nil {
 		t.Fail()
@@ -33,18 +33,18 @@ func TestNewBufferSize(t *testing.T) {
 
 func TestBufferFree(t *testing.T) {
 	buffer := testNewBuffer(t)
-	defer testBufferFree(t, &buffer)
+	defer testBufferFree(t, buffer)
 }
 
 func TestBufferWriteChar(t *testing.T) {
 	buffer := testNewBuffer(t)
-	defer testBufferFree(t, &buffer)
+	defer testBufferFree(t, buffer)
 	buffer.WriteChar("test")
 }
 
 func TestBufferEmpty(t *testing.T) {
 	buffer := testNewBuffer(t)
-	defer testBufferFree(t, &buffer)
+	defer testBufferFree(t, buffer)
 	buffer.WriteChar("test")
 	buffer.Empty()
 	if buffer.Content() != "" {
@@ -54,7 +54,7 @@ func TestBufferEmpty(t *testing.T) {
 
 func TestBufferResize(t *testing.T) {
 	buffer := testNewBuffer(t)
-	defer testBufferFree(t, &buffer)
+	defer testBufferFree(t, buffer)
 	if buffer.Resize(10) != 1 {
 		t.Fail()
 	}
@@ -62,7 +62,7 @@ func TestBufferResize(t *testing.T) {
 
 func TestBufferLength(t *testing.T) {
 	buffer := testNewBuffer(t)
-	defer testBufferFree(t, &buffer)
+	defer testBufferFree(t, buffer)
 	if buffer.Length() != 0 {
 		t.Fail()
 	}
@@ -74,7 +74,7 @@ func TestBufferLength(t *testing.T) {
 /*
 func TestBufferGrow(t *testing.T) {
 	buffer := testNewBuffer(t)
-	defer testBufferFree(t, &buffer)
+	defer testBufferFree(t, buffer)
 	buffer.Grow(128)
 	if buffer.Length() != 128 {
 		t.Fail()
@@ -83,7 +83,7 @@ func TestBufferGrow(t *testing.T) {
 
 func TestBufferShrink(t *testing.T) {
 	buffer := testNewBuffer(t)
-	defer testBufferFree(t, &buffer)
+	defer testBufferFree(t, buffer)
 	buffer.Shrink(128)
 	if buffer.Length() != 128 {
 		t.Fail()
@@ -92,13 +92,13 @@ func TestBufferShrink(t *testing.T) {
 */
 func TestBufferCat(t *testing.T) {
 	buffer := testNewBuffer(t)
-	defer testBufferFree(t, &buffer)
+	defer testBufferFree(t, buffer)
 	buffer.Cat("test")
 }
 
 func TestBufferContent(t *testing.T) {
 	buffer := testNewBuffer(t)
-	defer testBufferFree(t, &buffer)
+	defer testBufferFree(t, buffer)
 	buffer.WriteChar("test")
 	if buffer.Content() != "test" {
 		t.Fail()

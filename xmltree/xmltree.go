@@ -153,6 +153,11 @@ func (doc *DocPtr) Copy(recursive int) (DocPtr) {
 	}
 }
 
+// xmlCopyNamespace
+func (ns *NsPtr) Copy(extended int) (*NsPtr) {
+	return &NsPtr{C.xmlCopyNamespace(ns.Ptr)}
+}
+
 // xmlCopyNode
 func (node *NodePtr) Copy(extended int) (NodePtr) {
 	return NodePtr{C.xmlCopyNode(node.Ptr, C.int(extended))}
