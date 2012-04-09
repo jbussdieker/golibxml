@@ -137,8 +137,8 @@ package xmltree
 // xmlSearchNs
 // xmlSearchNsByHref
 // xmlSetBufferAllocationScheme
-// xmlSetCompressMode
-// xmlSetDocCompressMode
+// * xmlSetCompressMode
+// * xmlSetDocCompressMode
 // xmlSetListDoc
 // xmlSetNs
 // xmlSetNsProp
@@ -150,7 +150,7 @@ package xmltree
 // xmlStringLenGetNodeList
 // xmlTextConcat
 // xmlTextMerge
-// xmlUnlinkNode
+// * xmlUnlinkNode
 // xmlUnsetNsProp
 // xmlUnsetProp
 // xmlValidateNCName

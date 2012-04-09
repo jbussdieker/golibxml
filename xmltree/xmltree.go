@@ -374,3 +374,18 @@ func (node *Node) PreviousSibling() *Node {
 	return &Node{C.xmlPreviousElementSibling(node.Ptr)}
 }
 
+// xmlSetCompressMode
+func SetCompressMode(mode int) {
+	C.xmlSetCompressMode(C.int(mode))
+}
+
+// xmlSetDocCompressMode
+func (doc *Document) SetCompressMode(mode int) {
+	C.xmlSetDocCompressMode(doc.Ptr, C.int(mode))
+}
+
+// xmlUnlinkNode
+func (node *Node) Unlink() {
+	C.xmlUnlinkNode(node.Ptr)
+}
+
