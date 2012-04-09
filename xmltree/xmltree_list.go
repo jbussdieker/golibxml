@@ -27,13 +27,13 @@ package xmltree
 // xmlBuildQName
 // * xmlChildElementCount
 // * xmlCopyDoc
-// xmlCopyDtd
+// * xmlCopyDtd
 // * xmlCopyNamespace
-// xmlCopyNamespaceList
+// * xmlCopyNamespaceList
 // * xmlCopyNode
-// xmlCopyNodeList
-// xmlCopyProp
-// xmlCopyPropList
+// * xmlCopyNodeList
+// * xmlCopyProp
+// * xmlCopyPropList
 // xmlCreateIntSubset
 // xmlDOMWrapAcquireNsFunction
 // xmlDOMWrapAdoptNode
@@ -55,21 +55,21 @@ package xmltree
 // xmlElemDump
 // * xmlFirstElementChild
 // * xmlFreeDoc
-// xmlFreeDtd
+// * xmlFreeDtd
 // * xmlFreeNode
-// xmlFreeNodeList
+// * xmlFreeNodeList
 // * xmlFreeNs
-// xmlFreeNsList
-// xmlFreeProp
-// xmlFreePropList
+// * xmlFreeNsList
+// * xmlFreeProp
+// * xmlFreePropList
 // xmlGetBufferAllocationScheme
 // xmlGetCompressMode
 // xmlGetDocCompressMode
 // xmlGetIntSubset
-// xmlGetLastChild
+// * xmlGetLastChild
 // xmlGetLineNo
 // xmlGetNoNsProp
-// xmlGetNodePath
+// * xmlGetNodePath
 // xmlGetNsList
 // xmlGetNsProp
 // xmlGetProp

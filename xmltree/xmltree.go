@@ -165,9 +165,19 @@ func (doc *Document) Copy(recursive int) (*Document) {
 	}
 }
 
+// xmlCopyDtd
+func (dtd *Dtd) Copy() (*Dtd) {
+	return &Dtd{C.xmlCopyDtd(dtd.Ptr)}
+}
+
 // xmlCopyNamespace
 func (ns *Namespace) Copy(extended int) (*Namespace) {
 	return &Namespace{C.xmlCopyNamespace(ns.Ptr)}
+}
+
+// xmlCopyNamespaceList
+func (ns *Namespace) CopyList(extended int) (*Namespace) {
+	return &Namespace{C.xmlCopyNamespaceList(ns.Ptr)}
 }
 
 // xmlCopyNode
@@ -175,8 +185,23 @@ func (node *Node) Copy(extended int) (*Node) {
 	return &Node{C.xmlCopyNode(node.Ptr, C.int(extended))}
 }
 
+// xmlCopyNodeList
+func (node *Node) CopyList() (*Node) {
+	return &Node{C.xmlCopyNodeList(node.Ptr)}
+}
+
+// xmlCopyProp
+func (attr *Attribute) Copy(target *Node) (*Attribute) {
+	return &Attribute{C.xmlCopyProp(target.Ptr, attr.Ptr)}
+}
+
+// xmlCopyPropList
+func (attr *Attribute) CopyList(target *Node) (*Attribute) {
+	return &Attribute{C.xmlCopyPropList(target.Ptr, attr.Ptr)}
+}
+
 // xmlDocGetRootElement
-func (doc *Document) GetRoot() (*Node) {
+func (doc *Document) Root() (*Node) {
 	return &Node{C.xmlDocGetRootElement(doc.Ptr)}
 }
 
@@ -197,9 +222,21 @@ func (doc *Document) Free() {
 	doc.Node = nil
 }
 
+// xmlFreeDtd
+func (dtd *Dtd) Free() {
+	C.xmlFreeDtd(dtd.Ptr)
+	dtd.Ptr = nil
+}
+
 // xmlFreeNode
 func (node *Node) Free() {
 	C.xmlFreeNode(node.Ptr)
+	node.Ptr = nil
+}
+
+// xmlFreeNodeList
+func (node *Node) FreeList() {
+	C.xmlFreeNodeList(node.Ptr)
 	node.Ptr = nil
 }
 
@@ -209,8 +246,37 @@ func (ns *Namespace) Free() {
 	ns.Ptr = nil
 }
 
-// xmlLastElementChild
+// xmlFreeNsList
+func (ns *Namespace) FreeList() {
+	C.xmlFreeNsList(ns.Ptr)
+	ns.Ptr = nil
+}
+
+// xmlFreeProp
+func (attr *Attribute) Free() {
+	C.xmlFreeProp(attr.Ptr)
+	attr.Ptr = nil
+}
+
+// xmlFreePropList
+func (attr *Attribute) FreeList() {
+	C.xmlFreePropList(attr.Ptr)
+	attr.Ptr = nil
+}
+
+// xmlGetLastChild
 func (node *Node) LastChild() *Node {
+	return &Node{C.xmlGetLastChild(node.Ptr)}
+}
+
+// xmlGetNodePath
+func (node *Node) Path() string {
+	cstr := C.xmlGetNodePath(node.Ptr)
+	return C.GoString(C.to_charptr(cstr))
+}
+
+// xmlLastElementChild
+func (node *Node) LastElementChild() *Node {
 	return &Node{C.xmlLastElementChild(node.Ptr)}
 }
 
