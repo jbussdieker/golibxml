@@ -19,7 +19,7 @@ package xmltree
 // * xmlBufferLength
 // * xmlBufferResize
 // xmlBufferSetAllocationScheme
-// xmlBufferShrink
+// * xmlBufferShrink
 // * xmlBufferWriteCHAR
 // * xmlBufferWriteChar
 // xmlBufferWriteQuotedString

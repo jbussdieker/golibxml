@@ -72,6 +72,15 @@ func TestBufferGrow(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestBufferShrink(t *testing.T) {
+	buffer := testNewBuffer(t)
+	defer testBufferFree(t, &buffer)
+	buffer.Shrink(128)
+	if buffer.Length() != 128 {
+		t.Fail()
+	}
+}
 */
 func TestBufferCat(t *testing.T) {
 	buffer := testNewBuffer(t)

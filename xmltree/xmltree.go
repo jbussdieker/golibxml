@@ -96,6 +96,11 @@ func (buffer *Buffer) Resize(size int) int {
 	return int(C.xmlBufferResize(buffer.Ptr, C.uint(size)))
 }
 
+// xmlBufferShrink
+func (buffer *Buffer) Shrink(length int) int {
+	return int(C.xmlBufferShrink(buffer.Ptr, C.uint(length)))
+}
+
 // xmlBufferWriteChar/xmlBufferWriteCHAR
 func (buffer *Buffer) WriteChar(str string) {
 	ptr := C.CString(str)
