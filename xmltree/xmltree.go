@@ -29,39 +29,39 @@ type Buffer struct {
 }
 
 // xmlAddChild
-func (parent NodePtr) AddChild(cur NodePtr) (NodePtr) {
+func (parent *NodePtr) AddChild(cur NodePtr) (NodePtr) {
 	return NodePtr{C.xmlAddChild(parent.Ptr, cur.Ptr)}
 }
 
 // xmlAddChildList
-func (parent NodePtr) AddChildList(cur NodePtr) (NodePtr) {
+func (parent *NodePtr) AddChildList(cur NodePtr) (NodePtr) {
 	return NodePtr{C.xmlAddNextSibling(parent.Ptr, cur.Ptr)}
 }
 
 // xmlAddNextSibling
-func (cur NodePtr) AddNextSibling(elem NodePtr) (NodePtr) {
+func (cur *NodePtr) AddNextSibling(elem NodePtr) (NodePtr) {
 	return NodePtr{C.xmlAddNextSibling(cur.Ptr, elem.Ptr)}
 }
 
 // xmlAddPrevSibling
-func (cur NodePtr) AddPrevSibling(elem NodePtr) (NodePtr) {
+func (cur *NodePtr) AddPrevSibling(elem NodePtr) (NodePtr) {
 	return NodePtr{C.xmlAddPrevSibling(cur.Ptr, elem.Ptr)}
 }
 
 // xmlAddSibling
-func (cur NodePtr) AddSibling(elem NodePtr) (NodePtr) {
+func (cur *NodePtr) AddSibling(elem NodePtr) (NodePtr) {
 	return NodePtr{C.xmlAddSibling(cur.Ptr, elem.Ptr)}
 }
 
 // xmlBufferCat/xmlBufferCCat
-func (buffer Buffer) Cat(str string) int {
+func (buffer *Buffer) Cat(str string) int {
 	ptr := C.CString(str)
 	defer C.free_string(ptr)
 	return int(C.xmlBufferCCat(buffer.Ptr, ptr))
 }
 
 // xmlBufferContent
-func (buffer Buffer) Content() string {
+func (buffer *Buffer) Content() string {
 	return C.GoString(C.to_charptr(C.xmlBufferContent(buffer.Ptr)))
 }
 
