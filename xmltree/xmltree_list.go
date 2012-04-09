@@ -90,9 +90,9 @@ package xmltree
 // xmlNewDocPI
 // * xmlNewDocProp
 // * xmlNewDocRawNode
-// xmlNewDocText
+// * xmlNewDocText
 // xmlNewDocTextLen
-// xmlNewDtd
+// * xmlNewDtd
 // xmlNewGlobalNs
 // * xmlNewNode
 // xmlNewNodeEatName

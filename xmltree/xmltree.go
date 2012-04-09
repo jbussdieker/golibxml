@@ -17,6 +17,10 @@ import "unsafe"
 
 type AllocationScheme int
 
+type DtdPtr struct {
+	Ptr C.xmlDtdPtr
+}
+
 type AttrPtr struct {
 	Ptr C.xmlAttrPtr
 }
@@ -262,6 +266,24 @@ func (doc *DocPtr) NewRawNode(ns *NsPtr, name string, content string) (*NodePtr)
 		return &NodePtr{C.xmlNewDocRawNode(doc.Ptr, ns.Ptr, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc))}
 	}
 	return &NodePtr{C.xmlNewDocRawNode(doc.Ptr, nil, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc))}	
+}
+
+// xmlNewDocText
+func (doc *DocPtr) NewText(content string) (*NodePtr) {
+	ptr := C.CString(content)
+	defer C.free_string(ptr)
+	return &NodePtr{C.xmlNewDocText(doc.Ptr, C.to_xmlcharptr(ptr))}	
+}
+
+// xmlNewDtd
+func (doc *DocPtr) NewDtd(name string, ExternalID string, SystemID string) (*DtdPtr) {
+	ptrn := C.CString(name)
+	defer C.free_string(ptrn)
+	ptre := C.CString(ExternalID)
+	defer C.free_string(ptre)
+	ptrs := C.CString(SystemID)
+	defer C.free_string(ptrs)
+	return &DtdPtr{C.xmlNewDtd(doc.Ptr, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptre), C.to_xmlcharptr(ptrs))}	
 }
 
 // xmlNewNode
