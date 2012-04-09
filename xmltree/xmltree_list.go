@@ -11,6 +11,7 @@ package xmltree
 // * xmlBufferCat
 // * xmlBufferContent
 // * xmlBufferCreate
+// * xmlBufferCreateSize
 // xmlBufferCreateStatic
 // xmlBufferDump
 // * xmlBufferEmpty

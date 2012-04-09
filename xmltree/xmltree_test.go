@@ -5,7 +5,7 @@ import "testing"
 //
 // Buffer tests
 func testNewBuffer(t *testing.T) (buffer Buffer) {
-	buffer = BufferCreate()
+	buffer = NewBuffer()
 	if buffer.Ptr == nil {
 		t.Fail()
 	}
@@ -21,6 +21,14 @@ func testBufferFree(t *testing.T, buffer *Buffer) {
 
 func TestNewBuffer(t *testing.T) {
 	testNewBuffer(t)
+}
+
+func TestNewBufferSize(t *testing.T) {
+	buffer := NewBufferSize(10)
+	if buffer.Ptr == nil {
+		t.Fail()
+	}
+	return
 }
 
 func TestBufferFree(t *testing.T) {
@@ -101,7 +109,7 @@ func TestBufferContent(t *testing.T) {
 // Advanced/Combo tests
 func TestNewDocAdv(t *testing.T) {
 	doc := NewDoc("1.0")
-	buffer := BufferCreate()
+	buffer := NewBuffer()
 	result := doc.NodeDump(buffer, doc.NodePtr, 0, 0)
 
 	println("Result Size:", result)
@@ -112,7 +120,7 @@ func TestNewNode(t *testing.T) {
 	doc := NewDoc("1.0")
 	node := NewNode(nil, "div")
 	doc.AddChild(node)
-	buffer := BufferCreate()
+	buffer := NewBuffer()
 	result := doc.NodeDump(buffer, doc.NodePtr, 0, 0)
 
 	println("Result Size:", result)
@@ -123,7 +131,7 @@ func TestNewComment(t *testing.T) {
 	doc := NewDoc("1.0")
 	comment := doc.NewDocComment("this is a comment")
 	doc.AddChild(comment)
-	buffer := BufferCreate()
+	buffer := NewBuffer()
 	result := doc.NodeDump(buffer, doc.NodePtr, 0, 0)
 
 	println("Result Size:", result)

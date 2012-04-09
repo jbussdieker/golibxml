@@ -87,8 +87,13 @@ func (buffer *Buffer) Content() string {
 }
 
 // xmlBufferCreate
-func BufferCreate() Buffer {
+func NewBuffer() Buffer {
 	return Buffer{C.xmlBufferCreate()}
+}
+
+// xmlBufferCreateSize
+func NewBufferSize(size int) Buffer {
+	return Buffer{C.xmlBufferCreateSize(C.size_t(size))}
 }
 
 // xmlBufferEmpty
