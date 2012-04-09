@@ -148,7 +148,7 @@ func (buffer *Buffer) WriteChar(str string) {
 }
 
 // xmlChildElementCount
-func (node *Node) ChildElementCount() int {
+func (node *Node) ChildCount() int {
 	return int(C.xmlChildElementCount(node.Ptr))
 }
 
@@ -172,17 +172,17 @@ func (node *Node) Copy(extended int) (*Node) {
 }
 
 // xmlDocGetRootElement
-func (doc *Document) GetRootElement() (*Node) {
+func (doc *Document) GetRoot() (*Node) {
 	return &Node{C.xmlDocGetRootElement(doc.Ptr)}
 }
 
 // xmlDocSetRootElement
-func (doc *Document) SetRootElement(root *Node) (*Node) {
+func (doc *Document) SetRoot(root *Node) (*Node) {
 	return &Node{C.xmlDocSetRootElement(doc.Ptr, root.Ptr)}
 }
 
 // xmlFirstElementChild
-func (node *Node) FirstElementChild() (*Node) {
+func (node *Node) FirstChild() (*Node) {
 	return &Node{C.xmlFirstElementChild(node.Ptr)}
 }
 
