@@ -53,6 +53,13 @@ func (cur NodePtr) AddSibling(elem NodePtr) (NodePtr) {
 	return NodePtr{C.xmlAddSibling(cur.Ptr, elem.Ptr)}
 }
 
+// xmlBufferCat/xmlBufferCCat
+func (buffer Buffer) BufferCat(str string) int {
+	ptr := C.CString(str)
+	defer C.free_string(ptr)
+	return int(C.xmlBufferCCat(buffer.Ptr, ptr))
+}
+
 // xmlBufferContent
 func (buffer Buffer) BufferContent() string {
 	return C.GoString(C.to_charptr(C.xmlBufferContent(buffer.Ptr)))

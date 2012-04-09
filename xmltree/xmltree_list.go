@@ -7,8 +7,8 @@ package xmltree
 // xmlAttrSerializeTxtContent
 // xmlBufferAdd
 // xmlBufferAddHead
-// xmlBufferCCat
-// xmlBufferCat
+// * xmlBufferCCat
+// * xmlBufferCat
 // * xmlBufferContent
 // * xmlBufferCreate
 // xmlBufferCreateStatic
