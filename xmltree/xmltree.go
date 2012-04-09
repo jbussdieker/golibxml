@@ -5,6 +5,7 @@ package xmltree
 
 static inline void free_string(char* s) { free(s); }
 static inline xmlChar *to_xmlcharptr(const char *s) { return (xmlChar *)s; }
+static inline char *to_charptr(const xmlChar *s) { return (char *)s; }
 
 */
 import "C"
@@ -87,5 +88,9 @@ func (node NodePtr) NewNs(href string, prefix string) NsPtr {
 	ptrp := C.CString(prefix)
 	defer C.free_string(ptrp)
 	return NsPtr{C.xmlNewNs(node.Ptr, C.to_xmlcharptr(ptrh), C.to_xmlcharptr(ptrp))}
+}
+
+func (node NodePtr) NodeGetContent() string {
+	return C.GoString(C.to_charptr(C.xmlNodeGetContent(node.Ptr)))
 }
 

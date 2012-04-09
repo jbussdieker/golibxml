@@ -112,7 +112,7 @@ package xmltree
 // xmlNodeDump
 // xmlNodeDumpOutput
 // xmlNodeGetBase
-// xmlNodeGetContent
+// * xmlNodeGetContent
 // xmlNodeGetLang
 // xmlNodeGetSpacePreserve
 // xmlNodeIsText
