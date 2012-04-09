@@ -43,6 +43,13 @@ func (cur xmlNodePtr) xmlAddSibling(elem xmlNodePtr) (xmlNodePtr) {
 	return xmlNodePtr{C.xmlAddSibling(cur.Ptr, elem.Ptr)}
 }
 
+// xmlNewComment
+func xmlNewComment(content string) (xmlNodePtr) {
+	ptr := C.CString(content)
+	defer C.free_string(ptr)
+	return xmlNodePtr{C.xmlNewComment(C.to_xmlcharptr(ptr))}
+}
+
 // xmlNewDoc
 func xmlNewDoc(version string) (xmlDocPtr) {
 	ptr := C.CString(version)

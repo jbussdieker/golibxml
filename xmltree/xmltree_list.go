@@ -81,7 +81,7 @@ package xmltree
 // xmlNewCDataBlock
 // xmlNewCharRef
 // xmlNewChild
-// xmlNewComment
+// * xmlNewComment
 // * xmlNewDoc
 // * xmlNewDocComment
 // * xmlNewDocFragment
