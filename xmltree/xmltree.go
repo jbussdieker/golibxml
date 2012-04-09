@@ -23,6 +23,10 @@ type NsPtr struct {
 	Ptr C.xmlNsPtr
 }
 
+type Buffer struct {
+	Ptr C.xmlBufferPtr
+}
+
 // xmlAddChild
 func (parent NodePtr) AddChild(cur NodePtr) (NodePtr) {
 	return NodePtr{C.xmlAddChild(parent.Ptr, cur.Ptr)}
@@ -46,6 +50,11 @@ func (cur NodePtr) AddPrevSibling(elem NodePtr) (NodePtr) {
 // xmlAddSibling
 func (cur NodePtr) AddSibling(elem NodePtr) (NodePtr) {
 	return NodePtr{C.xmlAddSibling(cur.Ptr, elem.Ptr)}
+}
+
+// xmlBufferCreate
+func BufferCreate() Buffer {
+	return Buffer{C.xmlBufferCreate()}
 }
 
 // xmlNewComment

@@ -10,8 +10,7 @@ package xmltree
 // xmlBufferCCat
 // xmlBufferCat
 // xmlBufferContent
-// xmlBufferCreate
-// xmlBufferCreate
+// * xmlBufferCreate
 // xmlBufferCreateStatic
 // xmlBufferDump
 // xmlBufferEmpty
