@@ -96,7 +96,7 @@ package xmltree
 // xmlNewGlobalNs
 // xmlNewNode
 // xmlNewNodeEatName
-// xmlNewNs
+// * xmlNewNs
 // xmlNewNsProp
 // xmlNewNsPropEatName
 // xmlNewPI

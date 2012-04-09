@@ -18,6 +18,10 @@ type xmlDocPtr struct {
 	Ptr C.xmlDocPtr
 }
 
+type xmlNsPtr struct {
+	Ptr C.xmlNsPtr
+}
+
 // xmlAddChild
 func (parent xmlNodePtr) xmlAddChild(cur xmlNodePtr) (xmlNodePtr) {
 	return xmlNodePtr{C.xmlAddChild(parent.Ptr, cur.Ptr)}
@@ -68,3 +72,13 @@ func xmlNewDocComment(doc xmlDocPtr, content string) (xmlNodePtr) {
 func xmlNewDocFragment(doc xmlDocPtr) (xmlNodePtr) {
 	return xmlNodePtr{C.xmlNewDocFragment(doc.Ptr)}
 }
+
+// xmlNewNs
+func xmlNewNs(node xmlNodePtr, href string, prefix string) xmlNsPtr {
+	ptrh := C.CString(href)
+	defer C.free_string(ptrh)
+	ptrp := C.CString(prefix)
+	defer C.free_string(ptrp)
+	return xmlNsPtr{C.xmlNewNs(node.Ptr, C.to_xmlcharptr(ptrh), C.to_xmlcharptr(ptrp))}
+}
+
