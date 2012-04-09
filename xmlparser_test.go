@@ -2,6 +2,9 @@ package golibxml
 
 import "testing"
 
-func TestParser(t *testing.T) {
-	t.Fail()
+func TestParseDoc(t *testing.T) {
+	doc := ParseDoc("<html></html>")
+	if doc == nil {
+		t.Fail()
+	}
 }
