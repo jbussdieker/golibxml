@@ -17,6 +17,7 @@ import "github.com/jbussdieker/golibxml/xmltree"
 // INTERFACE
 ////////////////////////////////////////////////////////////////////////////////
 
+// xmlParseDoc
 func ParseDoc(cur string) *xmltree.Document {
 	ptr := C.CString(cur)
 	defer C.free_string(ptr)

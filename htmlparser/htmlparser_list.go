@@ -1,7 +1,7 @@
 package htmlparser
 // UTF8ToHtml
 // htmlAttrAllowed
-// htmlAutoCloseTag
+// * htmlAutoCloseTag
 // htmlCreateMemoryParserCtxt
 // htmlCreatePushParserCtxt
 // htmlCtxtReadDoc
@@ -24,7 +24,7 @@ package htmlparser
 // htmlNodeStatus
 // htmlParseCharRef
 // htmlParseChunk
-// htmlParseDoc
+// * htmlParseDoc
 // htmlParseDocument
 // htmlParseElement
 // htmlParseEntityRef
@@ -36,5 +36,5 @@ package htmlparser
 // htmlReadMemory
 // htmlSAXParseDoc
 // htmlSAXParseFile
-// htmlTagLookup
+// * htmlTagLookup
 

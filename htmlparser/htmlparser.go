@@ -15,10 +15,27 @@ import "github.com/jbussdieker/golibxml/xmltree"
 import "github.com/jbussdieker/golibxml/htmltree"
 
 ////////////////////////////////////////////////////////////////////////////////
+// TYPES/STRUCTS
+////////////////////////////////////////////////////////////////////////////////
+
+type ElemDesc struct {
+	Ptr C.htmlElemDescPtr
+}
+
+type Document struct {
+	*htmltree.Document
+}
+
+type Node struct {
+	*htmltree.Node
+}
+
+////////////////////////////////////////////////////////////////////////////////
 // INTERFACE
 ////////////////////////////////////////////////////////////////////////////////
 
-func ParseDoc(cur string, encoding string) *htmltree.Document {
+// htmlParseDoc
+func ParseDoc(cur string, encoding string) *Document {
 	ptrc := C.CString(cur)
 	defer C.free_string(ptrc)
 	ptre := C.CString(encoding)
@@ -26,12 +43,30 @@ func ParseDoc(cur string, encoding string) *htmltree.Document {
 	doc := C.htmlParseDoc(C.to_xmlcharptr(ptrc), ptre)
 	dp := xmltree.DocumentPtr(unsafe.Pointer(doc))
 	np := xmltree.NodePtr(unsafe.Pointer(doc))
-	return &htmltree.Document{
-		&xmltree.Document{
-			Ptr: dp,
-			Node: &xmltree.Node{np},
+	return &Document{
+		&htmltree.Document{
+			&xmltree.Document{
+				Ptr: dp,
+				Node: &xmltree.Node{np},
+			},
+			htmltree.DocumentPtr(unsafe.Pointer(doc)),
 		},
-		htmltree.DocumentPtr(unsafe.Pointer(doc)),
 	}
+}
+
+// htmlAutoCloseTag
+func (doc *Document) AutoCloseTag(name string, node *Node) int {
+	ptr := C.CString(name)
+	defer C.free_string(ptr)
+	d := doc.Document.Ptr
+	n := node.Node.Ptr
+	return int(C.htmlAutoCloseTag(C.xmlDocPtr(unsafe.Pointer(d)), C.to_xmlcharptr(ptr), C.xmlNodePtr(unsafe.Pointer(n))))
+}
+
+// htmlTagLookup
+func TagLookup(tag string) *ElemDesc {
+	ptr := C.CString(tag)
+	defer C.free_string(ptr)
+	return &ElemDesc{C.htmlTagLookup(C.to_xmlcharptr(ptr))}
 }
 

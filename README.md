@@ -16,4 +16,4 @@ golibxml is a simple wrapper for libxml. The goal is to avoid any extra magic so
 
 ## libxml/htmlparser
 
-2.63% (1/38)
+7.89% (3/38)
