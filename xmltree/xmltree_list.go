@@ -142,7 +142,7 @@ package xmltree
 // xmlSetListDoc
 // xmlSetNs
 // xmlSetNsProp
-// xmlSetProp
+// * xmlSetProp
 // xmlSetTreeDoc
 // xmlSplitQName2
 // xmlSplitQName3

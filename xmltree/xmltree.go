@@ -384,6 +384,15 @@ func (doc *Document) SetCompressMode(mode int) {
 	C.xmlSetDocCompressMode(doc.Ptr, C.int(mode))
 }
 
+// xmlSetProp
+func (node *Node) SetProp(name string, value string) *Attribute {
+	ptrn := C.CString(name)
+	defer C.free_string(ptrn)
+	ptrv := C.CString(value)
+	defer C.free_string(ptrv)
+	return &Attribute{C.xmlSetProp(node.Ptr, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrv))}
+}
+
 // xmlTextConcat
 func (node *Node) TextConcat(content string) int {
 	ptr := C.CString(content)
