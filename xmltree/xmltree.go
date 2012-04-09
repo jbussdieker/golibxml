@@ -71,7 +71,7 @@ func BufferCreate() Buffer {
 }
 
 // xmlBufferEmpty
-func (buffer Buffer) Empty() {
+func (buffer *Buffer) Empty() {
 	C.xmlBufferEmpty(buffer.Ptr)
 }
 
@@ -82,7 +82,7 @@ func (buffer *Buffer) Free() {
 }
 
 // xmlBufferWriteChar/xmlBufferWriteCHAR
-func (buffer Buffer) WriteChar(str string) {
+func (buffer *Buffer) WriteChar(str string) {
 	ptr := C.CString(str)
 	defer C.free_string(ptr)
 	C.xmlBufferWriteChar(buffer.Ptr, ptr)
@@ -107,14 +107,14 @@ func NewDoc(version string) (DocPtr) {
 }
 
 // xmlNewDocComment
-func (doc DocPtr) NewDocComment(content string) (NodePtr) {
+func (doc *DocPtr) NewDocComment(content string) (NodePtr) {
 	ptr := C.CString(content)
 	defer C.free_string(ptr)
 	return NodePtr{C.xmlNewDocComment(doc.Ptr, C.to_xmlcharptr(ptr))}
 }
 
 // xmlNewDocFragment
-func (doc DocPtr) NewDocFragment() (NodePtr) {
+func (doc *DocPtr) NewDocFragment() (NodePtr) {
 	return NodePtr{C.xmlNewDocFragment(doc.Ptr)}
 }
 
@@ -129,7 +129,7 @@ func NewNode(ns *NsPtr, name string) (NodePtr) {
 }
 
 // xmlNewNs
-func (node NodePtr) NewNs(href string, prefix string) NsPtr {
+func (node *NodePtr) NewNs(href string, prefix string) NsPtr {
 	ptrh := C.CString(href)
 	defer C.free_string(ptrh)
 	ptrp := C.CString(prefix)
@@ -138,13 +138,12 @@ func (node NodePtr) NewNs(href string, prefix string) NsPtr {
 }
 
 // xmlNodeDump
-func (doc DocPtr) NodeDump(buf Buffer, cur NodePtr, level int, format int) int {
+func (doc *DocPtr) NodeDump(buf Buffer, cur NodePtr, level int, format int) int {
 	return int(C.xmlNodeDump(buf.Ptr, doc.Ptr, cur.Ptr, C.int(level), C.int(format)))
 }
 
 // xmlNodeGetContent
-func (node NodePtr) NodeGetContent() string {
+func (node *NodePtr) NodeGetContent() string {
 	return C.GoString(C.to_charptr(C.xmlNodeGetContent(node.Ptr)))
 }
-
 
