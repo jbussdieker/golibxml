@@ -53,8 +53,8 @@ package xmltree
 // * xmlDocGetRootElement
 // * xmlDocSetRootElement
 // xmlElemDump
-// xmlFirstElementChild
-// xmlFreeDoc
+// * xmlFirstElementChild
+// * xmlFreeDoc
 // xmlFreeDtd
 // xmlFreeNode
 // xmlFreeNodeList

@@ -173,6 +173,16 @@ func (doc *DocPtr) SetRootElement(root *NodePtr) (*NodePtr) {
 	return &NodePtr{C.xmlDocSetRootElement(doc.Ptr, root.Ptr)}
 }
 
+// xmlFirstElementChild
+func (node *NodePtr) FirstElementChild() (*NodePtr) {
+	return &NodePtr{C.xmlFirstElementChild(node.Ptr)}
+}
+
+// xmlFreeDoc
+func (doc *DocPtr) Free() {
+	C.xmlFreeDoc(doc.Ptr)
+}
+
 // xmlNewComment
 func NewComment(content string) (*NodePtr) {
 	ptr := C.CString(content)
