@@ -122,9 +122,9 @@ package xmltree
 // * xmlNodeSetContent
 // xmlNodeSetContentLen
 // xmlNodeSetLang
-// xmlNodeSetName
+// * xmlNodeSetName
 // xmlNodeSetSpacePreserve
-// xmlPreviousElementSibling
+// * xmlPreviousElementSibling
 // xmlReconciliateNs
 // xmlRemoveProp
 // xmlReplaceNode

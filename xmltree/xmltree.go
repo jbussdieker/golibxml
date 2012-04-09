@@ -362,3 +362,15 @@ func (node *Node) SetContent(content string) {
 	C.xmlNodeSetContent(node.Ptr, C.to_xmlcharptr(ptr))
 }
 
+// xmlNodeSetName
+func (node *Node) SetName(name string) {
+	ptr := C.CString(name)
+	defer C.free_string(ptr)
+	C.xmlNodeSetName(node.Ptr, C.to_xmlcharptr(ptr))
+}
+
+// xmlPreviousElementSibling
+func (node *Node) PreviousSibling() *Node {
+	return &Node{C.xmlPreviousElementSibling(node.Ptr)}
+}
+
