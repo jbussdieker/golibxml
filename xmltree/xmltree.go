@@ -75,6 +75,12 @@ func (buffer Buffer) Empty() {
 	C.xmlBufferEmpty(buffer.Ptr)
 }
 
+// xmlBufferFree
+func (buffer *Buffer) Free() {
+	C.xmlBufferFree(buffer.Ptr)
+	buffer.Ptr = nil
+}
+
 // xmlBufferWriteChar/xmlBufferWriteCHAR
 func (buffer Buffer) WriteChar(str string) {
 	ptr := C.CString(str)

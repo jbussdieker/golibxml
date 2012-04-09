@@ -12,8 +12,16 @@ func testNewBuffer(t *testing.T) (buffer Buffer) {
 	return
 }
 
-func TestBufferCreate(t *testing.T) {
+func TestNewBuffer(t *testing.T) {
 	testNewBuffer(t)
+}
+
+func TestBufferFree(t *testing.T) {
+	buffer := testNewBuffer(t)
+	buffer.Free()
+	if buffer.Ptr != nil {
+		t.Fail()
+	}
 }
 
 func TestBufferWriteChar(t *testing.T) {
