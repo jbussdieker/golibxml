@@ -20,8 +20,8 @@ package xmltree
 // xmlBufferResize
 // xmlBufferSetAllocationScheme
 // xmlBufferShrink
-// xmlBufferWriteCHAR
-// xmlBufferWriteChar
+// * xmlBufferWriteCHAR
+// * xmlBufferWriteChar
 // xmlBufferWriteQuotedString
 // xmlBuildQName
 // xmlChildElementCount

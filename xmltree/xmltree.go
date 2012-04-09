@@ -63,6 +63,13 @@ func BufferCreate() Buffer {
 	return Buffer{C.xmlBufferCreate()}
 }
 
+// xmlBufferWriteChar/xmlBufferWriteCHAR
+func (buffer Buffer) BufferWriteChar(str string) {
+	ptr := C.CString(str)
+	defer C.free_string(ptr)
+	C.xmlBufferWriteChar(buffer.Ptr, ptr)
+}
+
 // xmlNewComment
 func NewComment(content string) (NodePtr) {
 	ptr := C.CString(content)
