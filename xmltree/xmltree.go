@@ -9,13 +9,14 @@ static inline char *to_charptr(const xmlChar *s) { return (char *)s; }
 
 */
 import "C"
-//import "unsafe"
+import "unsafe"
 
 type NodePtr struct {
 	Ptr C.xmlNodePtr
 }
 
 type DocPtr struct {
+	NodePtr
 	Ptr C.xmlDocPtr
 }
 
@@ -68,7 +69,11 @@ func NewComment(content string) (NodePtr) {
 func NewDoc(version string) (DocPtr) {
 	ptr := C.CString(version)
 	defer C.free_string(ptr)
-	return DocPtr{C.xmlNewDoc(C.to_xmlcharptr(ptr))}
+	doc := C.xmlNewDoc(C.to_xmlcharptr(ptr))
+	return DocPtr{
+		Ptr: doc, 
+		NodePtr: NodePtr{C.xmlNodePtr(unsafe.Pointer(doc))},
+	}
 }
 
 // xmlNewDocComment
@@ -84,10 +89,13 @@ func (doc DocPtr) NewDocFragment() (NodePtr) {
 }
 
 // xmlNewNode
-func NewNode(ns NsPtr, name string) (NodePtr) {
+func NewNode(ns *NsPtr, name string) (NodePtr) {
 	ptr := C.CString(name)
 	defer C.free_string(ptr)
-	return NodePtr{C.xmlNewNode(ns.Ptr, C.to_xmlcharptr(ptr))}
+	if ns != nil {
+		return NodePtr{C.xmlNewNode(ns.Ptr, C.to_xmlcharptr(ptr))}
+	}
+	return NodePtr{C.xmlNewNode(nil, C.to_xmlcharptr(ptr))}
 }
 
 // xmlNewNs
