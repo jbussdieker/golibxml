@@ -77,10 +77,10 @@ package xmltree
 // xmlHasProp
 // xmlIsBlankNode
 // xmlIsXHTML
-// xmlLastElementChild
+// * xmlLastElementChild
 // xmlNewCDataBlock
 // xmlNewCharRef
-// xmlNewChild
+// * xmlNewChild
 // * xmlNewComment
 // * xmlNewDoc
 // * xmlNewDocComment

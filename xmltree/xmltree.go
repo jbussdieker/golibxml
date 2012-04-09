@@ -29,6 +29,10 @@ type Node struct {
 	Ptr C.xmlNodePtr
 }
 
+type TextNode struct {
+	*Node
+}
+
 type Document struct {
 	*Node
 	Ptr C.xmlDocPtr
@@ -205,6 +209,23 @@ func (ns *Namespace) Free() {
 	ns.Ptr = nil
 }
 
+// xmlLastElementChild
+func (node *Node) LastChild() *Node {
+	return &Node{C.xmlLastElementChild(node.Ptr)}
+}
+
+// xmlNewChild
+func (node *Node) NewChild(ns *Namespace, name string, content string) *Node {
+	ptrn := C.CString(name)
+	defer C.free_string(ptrn)
+	ptrc := C.CString(content)
+	defer C.free_string(ptrc)
+	if ns != nil {
+		return &Node{C.xmlNewChild(node.Ptr, ns.Ptr, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc))}
+	}
+	return &Node{C.xmlNewChild(node.Ptr, nil, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc))}	
+}
+
 // xmlNewComment
 func NewComment(content string) (*Node) {
 	ptr := C.CString(content)
@@ -269,10 +290,10 @@ func (doc *Document) NewRawNode(ns *Namespace, name string, content string) (*No
 }
 
 // xmlNewDocText
-func (doc *Document) NewText(content string) (*Node) {
+func (doc *Document) NewText(content string) (*TextNode) {
 	ptr := C.CString(content)
 	defer C.free_string(ptr)
-	return &Node{C.xmlNewDocText(doc.Ptr, C.to_xmlcharptr(ptr))}	
+	return &TextNode{&Node{C.xmlNewDocText(doc.Ptr, C.to_xmlcharptr(ptr))}}
 }
 
 // xmlNewDtd
@@ -315,22 +336,22 @@ func (node *Node) NewProp(name string, value string) (*Attribute) {
 }
 
 // xmlNewText
-func NewText(content string) (*Node) {
+func NewText(content string) (*TextNode) {
 	ptr := C.CString(content)
 	defer C.free_string(ptr)
-	return &Node{C.xmlNewText(C.to_xmlcharptr(ptr))}
+	return &TextNode{&Node{C.xmlNewText(C.to_xmlcharptr(ptr))}}
 }
 
 // xmlNewTextChild
-func (node *Node) NewTextChild(ns *Namespace, name string, content string) (*Node) {
+func (node *Node) NewTextChild(ns *Namespace, name string, content string) (*TextNode) {
 	ptrn := C.CString(name)
 	defer C.free_string(ptrn)
 	ptrc := C.CString(content)
 	defer C.free_string(ptrc)
 	if ns == nil {
-		return &Node{C.xmlNewTextChild(node.Ptr, nil, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc))}
+		return &TextNode{&Node{C.xmlNewTextChild(node.Ptr, nil, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc))}}
 	}
-	return &Node{C.xmlNewTextChild(node.Ptr, ns.Ptr, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc))}
+	return &TextNode{&Node{C.xmlNewTextChild(node.Ptr, ns.Ptr, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc))}}
 }
 
 // xmlNextElementSibling
@@ -394,14 +415,14 @@ func (node *Node) SetProp(name string, value string) *Attribute {
 }
 
 // xmlTextConcat
-func (node *Node) TextConcat(content string) int {
+func (node *TextNode) Concat(content string) int {
 	ptr := C.CString(content)
 	defer C.free_string(ptr)
 	return int(C.xmlTextConcat(node.Ptr, C.to_xmlcharptr(ptr), C.int(len(content))))
 }
 
 // xmlTextMerge
-func (first *Node) TextMerge(second *Node) *Node {
+func (first *TextNode) Merge(second *Node) *Node {
 	return &Node{C.xmlTextMerge(first.Ptr, second.Ptr)}
 }
 
