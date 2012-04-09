@@ -181,6 +181,20 @@ func (node *NodePtr) FirstElementChild() (*NodePtr) {
 // xmlFreeDoc
 func (doc *DocPtr) Free() {
 	C.xmlFreeDoc(doc.Ptr)
+	doc.Ptr = nil
+	doc.NodePtr = nil
+}
+
+// xmlFreeNode
+func (node *NodePtr) Free() {
+	C.xmlFreeNode(node.Ptr)
+	node.Ptr = nil
+}
+
+// xmlFreeNs
+func (ns *NsPtr) Free() {
+	C.xmlFreeNs(ns.Ptr)
+	ns.Ptr = nil
 }
 
 // xmlNewComment

@@ -56,9 +56,9 @@ package xmltree
 // * xmlFirstElementChild
 // * xmlFreeDoc
 // xmlFreeDtd
-// xmlFreeNode
+// * xmlFreeNode
 // xmlFreeNodeList
-// xmlFreeNs
+// * xmlFreeNs
 // xmlFreeNsList
 // xmlFreeProp
 // xmlFreePropList
