@@ -44,9 +44,35 @@ func TestBufferEmpty(t *testing.T) {
 	}
 }
 
-func TestBufferGrow(t *testing.T) {
+func TestBufferResize(t *testing.T) {
+	buffer := testNewBuffer(t)
+	defer testBufferFree(t, &buffer)
+	if buffer.Resize(10) != 1 {
+		t.Fail()
+	}
 }
 
+func TestBufferLength(t *testing.T) {
+	buffer := testNewBuffer(t)
+	defer testBufferFree(t, &buffer)
+	if buffer.Length() != 0 {
+		t.Fail()
+	}
+	buffer.WriteChar("test")
+	if buffer.Length() != 4 {
+		t.Fail()
+	}
+}
+/*
+func TestBufferGrow(t *testing.T) {
+	buffer := testNewBuffer(t)
+	defer testBufferFree(t, &buffer)
+	buffer.Grow(128)
+	if buffer.Length() != 128 {
+		t.Fail()
+	}
+}
+*/
 func TestBufferCat(t *testing.T) {
 	buffer := testNewBuffer(t)
 	defer testBufferFree(t, &buffer)
