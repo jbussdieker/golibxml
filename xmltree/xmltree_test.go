@@ -110,7 +110,7 @@ func TestBufferContent(t *testing.T) {
 func TestNewDocAdv(t *testing.T) {
 	doc := NewDoc("1.0")
 	buffer := NewBuffer()
-	result := doc.NodeDump(buffer, doc.NodePtr, 0, 0)
+	result := doc.NodeDump(buffer, doc.Node, 0, 0)
 
 	println("Result Size:", result)
 	println("Result:", buffer.Content())
@@ -121,7 +121,7 @@ func TestNewNode(t *testing.T) {
 	node := NewNode(nil, "div")
 	doc.AddChild(node)
 	buffer := NewBuffer()
-	result := doc.NodeDump(buffer, doc.NodePtr, 0, 0)
+	result := doc.NodeDump(buffer, doc.Node, 0, 0)
 
 	println("Result Size:", result)
 	println("Result:", buffer.Content())
@@ -132,7 +132,7 @@ func TestNewComment(t *testing.T) {
 	comment := doc.NewComment("this is a comment")
 	doc.AddChild(comment)
 	buffer := NewBuffer()
-	result := doc.NodeDump(buffer, doc.NodePtr, 0, 0)
+	result := doc.NodeDump(buffer, doc.Node, 0, 0)
 
 	println("Result Size:", result)
 	println("Result:", buffer.Content())
