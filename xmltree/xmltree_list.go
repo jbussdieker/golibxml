@@ -15,7 +15,7 @@ package xmltree
 // xmlBufferDump
 // * xmlBufferEmpty
 // * xmlBufferFree
-// xmlBufferGrow
+// * xmlBufferGrow
 // xmlBufferLength
 // xmlBufferResize
 // xmlBufferSetAllocationScheme

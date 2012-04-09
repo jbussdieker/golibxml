@@ -44,6 +44,9 @@ func TestBufferEmpty(t *testing.T) {
 	}
 }
 
+func TestBufferGrow(t *testing.T) {
+}
+
 func TestBufferCat(t *testing.T) {
 	buffer := testNewBuffer(t)
 	defer testBufferFree(t, &buffer)

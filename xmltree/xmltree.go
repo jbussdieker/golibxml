@@ -81,6 +81,11 @@ func (buffer *Buffer) Free() {
 	buffer.Ptr = nil
 }
 
+// xmlBufferGrow
+func (buffer *Buffer) Grow(length int) int {
+	return int(C.xmlBufferGrow(buffer.Ptr, C.uint(length)))
+}
+
 // xmlBufferWriteChar/xmlBufferWriteCHAR
 func (buffer *Buffer) WriteChar(str string) {
 	ptr := C.CString(str)
