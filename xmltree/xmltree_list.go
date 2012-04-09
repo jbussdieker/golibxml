@@ -105,8 +105,8 @@ package xmltree
 // * xmlNewText
 // * xmlNewTextChild
 // xmlNewTextLen
-// xmlNextElementSibling
-// xmlNodeAddContent
+// * xmlNextElementSibling
+// * xmlNodeAddContent
 // xmlNodeAddContentLen
 // xmlNodeBufGetContent
 // * xmlNodeDump
@@ -119,7 +119,7 @@ package xmltree
 // xmlNodeListGetRawString
 // xmlNodeListGetString
 // xmlNodeSetBase
-// xmlNodeSetContent
+// * xmlNodeSetContent
 // xmlNodeSetContentLen
 // xmlNodeSetLang
 // xmlNodeSetName

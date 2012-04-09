@@ -333,6 +333,18 @@ func (node *Node) NewTextChild(ns *Namespace, name string, content string) (*Nod
 	return &Node{C.xmlNewTextChild(node.Ptr, ns.Ptr, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc))}
 }
 
+// xmlNextElementSibling
+func (node *Node) NextSibling() *Node {
+	return &Node{C.xmlNextElementSibling(node.Ptr)}
+}
+
+// xmlNodeAddContent
+func (node *Node) AddContent(content string) {
+	ptr := C.CString(content)
+	defer C.free_string(ptr)
+	C.xmlNodeAddContent(node.Ptr, C.to_xmlcharptr(ptr))
+}
+
 // xmlNodeDump
 func (doc *Document) NodeDump(buf *Buffer, cur *Node, level int, format int) int {
 	return int(C.xmlNodeDump(buf.Ptr, doc.Ptr, cur.Ptr, C.int(level), C.int(format)))
@@ -341,5 +353,12 @@ func (doc *Document) NodeDump(buf *Buffer, cur *Node, level int, format int) int
 // xmlNodeGetContent
 func (node *Node) GetContent() string {
 	return C.GoString(C.to_charptr(C.xmlNodeGetContent(node.Ptr)))
+}
+
+// xmlNodeSetContent
+func (node *Node) SetContent(content string) {
+	ptr := C.CString(content)
+	defer C.free_string(ptr)
+	C.xmlNodeSetContent(node.Ptr, C.to_xmlcharptr(ptr))
 }
 
