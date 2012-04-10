@@ -1,4 +1,4 @@
-package xmlparser
+package golibxml
 // xmlByteConsumed
 // xmlCleanupParser
 // xmlClearNodeInfoSeq

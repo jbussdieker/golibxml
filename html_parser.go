@@ -1,4 +1,4 @@
-package htmlparser
+package golibxml
 /*
 #cgo pkg-config: libxml-2.0
 #include <libxml/HTMLparser.h>
@@ -11,9 +11,6 @@ static inline char *to_charptr(const xmlChar *s) { return (char *)s; }
 import "C"
 import "unsafe"
 
-import "github.com/jbussdieker/golibxml/xmltree"
-import "github.com/jbussdieker/golibxml/htmltree"
-
 ////////////////////////////////////////////////////////////////////////////////
 // TYPES/STRUCTS
 ////////////////////////////////////////////////////////////////////////////////
@@ -22,12 +19,10 @@ type ElemDesc struct {
 	Ptr C.htmlElemDescPtr
 }
 
-type Document struct {
-	*htmltree.Document
-}
-
-type Node struct {
-	*htmltree.Node
+type HTMLDocument struct {
+	*Document
+	*HTMLNode
+	Ptr C.htmlDocPtr
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -35,32 +30,30 @@ type Node struct {
 ////////////////////////////////////////////////////////////////////////////////
 
 // htmlParseDoc
-func ParseDoc(cur string, encoding string) *Document {
+func ParseHTMLDoc(cur string, encoding string) *HTMLDocument {
 	ptrc := C.CString(cur)
 	defer C.free_string(ptrc)
 	ptre := C.CString(encoding)
 	defer C.free_string(ptre)
 	doc := C.htmlParseDoc(C.to_xmlcharptr(ptrc), ptre)
-	dp := xmltree.DocumentPtr(unsafe.Pointer(doc))
-	np := xmltree.NodePtr(unsafe.Pointer(doc))
-	return &Document{
-		&htmltree.Document{
-			&xmltree.Document{
-				Ptr: dp,
-				Node: &xmltree.Node{np},
-			},
-			htmltree.DocumentPtr(unsafe.Pointer(doc)),
+	return &HTMLDocument{
+		Ptr: doc,
+		Document: &Document{
+			Ptr:  C.xmlDocPtr(doc),
+			Node: &Node{C.xmlNodePtr(unsafe.Pointer(doc))},
+		},
+		HTMLNode: &HTMLNode{
+			Ptr:  C.htmlNodePtr(unsafe.Pointer(doc)),
+			Node: &Node{C.xmlNodePtr(unsafe.Pointer(doc))},
 		},
 	}
 }
 
 // htmlAutoCloseTag
-func (doc *Document) AutoCloseTag(name string, node *Node) int {
+func (doc *HTMLDocument) AutoCloseTag(name string, node *Node) int {
 	ptr := C.CString(name)
 	defer C.free_string(ptr)
-	d := doc.Document.Ptr
-	n := node.Node.Ptr
-	return int(C.htmlAutoCloseTag(C.xmlDocPtr(unsafe.Pointer(d)), C.to_xmlcharptr(ptr), C.xmlNodePtr(unsafe.Pointer(n))))
+	return int(C.htmlAutoCloseTag(doc.Document.Ptr, C.to_xmlcharptr(ptr), node.Ptr))
 }
 
 // htmlTagLookup

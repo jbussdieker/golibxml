@@ -1,8 +1,6 @@
-package xmlparser
+package golibxml
 
 import "testing"
-
-import . "github.com/jbussdieker/golibxml/xmltree"
 
 func TestParseDoc(t *testing.T) {
 	doc := ParseDoc("<html></html>")

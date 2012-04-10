@@ -1,4 +1,4 @@
-package htmltree
+package golibxml
 // htmlDocContentDumpFormatOutput
 // htmlDocContentDumpOutput
 // htmlDocDump

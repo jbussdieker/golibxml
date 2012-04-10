@@ -1,4 +1,4 @@
-package htmltree
+package golibxml
 /*
 #cgo pkg-config: libxml-2.0
 #include <libxml/HTMLparser.h>
@@ -10,24 +10,14 @@ static inline char *to_charptr(const xmlChar *s) { return (char *)s; }
 
 */
 import "C"
-import "unsafe"
-
-import "github.com/jbussdieker/golibxml/xmltree"
 
 ////////////////////////////////////////////////////////////////////////////////
 // TYPES/STRUCTS
 ////////////////////////////////////////////////////////////////////////////////
 
-type DocumentPtr C.htmlDocPtr
-type Document struct {
-	*xmltree.Document
-	Ptr DocumentPtr
-}
-
-type NodePtr C.htmlNodePtr
-type Node struct {
-	*xmltree.Node
-	Ptr NodePtr
+type HTMLNode struct {
+	*Node
+	Ptr C.htmlNodePtr
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -35,9 +25,7 @@ type Node struct {
 ////////////////////////////////////////////////////////////////////////////////
 
 // htmlNodeDump
-func (doc *Document) NodeDump(buf *xmltree.Buffer, cur *xmltree.Node) int {
-	node := C.xmlNodePtr(unsafe.Pointer(cur.Ptr))
-	bp := C.xmlBufferPtr(unsafe.Pointer(buf.Ptr))
-	return int(C.htmlNodeDump(bp, doc.Ptr, node))
+func (doc *HTMLDocument) NodeDump(buf *Buffer, cur *HTMLNode) int {
+	return int(C.htmlNodeDump(buf.Ptr, doc.Ptr, cur.Ptr))
 }
 
