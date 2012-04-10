@@ -467,13 +467,13 @@ func (node *Node) PreviousSibling() *Node {
 }
 
 // xmlSetCompressMode
-func SetCompressMode(mode int) {
-	C.xmlSetCompressMode(C.int(mode))
+func SetCompressionLevel(level int) {
+	C.xmlSetCompressMode(C.int(level))
 }
 
 // xmlSetDocCompressMode
-func (doc *Document) SetCompressMode(mode int) {
-	C.xmlSetDocCompressMode(doc.Ptr, C.int(mode))
+func (doc *Document) SetCompressionLevel(level int) {
+	C.xmlSetDocCompressMode(doc.Ptr, C.int(level))
 }
 
 // xmlSetProp
