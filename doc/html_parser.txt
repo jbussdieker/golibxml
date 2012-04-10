@@ -3,23 +3,23 @@
 // * htmlAutoCloseTag
 // htmlCreateMemoryParserCtxt
 // htmlCreatePushParserCtxt
-// htmlCtxtReadDoc
+// * htmlCtxtReadDoc
 // htmlCtxtReadFd
 // htmlCtxtReadFile
 // htmlCtxtReadIO
 // htmlCtxtReadMemory
-// htmlCtxtReset
-// htmlCtxtUseOptions
+// * htmlCtxtReset
+// * htmlCtxtUseOptions
 // htmlElementAllowedHere
 // htmlElementStatusHere
 // htmlEncodeEntities
 // htmlEntityLookup
 // htmlEntityValueLookup
-// htmlFreeParserCtxt
+// * htmlFreeParserCtxt
 // htmlHandleOmittedElem
 // htmlIsAutoClosed
 // htmlIsScriptAttribute
-// htmlNewParserCtxt
+// * htmlNewParserCtxt
 // htmlNodeStatus
 // htmlParseCharRef
 // htmlParseChunk
