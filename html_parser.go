@@ -38,17 +38,15 @@ type HTMLDocument struct {
 	Ptr C.htmlDocPtr
 }
 
+type HTMLParser struct {
+	Ptr C.htmlParserCtxtPtr
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // INTERFACE
 ////////////////////////////////////////////////////////////////////////////////
 
-// htmlParseDoc
-func ParseHTMLDoc(cur string, encoding string) *HTMLDocument {
-	ptrc := C.CString(cur)
-	defer C.free_string(ptrc)
-	ptre := C.CString(encoding)
-	defer C.free_string(ptre)
-	doc := C.htmlParseDoc(C.to_xmlcharptr(ptrc), ptre)
+func makeHTMLDoc(doc C.htmlDocPtr) *HTMLDocument {
 	return &HTMLDocument{
 		Ptr: doc,
 		Document: &Document{
@@ -60,6 +58,49 @@ func ParseHTMLDoc(cur string, encoding string) *HTMLDocument {
 			Node: &Node{C.xmlNodePtr(unsafe.Pointer(doc))},
 		},
 	}
+}
+
+// htmlCtxtReadDoc
+func (p *HTMLParser) ReadDoc(input string, url string, encoding string, options ParserOption) *HTMLDocument {
+	ptri := C.CString(input)
+	defer C.free_string(ptri)
+	ptru := C.CString(url)
+	defer C.free_string(ptru)
+	ptre := C.CString(encoding)
+	defer C.free_string(ptre)
+	doc := C.htmlCtxtReadDoc(p.Ptr, C.to_xmlcharptr(ptri), ptru, ptre, C.int(options))
+	return makeHTMLDoc(doc)
+}
+
+// htmlCtxtReset
+func (p *HTMLParser) Reset() {
+	C.htmlCtxtReset(p.Ptr)
+}
+
+// htmlCtxtUseOptions
+func (p *HTMLParser) UseOptions(options HTMLParserOption) int {
+	return int(C.htmlCtxtUseOptions(p.Ptr, C.int(options)))
+}
+
+// htmlFreeParserCtxt
+func (p *HTMLParser) Free() {
+	C.htmlFreeParserCtxt(p.Ptr)
+}
+
+// htmlNewParserCtxt
+func NewHTMLParserCtxt() *HTMLParser {
+	pctx := C.htmlNewParserCtxt()
+	return &HTMLParser{pctx}
+}
+
+// htmlParseDoc
+func ParseHTMLDoc(cur string, encoding string) *HTMLDocument {
+	ptrc := C.CString(cur)
+	defer C.free_string(ptrc)
+	ptre := C.CString(encoding)
+	defer C.free_string(ptre)
+	doc := C.htmlParseDoc(C.to_xmlcharptr(ptrc), ptre)
+	return makeHTMLDoc(doc)
 }
 
 // htmlAutoCloseTag
