@@ -8,7 +8,7 @@ golibxml is a simple wrapper for libxml. The goal is to avoid any extra magic so
 
 ## libxml/parser
 
-1.38% (1/72)
+2.77% (2/72)
 
 ## libxml/htmltree
 

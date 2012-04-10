@@ -48,7 +48,7 @@
 // xmlParserInputGrow
 // xmlParserInputRead
 // xmlPedanticParserDefault
-// xmlReadDoc
+// * xmlReadDoc
 // xmlReadFd
 // xmlReadFile
 // xmlReadIO
