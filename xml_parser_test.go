@@ -3,6 +3,15 @@ package golibxml
 import "testing"
 import "io/ioutil"
 
+const TEST_XML_FILE = "test/test.xml"
+const TEST_XML_EXPECTED = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<catalog/>\n"
+
+func compareResult(t *testing.T, got string, expected string) {
+	if got != expected {
+		t.Fatal("\nGot:\n" + got + "\nExpected:\n" + expected)
+	}
+}
+
 func TestGetFeaturesList(t *testing.T) {
 	features := GetFeaturesList()
 	if len(features) != 42 {
@@ -23,35 +32,29 @@ func TestParseDoc(t *testing.T) {
 		t.Fail()
 	}
 	defer doc.Free()
-	if doc.String() != "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<catalog/>\n" {
-		t.Fail()
-	}
+	compareResult(t, doc.String(), TEST_XML_EXPECTED)
 }
 
 func TestParseEntity(t *testing.T) {
-	doc := ParseEntity("test/test.xml")
+	doc := ParseEntity(TEST_XML_FILE)
 	if doc == nil {
 		t.Fail()
 	}
 	defer doc.Free()
-	if doc.String() != "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<catalog/>\n" {
-		t.Fail()
-	}
+	compareResult(t, doc.String(), TEST_XML_EXPECTED)
 }
 
 func TestParseFile(t *testing.T) {
-	doc := ParseFile("test/test.xml")
+	doc := ParseFile(TEST_XML_FILE)
 	if doc == nil {
 		t.Fail()
 	}
 	defer doc.Free()
-	if doc.String() != "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<catalog/>\n" {
-		t.Fail()
-	}
+	compareResult(t, doc.String(), TEST_XML_EXPECTED)
 }
 
 func TestParseMemory(t *testing.T) {
-	buf, err := ioutil.ReadFile("test/test.xml")
+	buf, err := ioutil.ReadFile(TEST_XML_FILE)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -60,9 +63,7 @@ func TestParseMemory(t *testing.T) {
 		t.Fail()
 	}
 	defer doc.Free()
-	if doc.String() != "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<catalog/>\n" {
-		t.Fail()
-	}
+	compareResult(t, doc.String(), TEST_XML_EXPECTED)
 }
 
 func TestReadDoc(t *testing.T) {
@@ -71,24 +72,20 @@ func TestReadDoc(t *testing.T) {
 		t.Fail()
 	}
 	defer doc.Free()
-	if doc.String() != "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<catalog/>\n" {
-		t.Fail()
-	}
+	compareResult(t, doc.String(), TEST_XML_EXPECTED)
 }
 
 func TestReadFile(t *testing.T) {
-	doc := ReadFile("test/test.xml", "UTF-8", 0)
+	doc := ReadFile(TEST_XML_FILE, "UTF-8", 0)
 	if doc == nil {
 		t.Fail()
 	}
 	defer doc.Free()
-	if doc.String() != "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<catalog/>\n" {
-		t.Fail()
-	}
+	compareResult(t, doc.String(), TEST_XML_EXPECTED)
 }
 
 func TestReadMemory(t *testing.T) {
-	buf, err := ioutil.ReadFile("test/test.xml")
+	buf, err := ioutil.ReadFile(TEST_XML_FILE)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -97,41 +94,33 @@ func TestReadMemory(t *testing.T) {
 		t.Fail()
 	}
 	defer doc.Free()
-	if doc.String() != "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<catalog/>\n" {
-		t.Fail()
-	}
+	compareResult(t, doc.String(), TEST_XML_EXPECTED)
 }
 
 func TestRecoverDoc(t *testing.T) {
-	buf, err := ioutil.ReadFile("test/test.xml")
+	buf, err := ioutil.ReadFile(TEST_XML_FILE)
 	if err != nil {
 		t.Fatal(err)
 	}
 	doc := RecoverDoc(string(buf))
-	if doc.String() != "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<catalog/>\n" {
-		t.Fail()
-	}
+	compareResult(t, doc.String(), TEST_XML_EXPECTED)
 }
 
 func TestRecoverFile(t *testing.T) {
-	doc := RecoverFile("test/test.xml")
+	doc := RecoverFile(TEST_XML_FILE)
 	if doc == nil {
 		t.Fail()
 	}
-	if doc.String() != "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<catalog/>\n" {
-		t.Fail()
-	}
+	compareResult(t, doc.String(), TEST_XML_EXPECTED)
 }
 
 func TestRecoverMemory(t *testing.T) {
-	buf, err := ioutil.ReadFile("test/test.xml")
+	buf, err := ioutil.ReadFile(TEST_XML_FILE)
 	if err != nil {
 		t.Fatal(err)
 	}
 	doc := RecoverMemory(buf)
-	if doc.String() != "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<catalog/>\n" {
-		t.Fail()
-	}
+	compareResult(t, doc.String(), TEST_XML_EXPECTED)
 }
 
 func TestSubstituteEntitiesDefault(t *testing.T) {

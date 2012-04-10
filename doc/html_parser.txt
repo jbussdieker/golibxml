@@ -27,12 +27,12 @@
 // htmlParseDocument
 // htmlParseElement
 // htmlParseEntityRef
-// htmlParseFile
-// htmlReadDoc
+// * htmlParseFile
+// * htmlReadDoc
 // htmlReadFd
-// htmlReadFile
+// * htmlReadFile
 // htmlReadIO
-// htmlReadMemory
+// * htmlReadMemory
 // htmlSAXParseDoc
 // htmlSAXParseFile
 // * htmlTagLookup

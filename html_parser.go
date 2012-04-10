@@ -62,6 +62,13 @@ func makeHTMLDoc(doc C.htmlDocPtr) *HTMLDocument {
 	}
 }
 
+// htmlAutoCloseTag
+func (doc *HTMLDocument) AutoCloseTag(name string, node *Node) int {
+	ptr := C.CString(name)
+	defer C.free_string(ptr)
+	return int(C.htmlAutoCloseTag(doc.Document.Ptr, C.to_xmlcharptr(ptr), node.Ptr))
+}
+
 // htmlCtxtReadDoc
 func (p *HTMLParser) ReadDoc(input string, url string, encoding string, options ParserOption) *HTMLDocument {
 	ptri := C.CString(input)
@@ -105,11 +112,46 @@ func ParseHTMLDoc(cur string, encoding string) *HTMLDocument {
 	return makeHTMLDoc(doc)
 }
 
-// htmlAutoCloseTag
-func (doc *HTMLDocument) AutoCloseTag(name string, node *Node) int {
-	ptr := C.CString(name)
-	defer C.free_string(ptr)
-	return int(C.htmlAutoCloseTag(doc.Document.Ptr, C.to_xmlcharptr(ptr), node.Ptr))
+// htmlParseFile
+func ParseHTMLFile(filename string, encoding string) *HTMLDocument {
+	ptrf := C.CString(filename)
+	defer C.free_string(ptrf)
+	ptre := C.CString(encoding)
+	defer C.free_string(ptre)
+	doc := C.htmlParseFile(ptrf, ptre)
+	return makeHTMLDoc(doc)
+}
+
+// htmlReadDoc
+func ReadHTMLDoc(cur string, url string, encoding string, options HTMLParserOption) *HTMLDocument {
+	ptrc := C.CString(cur)
+	defer C.free_string(ptrc)
+	ptru := C.CString(url)
+	defer C.free_string(ptru)
+	ptre := C.CString(encoding)
+	defer C.free_string(ptre)
+	doc := C.htmlReadDoc(C.to_xmlcharptr(ptrc), ptru, ptre, C.int(options))
+	return makeHTMLDoc(doc)
+}
+
+// htmlReadFile
+func ReadHTMLFile(filename string, encoding string, options HTMLParserOption) *HTMLDocument {
+	ptrf := C.CString(filename)
+	defer C.free_string(ptrf)
+	ptre := C.CString(encoding)
+	defer C.free_string(ptre)
+	doc := C.htmlReadFile(ptrf, ptre, C.int(options))
+	return makeHTMLDoc(doc)
+}
+
+// htmlReadMemory
+func ReadHTMLMemory(buffer []byte, url string, encoding string, options HTMLParserOption) *HTMLDocument {
+	ptru := C.CString(url)
+	defer C.free_string(ptru)
+	ptre := C.CString(encoding)
+	defer C.free_string(ptre)
+	doc := C.htmlReadMemory((*C.char)(unsafe.Pointer(&buffer[0])), C.int(len(buffer)), ptru, ptre, C.int(options))
+	return makeHTMLDoc(doc)
 }
 
 // htmlTagLookup
