@@ -40,9 +40,49 @@ const (
 	XML_PARSE_OLDSAX     = C.XML_PARSE_OLDSAX     //: parse using SAX2 interface from before 2.7.0
 )
 
+type Parser struct {
+	Ptr C.xmlParserCtxtPtr
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // INTERFACE
 ////////////////////////////////////////////////////////////////////////////////
+
+// xmlCtxtReadDoc
+func (p *Parser) ReadDoc(input string, url string, encoding string, options ParserOption) *Document {
+	ptri := C.CString(input)
+	defer C.free_string(ptri)
+	ptru := C.CString(url)
+	defer C.free_string(ptru)
+	ptre := C.CString(encoding)
+	defer C.free_string(ptre)
+	doc := C.xmlCtxtReadDoc(p.Ptr, C.to_xmlcharptr(ptri), ptru, ptre, C.int(options))
+	return &Document{
+		Ptr: doc,
+		Node: &Node{C.xmlNodePtr(unsafe.Pointer(doc))},
+	}
+}
+
+// xmlCtxtReset
+func (p *Parser) Reset() {
+	C.xmlCtxtReset(p.Ptr)
+}
+
+// xmlCtxtUseOptions
+func (p *Parser) UseOptions(options ParserOption) int {
+	return int(C.xmlCtxtUseOptions(p.Ptr, C.int(options)))
+}
+
+// xmlFreeParserCtxt
+func (p *Parser) Free() {
+	C.xmlFreeParserCtxt(p.Ptr)
+}
+
+// xmlNewParserCtxt
+func NewParserCtxt() *Parser {
+	pctx := C.xmlNewParserCtxt()
+	return &Parser{pctx}
+}
 
 // xmlParseDoc
 func ParseDoc(cur string) *Document {
@@ -68,5 +108,10 @@ func ReadDoc(input string, url string, encoding string, options ParserOption) *D
 		Ptr: doc,
 		Node: &Node{C.xmlNodePtr(unsafe.Pointer(doc))},
 	}
+}
+
+// xmlStopParser
+func (p *Parser) Stop() {
+	C.xmlStopParser(p.Ptr)
 }
 

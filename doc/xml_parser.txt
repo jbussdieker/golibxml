@@ -5,16 +5,16 @@
 // xmlCreateDocParserCtxt
 // xmlCreateIOParserCtxt
 // xmlCreatePushParserCtxt
-// xmlCtxtReadDoc
+// * xmlCtxtReadDoc
 // xmlCtxtReadFd
 // xmlCtxtReadFile
 // xmlCtxtReadIO
 // xmlCtxtReadMemory
-// xmlCtxtReset
+// * xmlCtxtReset
 // xmlCtxtResetPush
-// xmlCtxtUseOptions
+// * xmlCtxtUseOptions
 // xmlExternalEntityLoader
-// xmlFreeParserCtxt
+// * xmlFreeParserCtxt
 // xmlGetExternalEntityLoader
 // xmlGetFeature
 // xmlGetFeaturesList
@@ -27,7 +27,7 @@
 // xmlLineNumbersDefault
 // xmlLoadExternalEntity
 // xmlNewIOInputStream
-// xmlNewParserCtxt
+// * xmlNewParserCtxt
 // xmlParseBalancedChunkMemory
 // xmlParseBalancedChunkMemoryRecover
 // xmlParseChunk
@@ -68,5 +68,5 @@
 // xmlSetExternalEntityLoader
 // xmlSetFeature
 // xmlSetupParserForBuffer
-// xmlStopParser
+// * xmlStopParser
 // xmlSubstituteEntitiesDefault
