@@ -6,7 +6,16 @@ package golibxml
 static inline void free_string(char* s) { free(s); }
 static inline xmlChar *to_xmlcharptr(const char *s) { return (xmlChar *)s; }
 static inline char *to_charptr(const xmlChar *s) { return (char *)s; }
-
+static inline int *new_int_ptr(int value) { 
+	int *ptr = calloc(sizeof(int), 1);
+	*ptr = value;
+	return ptr;
+}
+static inline char **new_char_array(int size) { return calloc(sizeof(char *), size); } 
+static inline void set_char_array_string(char **ptr, char *str, int n) { ptr[n] = str; } 
+static inline char *get_char_array_string(char **ptr, int n) {
+	return ptr[n];
+}
 */
 import "C"
 import "unsafe"
@@ -76,6 +85,28 @@ func (p *Parser) UseOptions(options ParserOption) int {
 // xmlFreeParserCtxt
 func (p *Parser) Free() {
 	C.xmlFreeParserCtxt(p.Ptr)
+}
+
+// xmlGetFeaturesList
+func GetFeaturesList() []string {
+	// Get list in C land
+	clength := C.new_int_ptr(255)
+	defer C.free(unsafe.Pointer(clength))
+	clist := C.new_char_array(255)
+	defer C.free(unsafe.Pointer(clist))
+	result := C.xmlGetFeaturesList(clength, clist)
+	if result < 0 {
+		panic("ERROR TO BE HANDLED")
+	}
+
+	// Convert to Go land
+	length := int(*clength)
+	list := make([]string, length)
+	for i := 0; i < length; i++ {
+		list[i] = C.GoString(C.get_char_array_string(clist, C.int(i)))
+	}
+	
+	return list
 }
 
 // xmlNewParserCtxt

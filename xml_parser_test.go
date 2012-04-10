@@ -31,3 +31,10 @@ func TestReadDoc(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestGetFeaturesList(t *testing.T) {
+	features := GetFeaturesList()
+	if len(features) != 42 {
+		t.Fail()
+	}
+}

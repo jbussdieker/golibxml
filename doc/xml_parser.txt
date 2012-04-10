@@ -17,7 +17,7 @@
 // * xmlFreeParserCtxt
 // xmlGetExternalEntityLoader
 // xmlGetFeature
-// xmlGetFeaturesList
+// * xmlGetFeaturesList
 // xmlHasFeature
 // xmlIOParseDTD
 // xmlInitNodeInfoSeq
