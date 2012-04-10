@@ -32,15 +32,15 @@
 // xmlParseBalancedChunkMemoryRecover
 // xmlParseChunk
 // xmlParseCtxtExternalEntity
-// xmlParseDTD
+// * xmlParseDTD
 // * xmlParseDoc
 // * xmlParseDocument
-// xmlParseEntity
+// * xmlParseEntity
 // xmlParseExtParsedEnt
 // xmlParseExternalEntity
-// xmlParseFile
+// * xmlParseFile
 // xmlParseInNodeContext
-// xmlParseMemory
+// * xmlParseMemory
 // xmlParserAddNodeInfo
 // xmlParserFindNodeInfo
 // xmlParserFindNodeInfoIndex
@@ -50,12 +50,12 @@
 // xmlPedanticParserDefault
 // * xmlReadDoc
 // xmlReadFd
-// xmlReadFile
+// * xmlReadFile
 // xmlReadIO
-// xmlReadMemory
-// xmlRecoverDoc
-// xmlRecoverFile
-// xmlRecoverMemory
+// * xmlReadMemory
+// * xmlRecoverDoc
+// * xmlRecoverFile
+// * xmlRecoverMemory
 // xmlSAXParseDTD
 // xmlSAXParseDoc
 // xmlSAXParseEntity
@@ -69,4 +69,4 @@
 // xmlSetFeature
 // xmlSetupParserForBuffer
 // * xmlStopParser
-// xmlSubstituteEntitiesDefault
+// * xmlSubstituteEntitiesDefault
