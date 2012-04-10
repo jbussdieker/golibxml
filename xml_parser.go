@@ -57,6 +57,13 @@ type Parser struct {
 // INTERFACE
 ////////////////////////////////////////////////////////////////////////////////
 
+func makeDoc(doc C.xmlDocPtr) *Document {
+	return &Document{
+		Ptr: doc,
+		Node: &Node{C.xmlNodePtr(unsafe.Pointer(doc))},
+	}
+}
+
 // xmlCtxtReadDoc
 func (p *Parser) ReadDoc(input string, url string, encoding string, options ParserOption) *Document {
 	ptri := C.CString(input)
@@ -66,10 +73,7 @@ func (p *Parser) ReadDoc(input string, url string, encoding string, options Pars
 	ptre := C.CString(encoding)
 	defer C.free_string(ptre)
 	doc := C.xmlCtxtReadDoc(p.Ptr, C.to_xmlcharptr(ptri), ptru, ptre, C.int(options))
-	return &Document{
-		Ptr: doc,
-		Node: &Node{C.xmlNodePtr(unsafe.Pointer(doc))},
-	}
+	return makeDoc(doc)
 }
 
 // xmlCtxtReset
@@ -130,10 +134,7 @@ func ParseDoc(cur string) *Document {
 	ptr := C.CString(cur)
 	defer C.free_string(ptr)
 	doc := C.xmlParseDoc(C.to_xmlcharptr(ptr))
-	return &Document{
-		Ptr: doc,
-		Node: &Node{C.xmlNodePtr(unsafe.Pointer(doc))},
-	}
+	return makeDoc(doc)
 }
 
 // xmlParseDocument
@@ -146,10 +147,7 @@ func ParseEntity(filename string) *Document {
 	ptr := C.CString(filename)
 	defer C.free_string(ptr)
 	doc := C.xmlParseEntity(ptr)
-	return &Document{
-		Ptr: doc,
-		Node: &Node{C.xmlNodePtr(unsafe.Pointer(doc))},
-	}
+	return makeDoc(doc)
 }
 
 // xmlParseFile
@@ -157,19 +155,13 @@ func ParseFile(filename string) *Document {
 	ptr := C.CString(filename)
 	defer C.free_string(ptr)
 	doc := C.xmlParseFile(ptr)
-	return &Document{
-		Ptr: doc,
-		Node: &Node{C.xmlNodePtr(unsafe.Pointer(doc))},
-	}
+	return makeDoc(doc)
 }
 
 // xmlParseMemory
 func ParseMemory(buffer []byte) *Document {
 	doc := C.xmlParseMemory((*C.char)(unsafe.Pointer(&buffer[0])), C.int(len(buffer)))
-	return &Document{
-		Ptr: doc,
-		Node: &Node{C.xmlNodePtr(unsafe.Pointer(doc))},
-	}
+	return makeDoc(doc)
 }
 
 // xmlReadDoc
@@ -181,10 +173,7 @@ func ReadDoc(input string, url string, encoding string, options ParserOption) *D
 	ptre := C.CString(encoding)
 	defer C.free_string(ptre)
 	doc := C.xmlReadDoc(C.to_xmlcharptr(ptri), ptru, ptre, C.int(options))
-	return &Document{
-		Ptr: doc,
-		Node: &Node{C.xmlNodePtr(unsafe.Pointer(doc))},
-	}
+	return makeDoc(doc)
 }
 
 // xmlReadFile
@@ -194,10 +183,7 @@ func ReadFile(filename string, encoding string, options ParserOption) *Document 
 	ptre := C.CString(encoding)
 	defer C.free_string(ptre)
 	doc := C.xmlReadFile(ptrf, ptre, C.int(options))
-	return &Document{
-		Ptr: doc,
-		Node: &Node{C.xmlNodePtr(unsafe.Pointer(doc))},
-	}
+	return makeDoc(doc)
 }
 
 // xmlReadMemory
@@ -207,10 +193,7 @@ func ReadMemory(buffer []byte, url string, encoding string, options ParserOption
 	ptre := C.CString(encoding)
 	defer C.free_string(ptre)
 	doc := C.xmlReadMemory((*C.char)(unsafe.Pointer(&buffer[0])), C.int(len(buffer)), ptru, ptre, C.int(options))
-	return &Document{
-		Ptr: doc,
-		Node: &Node{C.xmlNodePtr(unsafe.Pointer(doc))},
-	}
+	return makeDoc(doc)
 }
 
 // xmlRecoverDoc
@@ -218,10 +201,7 @@ func RecoverDoc(cur string) *Document {
 	ptr := C.CString(cur)
 	defer C.free_string(ptr)
 	doc := C.xmlRecoverDoc(C.to_xmlcharptr(ptr))
-	return &Document{
-		Ptr: doc,
-		Node: &Node{C.xmlNodePtr(unsafe.Pointer(doc))},
-	}
+	return makeDoc(doc)
 }
 
 // xmlRecoverFile
@@ -229,19 +209,13 @@ func RecoverFile(filename string) *Document {
 	ptr := C.CString(filename)
 	defer C.free_string(ptr)
 	doc := C.xmlRecoverFile(ptr)
-	return &Document{
-		Ptr: doc,
-		Node: &Node{C.xmlNodePtr(unsafe.Pointer(doc))},
-	}
+	return makeDoc(doc)
 }
 
 // xmlRecoverMemory
 func RecoverMemory(buffer []byte) *Document {
 	doc := C.xmlRecoverMemory((*C.char)(unsafe.Pointer(&buffer[0])), C.int(len(buffer)))
-	return &Document{
-		Ptr: doc,
-		Node: &Node{C.xmlNodePtr(unsafe.Pointer(doc))},
-	}
+	return makeDoc(doc)
 }
 
 // xmlStopParser
