@@ -126,6 +126,11 @@ func ParseDoc(cur string) *Document {
 	}
 }
 
+// xmlParseDocument
+func (p *Parser) Parse() int {
+	return int(C.xmlParseDocument(p.Ptr))
+}
+
 // xmlReadDoc
 func ReadDoc(input string, url string, encoding string, options ParserOption) *Document {
 	ptri := C.CString(input)

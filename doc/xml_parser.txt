@@ -34,7 +34,7 @@
 // xmlParseCtxtExternalEntity
 // xmlParseDTD
 // * xmlParseDoc
-// xmlParseDocument
+// * xmlParseDocument
 // xmlParseEntity
 // xmlParseExtParsedEnt
 // xmlParseExternalEntity
