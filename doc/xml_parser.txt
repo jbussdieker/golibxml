@@ -1,4 +1,3 @@
-package golibxml
 // xmlByteConsumed
 // xmlCleanupParser
 // xmlClearNodeInfoSeq

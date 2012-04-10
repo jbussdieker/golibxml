@@ -11,5 +11,5 @@ func TestParseDoc(t *testing.T) {
 	buffer := NewBuffer()
 	defer buffer.Free()
 	doc.NodeDump(buffer, doc.Node, 0, 0)
-	println(buffer.Content())
+	//println(buffer.Content())
 }

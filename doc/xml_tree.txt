@@ -1,5 +1,3 @@
-package golibxml
-
 // * xmlAddChild
 // * xmlAddChildList
 // * xmlAddNextSibling

@@ -113,8 +113,10 @@ func TestNewDocAdv(t *testing.T) {
 	buffer := NewBuffer()
 	result := doc.NodeDump(buffer, doc.Node, 0, 0)
 
-	println("Result Size:", result)
-	println("Result:", buffer.Content())
+	if result != 39 {
+		println("Result Size:", result)
+		println("Result:", buffer.Content())
+	}
 }
 
 func TestNewNode(t *testing.T) {
@@ -125,8 +127,11 @@ func TestNewNode(t *testing.T) {
 	buffer := NewBuffer()
 	result := doc.NodeDump(buffer, doc.Node, 0, 0)
 
-	println("Result Size:", result)
-	println("Result:", buffer.Content())
+	if result != 46 {
+		println("Result Size:", result)
+		println("Result:", buffer.Content())
+		t.Fail()
+	}
 }
 
 func TestNewComment(t *testing.T) {
@@ -137,6 +142,9 @@ func TestNewComment(t *testing.T) {
 	buffer := NewBuffer()
 	result := doc.NodeDump(buffer, doc.Node, 0, 0)
 
-	println("Result Size:", result)
-	println("Result:", buffer.Content())
+	if result != 64 {
+		println("Result Size:", result)
+		println("Result:", buffer.Content())
+		t.Fail()
+	}
 }

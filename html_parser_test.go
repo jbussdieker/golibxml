@@ -11,9 +11,9 @@ func TestParseHTMLDoc(t *testing.T) {
 	buffer := NewBuffer()
 	defer buffer.Free()
 	doc.NodeDump(buffer, doc.HTMLNode)
-	println(buffer.Content())
+	//println(buffer.Content())
 }
-
+/*
 func TestDocAutoCloseTag(t *testing.T) {
 	doc := ParseHTMLDoc("<html></html>", "UTF-8")
 	if doc == nil {
@@ -31,4 +31,4 @@ func TestDocAutoCloseTag(t *testing.T) {
 	doc.NodeDump(buffer, doc.HTMLNode)
 
 	println(buffer.Content())
-}
+}*/

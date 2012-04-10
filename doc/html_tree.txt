@@ -1,4 +1,3 @@
-package golibxml
 // htmlDocContentDumpFormatOutput
 // htmlDocContentDumpOutput
 // htmlDocDump

@@ -1,4 +1,3 @@
-package golibxml
 // UTF8ToHtml
 // htmlAttrAllowed
 // * htmlAutoCloseTag
