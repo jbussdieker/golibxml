@@ -71,6 +71,7 @@ func TestBufferLength(t *testing.T) {
 		t.Fail()
 	}
 }
+
 /*
 func TestBufferGrow(t *testing.T) {
 	buffer := testNewBuffer(t)

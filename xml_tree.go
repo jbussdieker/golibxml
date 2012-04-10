@@ -1,4 +1,5 @@
 package golibxml
+
 /*
 #cgo pkg-config: libxml-2.0
 #include <libxml/tree.h>

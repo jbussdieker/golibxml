@@ -1,4 +1,5 @@
 package golibxml
+
 /*
 #cgo pkg-config: libxml-2.0
 #include <libxml/HTMLparser.h>
@@ -16,16 +17,17 @@ import "unsafe"
 ////////////////////////////////////////////////////////////////////////////////
 
 type HTMLParserOption int
+
 const (
-	HTML_PARSE_RECOVER  HTMLParserOption = C.HTML_PARSE_RECOVER   //: Relaxed parsing
-	HTML_PARSE_NODEFDTD  = C.HTML_PARSE_NODEFDTD  //: do not default a doctype if not found
-	HTML_PARSE_NOERROR   = C.HTML_PARSE_NOERROR   //: suppress error reports
-	HTML_PARSE_NOWARNING = C.HTML_PARSE_NOWARNING //: suppress warning reports
-	HTML_PARSE_PEDANTIC  = C.HTML_PARSE_PEDANTIC  //: pedantic error reporting
-	HTML_PARSE_NOBLANKS  = C.HTML_PARSE_NOBLANKS  //: remove blank nodes
-	HTML_PARSE_NONET     = C.HTML_PARSE_NONET     //: Forbid network access
-	HTML_PARSE_NOIMPLIED = C.HTML_PARSE_NOIMPLIED //: Do not add implied html/body... elements
-	HTML_PARSE_COMPACT   = C.HTML_PARSE_COMPACT   //: compact small text nodes
+	HTML_PARSE_RECOVER   HTMLParserOption = C.HTML_PARSE_RECOVER   //: Relaxed parsing
+	HTML_PARSE_NODEFDTD                   = C.HTML_PARSE_NODEFDTD  //: do not default a doctype if not found
+	HTML_PARSE_NOERROR                    = C.HTML_PARSE_NOERROR   //: suppress error reports
+	HTML_PARSE_NOWARNING                  = C.HTML_PARSE_NOWARNING //: suppress warning reports
+	HTML_PARSE_PEDANTIC                   = C.HTML_PARSE_PEDANTIC  //: pedantic error reporting
+	HTML_PARSE_NOBLANKS                   = C.HTML_PARSE_NOBLANKS  //: remove blank nodes
+	HTML_PARSE_NONET                      = C.HTML_PARSE_NONET     //: Forbid network access
+	HTML_PARSE_NOIMPLIED                  = C.HTML_PARSE_NOIMPLIED //: Do not add implied html/body... elements
+	HTML_PARSE_COMPACT                    = C.HTML_PARSE_COMPACT   //: compact small text nodes
 )
 
 type ElemDesc struct {
@@ -116,4 +118,3 @@ func TagLookup(tag string) *ElemDesc {
 	defer C.free_string(ptr)
 	return &ElemDesc{C.htmlTagLookup(C.to_xmlcharptr(ptr))}
 }
-

@@ -1,4 +1,5 @@
 package golibxml
+
 /*
 #cgo pkg-config: libxml-2.0
 #include <libxml/HTMLparser.h>
@@ -28,4 +29,3 @@ type HTMLNode struct {
 func (doc *HTMLDocument) NodeDump(buf *Buffer, cur *HTMLNode) int {
 	return int(C.htmlNodeDump(buf.Ptr, doc.Ptr, cur.Ptr))
 }
-

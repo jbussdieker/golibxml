@@ -149,4 +149,3 @@ func TestSubstituteEntitiesDefault(t *testing.T) {
 		t.Fail()
 	}
 }
-

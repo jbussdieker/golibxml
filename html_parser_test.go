@@ -13,6 +13,7 @@ func TestParseHTMLDoc(t *testing.T) {
 	doc.NodeDump(buffer, doc.HTMLNode)
 	//println(buffer.Content())
 }
+
 /*
 func TestDocAutoCloseTag(t *testing.T) {
 	doc := ParseHTMLDoc("<html></html>", "UTF-8")
