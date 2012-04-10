@@ -116,6 +116,7 @@ func TestNewDocAdv(t *testing.T) {
 	if result != 39 {
 		println("Result Size:", result)
 		println("Result:", buffer.Content())
+		t.Fail()
 	}
 }
 
