@@ -11,7 +11,7 @@ func TestGetFeaturesList(t *testing.T) {
 }
 
 func TestParseDtd(t *testing.T) {
-	dtd := ParseDTD("1", "filename")
+	dtd := ParseDTD("1", "test/test.dtd")
 	if dtd == nil {
 		t.Fail()
 	}
