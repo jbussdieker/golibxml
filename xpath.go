@@ -78,6 +78,19 @@ func (ctx *XpathCtx) XPathCompile(str string) *Xpath {
 	return &Xpath{C.xmlXPathCtxtCompile(ctx.Ptr, C.to_xmlcharptr(ptr))}
 }
 
+// xmlXPathEval
+func (ctx *XpathCtx) Eval(str string) *XPathObjectPtr {
+	ptr := C.CString(str)
+	defer C.free_string(ptr)
+	return &XPathObjectPtr{C.xmlXPathEval(C.to_xmlcharptr(ptr), ctx.Ptr)}
+}
+
+// xmlXPathEvalPredicate
+func (ctx *XpathCtx) EvalPredicate(res *XPathObjectPtr) bool {
+	result := C.xmlXPathEvalPredicate(ctx.Ptr, res.Ptr)
+	return int(result) != 0
+}
+
 // xmlXPathEvalExpression
 func (ctx *XpathCtx) EvalExpression(str string) *XPathObjectPtr {
 	ptr := C.CString(str)
@@ -101,6 +114,18 @@ func (ctx *XpathCtx) Free() {
 func (nodeset *NodeSet) Free() {
 	C.xmlXPathFreeNodeSet(nodeset.Ptr)
 	nodeset.Ptr = nil
+}
+
+// xmlXPathFreeNodeSetList
+func (obj *XPathObjectPtr) FreeList() {
+	C.xmlXPathFreeNodeSetList(obj.Ptr)
+	obj.Ptr = nil
+}
+
+// xmlXPathFreeObject
+func (obj *XPathObjectPtr) Free() {
+	C.xmlXPathFreeObject(obj.Ptr)
+	obj.Ptr = nil
 }
 
 // xmlXPathIsInf

@@ -21,15 +21,15 @@
 // * xmlXPathConvertNumber
 // * xmlXPathConvertString
 // * xmlXPathCtxtCompile
-// xmlXPathEval
+// * xmlXPathEval
 // * xmlXPathEvalExpression
 // xmlXPathEvalFunc
-// xmlXPathEvalPredicate
+// * xmlXPathEvalPredicate
 // * xmlXPathFreeCompExpr
 // * xmlXPathFreeContext
 // * xmlXPathFreeNodeSet
-// xmlXPathFreeNodeSetList
-// xmlXPathFreeObject
+// * xmlXPathFreeNodeSetList
+// * xmlXPathFreeObject
 // xmlXPathFuncLookupFunc
 // xmlXPathFunction
 // xmlXPathInit
