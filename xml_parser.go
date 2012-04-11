@@ -69,6 +69,20 @@ func makeDoc(doc C.xmlDocPtr) *Document {
 	}
 }
 
+func makeParser(parser C.xmlParserCtxtPtr) *Parser {
+	if parser == nil {
+		return nil
+	}
+	return &Parser{parser}
+}
+
+func makeDtd(dtd C.xmlDtdPtr) *Dtd {
+	if dtd == nil {
+		return nil
+	}
+	return &Dtd{dtd}
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // INTERFACE
 ////////////////////////////////////////////////////////////////////////////////
@@ -125,7 +139,7 @@ func GetFeaturesList() []string {
 // xmlNewParserCtxt
 func NewParserCtxt() *Parser {
 	pctx := C.xmlNewParserCtxt()
-	return &Parser{pctx}
+	return makeParser(pctx)
 }
 
 // xmlParseDTD
@@ -134,8 +148,8 @@ func ParseDTD(ExternalID string, SystemID string) *Dtd {
 	defer C.free_string(ptre)
 	ptrs := C.CString(SystemID)
 	defer C.free_string(ptrs)
-	dtd := C.xmlParseDTD(C.to_xmlcharptr(ptre), C.to_xmlcharptr(ptrs))
-	return &Dtd{dtd}
+	cdtd := C.xmlParseDTD(C.to_xmlcharptr(ptre), C.to_xmlcharptr(ptrs))
+	return makeDtd(cdtd)
 }
 
 // xmlParseDoc
