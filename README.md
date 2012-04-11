@@ -20,4 +20,4 @@ golibxml is a simple wrapper for libxml. The goal is to avoid any extra magic so
 
 ## libxml/xpath
 
-0% (0/42)
+40.47% (17/42)

@@ -10,34 +10,34 @@
 // xmlXPathCastStringToBoolean
 // xmlXPathCastStringToNumber
 // xmlXPathCastToBoolean
-// xmlXPathCastToNumber
-// xmlXPathCastToString
+// * xmlXPathCastToNumber
+// * xmlXPathCastToString
 // xmlXPathCmpNodes
-// xmlXPathCompile
+// * xmlXPathCompile
 // xmlXPathCompiledEval
 // xmlXPathCompiledEvalToBoolean
 // xmlXPathContextSetCache
-// xmlXPathConvertBoolean
-// xmlXPathConvertNumber
-// xmlXPathConvertString
-// xmlXPathCtxtCompile
+// * xmlXPathConvertBoolean
+// * xmlXPathConvertNumber
+// * xmlXPathConvertString
+// * xmlXPathCtxtCompile
 // xmlXPathEval
-// xmlXPathEvalExpression
+// * xmlXPathEvalExpression
 // xmlXPathEvalFunc
 // xmlXPathEvalPredicate
-// xmlXPathFreeCompExpr
-// xmlXPathFreeContext
-// xmlXPathFreeNodeSet
+// * xmlXPathFreeCompExpr
+// * xmlXPathFreeContext
+// * xmlXPathFreeNodeSet
 // xmlXPathFreeNodeSetList
 // xmlXPathFreeObject
 // xmlXPathFuncLookupFunc
 // xmlXPathFunction
 // xmlXPathInit
-// xmlXPathIsInf
-// xmlXPathIsNaN
-// xmlXPathNewContext
-// xmlXPathNodeSetCreate
-// xmlXPathObjectCopy
-// xmlXPathOrderDocElems
+// * xmlXPathIsInf
+// * xmlXPathIsNaN
+// * xmlXPathNewContext
+// * xmlXPathNodeSetCreate
+// * xmlXPathObjectCopy
+// * xmlXPathOrderDocElems
 // xmlXPathVariableLookupFunc
 
