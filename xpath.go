@@ -20,11 +20,11 @@ type Xpath struct {
 	Ptr C.xmlXPathCompExprPtr
 }
 
-type XpathCtx struct {
+type XpathContext struct {
 	Ptr C.xmlXPathContextPtr
 }
 
-type XPathObjectPtr struct {
+type XPathObject struct {
 	Ptr C.xmlXPathObjectPtr
 }
 
@@ -42,11 +42,11 @@ func makeXpath(ptr C.xmlXPathCompExprPtr) *Xpath {
 	return &Xpath{ptr}
 }
 
-func makeXpathObj(ptr C.xmlXPathObjectPtr) *XPathObjectPtr {
+func makeXpathObj(ptr C.xmlXPathObjectPtr) *XPathObject {
 	if ptr == nil {
 		return nil
 	}
-	return &XPathObjectPtr{ptr}
+	return &XPathObject{ptr}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -54,13 +54,13 @@ func makeXpathObj(ptr C.xmlXPathObjectPtr) *XPathObjectPtr {
 ////////////////////////////////////////////////////////////////////////////////
 
 // xmlXPathCastToNumber
-func (obj *XPathObjectPtr) CastToNumber() float32 {
+func (obj *XPathObject) CastToNumber() float32 {
 	cdbl := C.xmlXPathCastToNumber(obj.Ptr)
 	return float32(cdbl)
 }
 
 // xmlXPathCastToString
-func (obj *XPathObjectPtr) CastToString() string {
+func (obj *XPathObject) CastToString() string {
 	cstr := C.xmlXPathCastToString(obj.Ptr)
 	defer C.free(unsafe.Pointer(cstr))
 	return C.GoString(C.to_charptr(cstr))
@@ -74,42 +74,42 @@ func XPathCompile(str string) *Xpath {
 }
 
 // xmlXPathConvertBoolean
-func (obj *XPathObjectPtr) ConvertBoolean() *XPathObjectPtr {
+func (obj *XPathObject) ConvertBoolean() *XPathObject {
 	return makeXpathObj(C.xmlXPathConvertBoolean(obj.Ptr))
 }
 
 // xmlXPathConvertNumber
-func (obj *XPathObjectPtr) ConvertNumber() *XPathObjectPtr {
+func (obj *XPathObject) ConvertNumber() *XPathObject {
 	return makeXpathObj(C.xmlXPathConvertNumber(obj.Ptr))
 }
 
 // xmlXPathConvertString
-func (obj *XPathObjectPtr) ConvertString() *XPathObjectPtr {
+func (obj *XPathObject) ConvertString() *XPathObject {
 	return makeXpathObj(C.xmlXPathConvertString(obj.Ptr))
 }
 
 // xmlXPathCtxtCompile
-func (ctx *XpathCtx) XPathCompile(str string) *Xpath {
+func (ctx *XpathContext) XPathCompile(str string) *Xpath {
 	ptr := C.CString(str)
 	defer C.free_string(ptr)
 	return makeXpath(C.xmlXPathCtxtCompile(ctx.Ptr, C.to_xmlcharptr(ptr)))
 }
 
 // xmlXPathEval
-func (ctx *XpathCtx) Eval(str string) *XPathObjectPtr {
+func (ctx *XpathContext) Eval(str string) *XPathObject {
 	ptr := C.CString(str)
 	defer C.free_string(ptr)
 	return makeXpathObj(C.xmlXPathEval(C.to_xmlcharptr(ptr), ctx.Ptr))
 }
 
 // xmlXPathEvalPredicate
-func (ctx *XpathCtx) EvalPredicate(res *XPathObjectPtr) bool {
+func (ctx *XpathContext) EvalPredicate(res *XPathObject) bool {
 	result := C.xmlXPathEvalPredicate(ctx.Ptr, res.Ptr)
 	return int(result) != 0
 }
 
 // xmlXPathEvalExpression
-func (ctx *XpathCtx) EvalExpression(str string) *XPathObjectPtr {
+func (ctx *XpathContext) EvalExpression(str string) *XPathObject {
 	ptr := C.CString(str)
 	defer C.free_string(ptr)
 	return makeXpathObj(C.xmlXPathEvalExpression(C.to_xmlcharptr(ptr), ctx.Ptr))
@@ -122,7 +122,7 @@ func (xpath *Xpath) Free() {
 }
 
 // xmlXPathFreeContext
-func (ctx *XpathCtx) Free() {
+func (ctx *XpathContext) Free() {
 	C.xmlXPathFreeContext(ctx.Ptr)
 	ctx.Ptr = nil
 }
@@ -134,13 +134,13 @@ func (nodeset *NodeSet) Free() {
 }
 
 // xmlXPathFreeNodeSetList
-func (obj *XPathObjectPtr) FreeList() {
+func (obj *XPathObject) FreeList() {
 	C.xmlXPathFreeNodeSetList(obj.Ptr)
 	obj.Ptr = nil
 }
 
 // xmlXPathFreeObject
-func (obj *XPathObjectPtr) Free() {
+func (obj *XPathObject) Free() {
 	C.xmlXPathFreeObject(obj.Ptr)
 	obj.Ptr = nil
 }
@@ -156,8 +156,8 @@ func XpathIsNaN(val float32) int {
 }
 
 // xmlXPathNewContext
-func XpathNewContext(doc *Document) *XpathCtx {
-	return &XpathCtx{C.xmlXPathNewContext(doc.Ptr)}
+func XpathNewContext(doc *Document) *XpathContext {
+	return &XpathContext{C.xmlXPathNewContext(doc.Ptr)}
 }
 
 // xmlXPathNodeSetCreate
@@ -166,7 +166,7 @@ func NodeSetCreate(node *Node) *NodeSet {
 }
 
 // xmlXPathObjectCopy
-func (obj *XPathObjectPtr) Copy() *XPathObjectPtr {
+func (obj *XPathObject) Copy() *XPathObject {
 	return makeXpathObj(C.xmlXPathObjectCopy(obj.Ptr))
 }
 
