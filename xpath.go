@@ -35,6 +35,19 @@ type NodeSet struct {
 ////////////////////////////////////////////////////////////////////////////////
 // INTERFACE
 ////////////////////////////////////////////////////////////////////////////////
+func makeXpath(ptr C.xmlXPathCompExprPtr) *Xpath {
+	if ptr == nil {
+		return nil
+	}
+	return &Xpath{ptr}
+}
+
+func makeXpathObj(ptr C.xmlXPathObjectPtr) *XPathObjectPtr {
+	if ptr == nil {
+		return nil
+	}
+	return &XPathObjectPtr{ptr}
+}
 
 // xmlXPathCastToNumber
 func (obj *XPathObjectPtr) CastToNumber() float32 {
@@ -53,36 +66,36 @@ func (obj *XPathObjectPtr) CastToString() string {
 func XPathCompile(str string) *Xpath {
 	ptr := C.CString(str)
 	defer C.free_string(ptr)
-	return &Xpath{C.xmlXPathCompile(C.to_xmlcharptr(ptr))}
+	return makeXpath(C.xmlXPathCompile(C.to_xmlcharptr(ptr)))
 }
 
 // xmlXPathConvertBoolean
 func (obj *XPathObjectPtr) ConvertBoolean() *XPathObjectPtr {
-	return &XPathObjectPtr{C.xmlXPathConvertBoolean(obj.Ptr)}
+	return makeXpathObj(C.xmlXPathConvertBoolean(obj.Ptr))
 }
 
 // xmlXPathConvertNumber
 func (obj *XPathObjectPtr) ConvertNumber() *XPathObjectPtr {
-	return &XPathObjectPtr{C.xmlXPathConvertNumber(obj.Ptr)}
+	return makeXpathObj(C.xmlXPathConvertNumber(obj.Ptr))
 }
 
 // xmlXPathConvertString
 func (obj *XPathObjectPtr) ConvertString() *XPathObjectPtr {
-	return &XPathObjectPtr{C.xmlXPathConvertString(obj.Ptr)}
+	return makeXpathObj(C.xmlXPathConvertString(obj.Ptr))
 }
 
 // xmlXPathCtxtCompile
 func (ctx *XpathCtx) XPathCompile(str string) *Xpath {
 	ptr := C.CString(str)
 	defer C.free_string(ptr)
-	return &Xpath{C.xmlXPathCtxtCompile(ctx.Ptr, C.to_xmlcharptr(ptr))}
+	return makeXpath(C.xmlXPathCtxtCompile(ctx.Ptr, C.to_xmlcharptr(ptr)))
 }
 
 // xmlXPathEval
 func (ctx *XpathCtx) Eval(str string) *XPathObjectPtr {
 	ptr := C.CString(str)
 	defer C.free_string(ptr)
-	return &XPathObjectPtr{C.xmlXPathEval(C.to_xmlcharptr(ptr), ctx.Ptr)}
+	return makeXpathObj(C.xmlXPathEval(C.to_xmlcharptr(ptr), ctx.Ptr))
 }
 
 // xmlXPathEvalPredicate
@@ -95,7 +108,7 @@ func (ctx *XpathCtx) EvalPredicate(res *XPathObjectPtr) bool {
 func (ctx *XpathCtx) EvalExpression(str string) *XPathObjectPtr {
 	ptr := C.CString(str)
 	defer C.free_string(ptr)
-	return &XPathObjectPtr{C.xmlXPathEvalExpression(C.to_xmlcharptr(ptr), ctx.Ptr)}
+	return makeXpathObj(C.xmlXPathEvalExpression(C.to_xmlcharptr(ptr), ctx.Ptr))
 }
 
 // xmlXPathFreeCompExpr
@@ -150,7 +163,7 @@ func NodeSetCreate(node *Node) *NodeSet {
 
 // xmlXPathObjectCopy
 func (obj *XPathObjectPtr) Copy() *XPathObjectPtr {
-	return &XPathObjectPtr{C.xmlXPathObjectCopy(obj.Ptr)}
+	return makeXpathObj(C.xmlXPathObjectCopy(obj.Ptr))
 }
 
 // xmlXPathOrderDocElems
