@@ -72,6 +72,13 @@ func makeHTMLParser(parser C.htmlParserCtxtPtr) *HTMLParser {
 	return &HTMLParser{parser}
 }
 
+func makeElemDesc(desc C.htmlElemDescPtr) *ElemDesc {
+	if desc == nil {
+		return nil
+	}
+	return &ElemDesc{desc}
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // INTERFACE
 ////////////////////////////////////////////////////////////////////////////////
@@ -172,5 +179,6 @@ func ReadHTMLMemory(buffer []byte, url string, encoding string, options HTMLPars
 func TagLookup(tag string) *ElemDesc {
 	ptr := C.CString(tag)
 	defer C.free_string(ptr)
-	return &ElemDesc{C.htmlTagLookup(C.to_xmlcharptr(ptr))}
+	cdesc := C.htmlTagLookup(C.to_xmlcharptr(ptr))
+	return makeElemDesc(cdesc)
 }
