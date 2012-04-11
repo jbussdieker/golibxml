@@ -49,7 +49,7 @@ func NewHTMLDoc(uri string, external_id string) *HTMLDocument {
 }
 
 // htmlNewDocNoDtD
-func NewHTMLDocNoDtD() *HTMLDocument {
+func NewHTMLDocNoDtd() *HTMLDocument {
 	doc := C.htmlNewDocNoDtD(nil, nil)
 	return makeHTMLDoc(doc)
 }
