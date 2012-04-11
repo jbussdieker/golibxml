@@ -65,15 +65,22 @@ func makeHTMLDoc(doc C.htmlDocPtr) *HTMLDocument {
 	}
 }
 
+func makeHTMLParser(parser C.htmlParserCtxtPtr) *HTMLParser {
+	if parser == nil {
+		return nil
+	}
+	return &HTMLParser{parser}
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // INTERFACE
 ////////////////////////////////////////////////////////////////////////////////
 
 // htmlAutoCloseTag
-func (doc *HTMLDocument) AutoCloseTag(name string, node *Node) int {
+func (doc *HTMLDocument) AutoCloseTag(name string, node *Node) bool {
 	ptr := C.CString(name)
 	defer C.free_string(ptr)
-	return int(C.htmlAutoCloseTag(doc.Document.Ptr, C.to_xmlcharptr(ptr), node.Ptr))
+	return int(C.htmlAutoCloseTag(doc.Document.Ptr, C.to_xmlcharptr(ptr), node.Ptr)) == 1
 }
 
 // htmlCtxtReadDoc
@@ -106,7 +113,7 @@ func (p *HTMLParser) Free() {
 // htmlNewParserCtxt
 func NewHTMLParserCtxt() *HTMLParser {
 	pctx := C.htmlNewParserCtxt()
-	return &HTMLParser{pctx}
+	return makeHTMLParser(pctx)
 }
 
 // htmlParseDoc
