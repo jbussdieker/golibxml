@@ -16,3 +16,17 @@ func TestXPathCompileNeg(t *testing.T) {
 	}
 }
 
+func TestNewXPathContext(t *testing.T) {
+	doc := ParseDoc("<catalog/>")
+	if doc == nil {
+		t.Fail()
+	}
+	defer doc.Free()
+	ctx := NewXPathContext(doc)
+	xpath := ctx.Compile("*")
+	if xpath == nil {
+		t.Fail()
+	}
+
+}
+
