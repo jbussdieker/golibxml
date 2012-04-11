@@ -120,7 +120,7 @@ func GetFeaturesList() []string {
 }
 
 // xmlNewParserCtxt
-func NewParserCtxt() *Parser {
+func NewParser() *Parser {
 	pctx := C.xmlNewParserCtxt()
 	return makeParser(pctx)
 }

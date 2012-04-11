@@ -16,11 +16,11 @@ import "unsafe"
 // TYPES/STRUCTS
 ////////////////////////////////////////////////////////////////////////////////
 
-type Xpath struct {
+type XPath struct {
 	Ptr C.xmlXPathCompExprPtr
 }
 
-type XpathContext struct {
+type XPathContext struct {
 	Ptr C.xmlXPathContextPtr
 }
 
@@ -35,11 +35,11 @@ type NodeSet struct {
 ////////////////////////////////////////////////////////////////////////////////
 // PRIVATE FUNCTIONS
 ////////////////////////////////////////////////////////////////////////////////
-func makeXpath(ptr C.xmlXPathCompExprPtr) *Xpath {
+func makeXpath(ptr C.xmlXPathCompExprPtr) *XPath {
 	if ptr == nil {
 		return nil
 	}
-	return &Xpath{ptr}
+	return &XPath{ptr}
 }
 
 func makeXpathObj(ptr C.xmlXPathObjectPtr) *XPathObject {
@@ -67,7 +67,7 @@ func (obj *XPathObject) CastToString() string {
 }
 
 // xmlXPathCompile
-func XPathCompile(str string) *Xpath {
+func CompileXPath(str string) *XPath {
 	ptr := C.CString(str)
 	defer C.free_string(ptr)
 	return makeXpath(C.xmlXPathCompile(C.to_xmlcharptr(ptr)))
@@ -89,40 +89,40 @@ func (obj *XPathObject) ConvertString() *XPathObject {
 }
 
 // xmlXPathCtxtCompile
-func (ctx *XpathContext) XPathCompile(str string) *Xpath {
+func (ctx *XPathContext) Compile(str string) *XPath {
 	ptr := C.CString(str)
 	defer C.free_string(ptr)
 	return makeXpath(C.xmlXPathCtxtCompile(ctx.Ptr, C.to_xmlcharptr(ptr)))
 }
 
 // xmlXPathEval
-func (ctx *XpathContext) Eval(str string) *XPathObject {
+func (ctx *XPathContext) Eval(str string) *XPathObject {
 	ptr := C.CString(str)
 	defer C.free_string(ptr)
 	return makeXpathObj(C.xmlXPathEval(C.to_xmlcharptr(ptr), ctx.Ptr))
 }
 
 // xmlXPathEvalPredicate
-func (ctx *XpathContext) EvalPredicate(res *XPathObject) bool {
+func (ctx *XPathContext) EvalPredicate(res *XPathObject) bool {
 	result := C.xmlXPathEvalPredicate(ctx.Ptr, res.Ptr)
 	return int(result) != 0
 }
 
 // xmlXPathEvalExpression
-func (ctx *XpathContext) EvalExpression(str string) *XPathObject {
+func (ctx *XPathContext) EvalExpression(str string) *XPathObject {
 	ptr := C.CString(str)
 	defer C.free_string(ptr)
 	return makeXpathObj(C.xmlXPathEvalExpression(C.to_xmlcharptr(ptr), ctx.Ptr))
 }
 
 // xmlXPathFreeCompExpr
-func (xpath *Xpath) Free() {
+func (xpath *XPath) Free() {
 	C.xmlXPathFreeCompExpr(xpath.Ptr)
 	xpath.Ptr = nil
 }
 
 // xmlXPathFreeContext
-func (ctx *XpathContext) Free() {
+func (ctx *XPathContext) Free() {
 	C.xmlXPathFreeContext(ctx.Ptr)
 	ctx.Ptr = nil
 }
@@ -156,8 +156,8 @@ func XpathIsNaN(val float32) int {
 }
 
 // xmlXPathNewContext
-func XpathNewContext(doc *Document) *XpathContext {
-	return &XpathContext{C.xmlXPathNewContext(doc.Ptr)}
+func NewXPathContext(doc *Document) *XPathContext {
+	return &XPathContext{C.xmlXPathNewContext(doc.Ptr)}
 }
 
 // xmlXPathNodeSetCreate
