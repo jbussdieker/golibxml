@@ -1,6 +1,16 @@
 package golibxml
 
 import "testing"
+import "syscall"
+
+func getRSS() uint64 {
+	rusage := &syscall.Rusage{}
+	ret := syscall.Getrusage(0, rusage)
+	if ret == nil && rusage.Maxrss > 0 {
+		return uint64(rusage.Maxrss)
+	}
+	return 0
+}
 
 //
 // Buffer tests
@@ -23,12 +33,34 @@ func TestNewBuffer(t *testing.T) {
 	testNewBuffer(t)
 }
 
+func TestNewBufferLeak(t *testing.T) {
+	var buffer *Buffer
+	for i := 0; i < 1000000; i++ {
+		buffer = testNewBuffer(t)
+		buffer.Free()
+	}
+	if getRSS() > 4000 {
+		t.Fatal("Memory leak")
+	}
+}
+
 func TestNewBufferSize(t *testing.T) {
 	buffer := NewBufferSize(10)
 	if buffer.Ptr == nil {
 		t.Fail()
 	}
 	return
+}
+
+func TestNewBufferSizeLeak(t *testing.T) {
+	var buffer *Buffer
+	for i := 0; i < 1000000; i++ {
+		buffer = NewBufferSize(1024)
+		buffer.Free()
+	}
+	if getRSS() > 4000 {
+		t.Fatal("Memory leak")
+	}
 }
 
 func TestBufferFree(t *testing.T) {
