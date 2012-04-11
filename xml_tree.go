@@ -67,7 +67,7 @@ func makeDoc(doc C.xmlDocPtr) *Document {
 	}
 	return &Document{
 		Ptr:  doc,
-		Node: &Node{C.xmlNodePtr(unsafe.Pointer(doc))},
+		Node: makeNode(C.xmlNodePtr(unsafe.Pointer(doc))),
 	}
 }
 
@@ -78,11 +78,25 @@ func makeDtd(dtd C.xmlDtdPtr) *Dtd {
 	return &Dtd{dtd}
 }
 
+func makeNamespace(ns C.xmlNsPtr) *Namespace {
+	if ns == nil {
+		return nil
+	}
+	return &Namespace{ns}
+}
+
 func makeNode(node C.xmlNodePtr) *Node {
 	if node == nil {
 		return nil
 	}
 	return &Node{node}
+}
+
+func makeTextNode(node C.xmlNodePtr) *TextNode {
+	if node == nil {
+		return nil
+	}
+	return &TextNode{makeNode(node)}
 }
 
 func makeAttribute(attr C.xmlAttrPtr) *Attribute {
@@ -204,12 +218,12 @@ func (dtd *Dtd) Copy() *Dtd {
 
 // xmlCopyNamespace
 func (ns *Namespace) Copy(extended int) *Namespace {
-	return &Namespace{C.xmlCopyNamespace(ns.Ptr)}
+	return makeNamespace(C.xmlCopyNamespace(ns.Ptr))
 }
 
 // xmlCopyNamespaceList
 func (ns *Namespace) CopyList(extended int) *Namespace {
-	return &Namespace{C.xmlCopyNamespaceList(ns.Ptr)}
+	return makeNamespace(C.xmlCopyNamespaceList(ns.Ptr))
 }
 
 // xmlCopyNode
@@ -326,9 +340,9 @@ func (node *Node) NewChild(ns *Namespace, name string, content string) *Node {
 	ptrc := C.CString(content)
 	defer C.free_string(ptrc)
 	if ns != nil {
-		return &Node{C.xmlNewChild(node.Ptr, ns.Ptr, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc))}
+		return makeNode(C.xmlNewChild(node.Ptr, ns.Ptr, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc)))
 	}
-	return &Node{C.xmlNewChild(node.Ptr, nil, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc))}
+	return makeNode(C.xmlNewChild(node.Ptr, nil, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc)))
 }
 
 // xmlNewComment
@@ -366,9 +380,9 @@ func (doc *Document) NewNode(ns *Namespace, name string, content string) *Node {
 	ptrc := C.CString(content)
 	defer C.free_string(ptrc)
 	if ns != nil {
-		return &Node{C.xmlNewDocNode(doc.Ptr, ns.Ptr, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc))}
+		return makeNode(C.xmlNewDocNode(doc.Ptr, ns.Ptr, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc)))
 	}
-	return &Node{C.xmlNewDocNode(doc.Ptr, nil, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc))}
+	return makeNode(C.xmlNewDocNode(doc.Ptr, nil, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc)))
 }
 
 // xmlNewDocProp
@@ -388,16 +402,16 @@ func (doc *Document) NewRawNode(ns *Namespace, name string, content string) *Nod
 	ptrc := C.CString(content)
 	defer C.free_string(ptrc)
 	if ns != nil {
-		return &Node{C.xmlNewDocRawNode(doc.Ptr, ns.Ptr, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc))}
+		return makeNode(C.xmlNewDocRawNode(doc.Ptr, ns.Ptr, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc)))
 	}
-	return &Node{C.xmlNewDocRawNode(doc.Ptr, nil, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc))}
+	return makeNode(C.xmlNewDocRawNode(doc.Ptr, nil, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc)))
 }
 
 // xmlNewDocText
 func (doc *Document) NewText(content string) *TextNode {
 	ptr := C.CString(content)
 	defer C.free_string(ptr)
-	return &TextNode{makeNode(C.xmlNewDocText(doc.Ptr, C.to_xmlcharptr(ptr)))}
+	return makeTextNode(C.xmlNewDocText(doc.Ptr, C.to_xmlcharptr(ptr)))
 }
 
 // xmlNewDtd
@@ -417,9 +431,9 @@ func NewNode(ns *Namespace, name string) *Node {
 	ptr := C.CString(name)
 	defer C.free_string(ptr)
 	if ns != nil {
-		return &Node{C.xmlNewNode(ns.Ptr, C.to_xmlcharptr(ptr))}
+		return makeNode(C.xmlNewNode(ns.Ptr, C.to_xmlcharptr(ptr)))
 	}
-	return &Node{C.xmlNewNode(nil, C.to_xmlcharptr(ptr))}
+	return makeNode(C.xmlNewNode(nil, C.to_xmlcharptr(ptr)))
 }
 
 // xmlNewNs
@@ -428,7 +442,7 @@ func (node *Node) NewNs(href string, prefix string) *Namespace {
 	defer C.free_string(ptrh)
 	ptrp := C.CString(prefix)
 	defer C.free_string(ptrp)
-	return &Namespace{C.xmlNewNs(node.Ptr, C.to_xmlcharptr(ptrh), C.to_xmlcharptr(ptrp))}
+	return makeNamespace(C.xmlNewNs(node.Ptr, C.to_xmlcharptr(ptrh), C.to_xmlcharptr(ptrp)))
 }
 
 // xmlNewProp
@@ -445,7 +459,7 @@ func (node *Node) NewAttribute(name string, value string) *Attribute {
 func NewText(content string) *TextNode {
 	ptr := C.CString(content)
 	defer C.free_string(ptr)
-	return &TextNode{makeNode(C.xmlNewText(C.to_xmlcharptr(ptr)))}
+	return makeTextNode(C.xmlNewText(C.to_xmlcharptr(ptr)))
 }
 
 // xmlNewTextChild
@@ -455,9 +469,9 @@ func (node *Node) NewTextChild(ns *Namespace, name string, content string) *Text
 	ptrc := C.CString(content)
 	defer C.free_string(ptrc)
 	if ns == nil {
-		return &TextNode{&Node{C.xmlNewTextChild(node.Ptr, nil, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc))}}
+		return makeTextNode(C.xmlNewTextChild(node.Ptr, nil, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc)))
 	}
-	return &TextNode{&Node{C.xmlNewTextChild(node.Ptr, ns.Ptr, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc))}}
+	return makeTextNode(C.xmlNewTextChild(node.Ptr, ns.Ptr, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrc)))
 }
 
 // xmlNextElementSibling
