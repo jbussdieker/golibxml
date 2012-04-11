@@ -70,6 +70,16 @@ func makeParser(parser C.xmlParserCtxtPtr) *Parser {
 // INTERFACE
 ////////////////////////////////////////////////////////////////////////////////
 
+// xmlByteConsumed
+func (p *Parser) ByteConsumed() int {
+	return int(C.xmlByteConsumed(p.Ptr))
+}
+
+// xmlCleanupParser
+func CleanupParser() {
+	C.xmlCleanupParser()
+}
+
 // xmlCtxtReadDoc
 func (p *Parser) ReadDoc(input string, url string, encoding string, options ParserOption) *Document {
 	ptri := C.CString(input)

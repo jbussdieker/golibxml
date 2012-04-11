@@ -1,5 +1,5 @@
-// xmlByteConsumed
-// xmlCleanupParser
+// * xmlByteConsumed
+// * xmlCleanupParser
 // xmlClearNodeInfoSeq
 // xmlClearParserCtxt
 // xmlCreateDocParserCtxt
