@@ -7,10 +7,8 @@ package golibxml
 static inline void free_string(char* s) { free(s); }
 static inline xmlChar *to_xmlcharptr(const char *s) { return (xmlChar *)s; }
 static inline char *to_charptr(const xmlChar *s) { return (char *)s; }
-
 */
 import "C"
-import "unsafe"
 
 ////////////////////////////////////////////////////////////////////////////////
 // TYPES/STRUCTS
@@ -59,32 +57,50 @@ const (
 )
 
 ////////////////////////////////////////////////////////////////////////////////
+// PRIVATE FUNCTIONS
+////////////////////////////////////////////////////////////////////////////////
+
+func makeNode(node C.xmlNodePtr) *Node {
+	if node == nil {
+		return nil
+	}
+	return &Node{node}
+}
+
+func makeAttribute(attr C.xmlAttrPtr) *Attribute {
+	if attr == nil {
+		return nil
+	}
+	return &Attribute{attr}
+}
+
+////////////////////////////////////////////////////////////////////////////////
 // INTERFACE
 ////////////////////////////////////////////////////////////////////////////////
 
 // xmlAddChild
 func (parent *Node) AddChild(cur *Node) *Node {
-	return &Node{C.xmlAddChild(parent.Ptr, cur.Ptr)}
+	return makeNode(C.xmlAddChild(parent.Ptr, cur.Ptr))
 }
 
 // xmlAddChildList
 func (parent *Node) AddChildList(cur Node) *Node {
-	return &Node{C.xmlAddNextSibling(parent.Ptr, cur.Ptr)}
+	return makeNode(C.xmlAddNextSibling(parent.Ptr, cur.Ptr))
 }
 
 // xmlAddNextSibling
 func (cur *Node) AddNextSibling(elem Node) *Node {
-	return &Node{C.xmlAddNextSibling(cur.Ptr, elem.Ptr)}
+	return makeNode(C.xmlAddNextSibling(cur.Ptr, elem.Ptr))
 }
 
 // xmlAddPrevSibling
 func (cur *Node) AddPrevSibling(elem Node) *Node {
-	return &Node{C.xmlAddPrevSibling(cur.Ptr, elem.Ptr)}
+	return makeNode(C.xmlAddPrevSibling(cur.Ptr, elem.Ptr))
 }
 
 // xmlAddSibling
 func (cur *Node) AddSibling(elem Node) *Node {
-	return &Node{C.xmlAddSibling(cur.Ptr, elem.Ptr)}
+	return makeNode(C.xmlAddSibling(cur.Ptr, elem.Ptr))
 }
 
 // xmlBufferCat/xmlBufferCCat
@@ -159,11 +175,8 @@ func (node *Node) ChildCount() int {
 
 // xmlCopyDoc
 func (doc *Document) Copy(recursive int) *Document {
-	docptr := C.xmlCopyDoc(doc.Ptr, C.int(recursive))
-	return &Document{
-		Ptr:  docptr,
-		Node: &Node{C.xmlNodePtr(unsafe.Pointer(docptr))},
-	}
+	cdoc := C.xmlCopyDoc(doc.Ptr, C.int(recursive))
+	return makeDoc(cdoc)
 }
 
 // xmlCopyDtd
@@ -183,41 +196,44 @@ func (ns *Namespace) CopyList(extended int) *Namespace {
 
 // xmlCopyNode
 func (node *Node) Copy(extended int) *Node {
-	p := unsafe.Pointer(node.Ptr)
-	n := C.xmlCopyNode(C.xmlNodePtr(p), C.int(extended))
-	return &Node{n}
+	cnode := C.xmlCopyNode(node.Ptr, C.int(extended))
+	return makeNode(cnode)
 }
 
 // xmlCopyNodeList
 func (node *Node) CopyList() *Node {
-	p := unsafe.Pointer(node.Ptr)
-	n := C.xmlCopyNodeList(C.xmlNodePtr(p))
-	return &Node{n}
+	cnode := C.xmlCopyNodeList(node.Ptr)
+	return makeNode(cnode)
 }
 
 // xmlCopyProp
 func (attr *Attribute) Copy(target *Node) *Attribute {
-	return &Attribute{C.xmlCopyProp(target.Ptr, attr.Ptr)}
+	cattr := C.xmlCopyProp(target.Ptr, attr.Ptr)
+	return makeAttribute(cattr)
 }
 
 // xmlCopyPropList
 func (attr *Attribute) CopyList(target *Node) *Attribute {
-	return &Attribute{C.xmlCopyPropList(target.Ptr, attr.Ptr)}
+	cattr := C.xmlCopyPropList(target.Ptr, attr.Ptr)
+	return makeAttribute(cattr)
 }
 
 // xmlDocGetRootElement
 func (doc *Document) Root() *Node {
-	return &Node{C.xmlDocGetRootElement(doc.Ptr)}
+	cnode := C.xmlDocGetRootElement(doc.Ptr)
+	return makeNode(cnode)
 }
 
 // xmlDocSetRootElement
 func (doc *Document) SetRoot(root *Node) *Node {
-	return &Node{C.xmlDocSetRootElement(doc.Ptr, root.Ptr)}
+	cnode := C.xmlDocSetRootElement(doc.Ptr, root.Ptr)
+	return makeNode(cnode)
 }
 
 // xmlFirstElementChild
 func (node *Node) FirstChild() *Node {
-	return &Node{C.xmlFirstElementChild(node.Ptr)}
+	cnode := C.xmlFirstElementChild(node.Ptr)
+	return makeNode(cnode)
 }
 
 // xmlFreeDoc
@@ -271,7 +287,7 @@ func (attr *Attribute) FreeList() {
 
 // xmlGetLastChild
 func (node *Node) LastChild() *Node {
-	return &Node{C.xmlGetLastChild(node.Ptr)}
+	return makeNode(C.xmlGetLastChild(node.Ptr))
 }
 
 // xmlGetNodePath
@@ -282,7 +298,7 @@ func (node *Node) Path() string {
 
 // xmlLastElementChild
 func (node *Node) LastElementChild() *Node {
-	return &Node{C.xmlLastElementChild(node.Ptr)}
+	return makeNode(C.xmlLastElementChild(node.Ptr))
 }
 
 // xmlNewChild
@@ -301,31 +317,28 @@ func (node *Node) NewChild(ns *Namespace, name string, content string) *Node {
 func NewComment(content string) *Node {
 	ptr := C.CString(content)
 	defer C.free_string(ptr)
-	node := C.xmlNewComment(C.to_xmlcharptr(ptr))
-	return &Node{node}
+	cnode := C.xmlNewComment(C.to_xmlcharptr(ptr))
+	return makeNode(cnode)
 }
 
 // xmlNewDoc
 func NewDoc(version string) *Document {
 	ptr := C.CString(version)
 	defer C.free_string(ptr)
-	doc := C.xmlNewDoc(C.to_xmlcharptr(ptr))
-	return &Document{
-		Ptr:  doc,
-		Node: &Node{C.xmlNodePtr(unsafe.Pointer(doc))},
-	}
+	cdoc := C.xmlNewDoc(C.to_xmlcharptr(ptr))
+	return makeDoc(cdoc)
 }
 
 // xmlNewDocComment
 func (doc *Document) NewComment(content string) *Node {
 	ptr := C.CString(content)
 	defer C.free_string(ptr)
-	return &Node{C.xmlNewDocComment(doc.Ptr, C.to_xmlcharptr(ptr))}
+	return makeNode(C.xmlNewDocComment(doc.Ptr, C.to_xmlcharptr(ptr)))
 }
 
 // xmlNewDocFragment
 func (doc *Document) NewFragment() *Node {
-	return &Node{C.xmlNewDocFragment(doc.Ptr)}
+	return makeNode(C.xmlNewDocFragment(doc.Ptr))
 }
 
 // xmlNewDocNode
@@ -346,7 +359,8 @@ func (doc *Document) NewProp(name string, value string) *Attribute {
 	defer C.free_string(ptrn)
 	ptrv := C.CString(value)
 	defer C.free_string(ptrv)
-	return &Attribute{C.xmlNewDocProp(doc.Ptr, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrv))}
+	cattr := C.xmlNewDocProp(doc.Ptr, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrv))
+	return makeAttribute(cattr)
 }
 
 // xmlNewDocRawNode
@@ -365,7 +379,7 @@ func (doc *Document) NewRawNode(ns *Namespace, name string, content string) *Nod
 func (doc *Document) NewText(content string) *TextNode {
 	ptr := C.CString(content)
 	defer C.free_string(ptr)
-	return &TextNode{&Node{C.xmlNewDocText(doc.Ptr, C.to_xmlcharptr(ptr))}}
+	return &TextNode{makeNode(C.xmlNewDocText(doc.Ptr, C.to_xmlcharptr(ptr)))}
 }
 
 // xmlNewDtd
@@ -399,19 +413,20 @@ func (node *Node) NewNs(href string, prefix string) *Namespace {
 }
 
 // xmlNewProp
-func (node *Node) NewProp(name string, value string) *Attribute {
+func (node *Node) NewAttribute(name string, value string) *Attribute {
 	ptrn := C.CString(name)
 	defer C.free_string(ptrn)
 	ptrv := C.CString(value)
 	defer C.free_string(ptrv)
-	return &Attribute{C.xmlNewProp(node.Ptr, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrv))}
+	cattr := C.xmlNewProp(node.Ptr, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrv))
+	return makeAttribute(cattr)
 }
 
 // xmlNewText
 func NewText(content string) *TextNode {
 	ptr := C.CString(content)
 	defer C.free_string(ptr)
-	return &TextNode{&Node{C.xmlNewText(C.to_xmlcharptr(ptr))}}
+	return &TextNode{makeNode(C.xmlNewText(C.to_xmlcharptr(ptr)))}
 }
 
 // xmlNewTextChild
@@ -428,7 +443,7 @@ func (node *Node) NewTextChild(ns *Namespace, name string, content string) *Text
 
 // xmlNextElementSibling
 func (node *Node) NextSibling() *Node {
-	return &Node{C.xmlNextElementSibling(node.Ptr)}
+	return makeNode(C.xmlNextElementSibling(node.Ptr))
 }
 
 // xmlNodeAddContent
@@ -464,7 +479,7 @@ func (node *Node) SetName(name string) {
 
 // xmlPreviousElementSibling
 func (node *Node) PreviousSibling() *Node {
-	return &Node{C.xmlPreviousElementSibling(node.Ptr)}
+	return makeNode(C.xmlPreviousElementSibling(node.Ptr))
 }
 
 // xmlSetCompressMode
@@ -478,12 +493,13 @@ func (doc *Document) SetCompressionLevel(level int) {
 }
 
 // xmlSetProp
-func (node *Node) SetProp(name string, value string) *Attribute {
+func (node *Node) SetAttribute(name string, value string) *Attribute {
 	ptrn := C.CString(name)
 	defer C.free_string(ptrn)
 	ptrv := C.CString(value)
 	defer C.free_string(ptrv)
-	return &Attribute{C.xmlSetProp(node.Ptr, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrv))}
+	cattr := C.xmlSetProp(node.Ptr, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptrv))
+	return makeAttribute(cattr)
 }
 
 // xmlTextConcat
@@ -495,7 +511,7 @@ func (node *TextNode) Concat(content string) int {
 
 // xmlTextMerge
 func (first *TextNode) Merge(second *Node) *Node {
-	return &Node{C.xmlTextMerge(first.Ptr, second.Ptr)}
+	return makeNode(C.xmlTextMerge(first.Ptr, second.Ptr))
 }
 
 // xmlUnlinkNode
