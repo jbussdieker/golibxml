@@ -80,6 +80,19 @@ func CleanupParser() {
 	C.xmlCleanupParser()
 }
 
+// xmlClearParserCtxt
+func (p *Parser) Clear() {
+	C.xmlClearParserCtxt(p.Ptr)
+}
+
+// xmlCreateDocParserCtxt
+func CreateDocParser(cur string) *Parser {
+	ptr := C.CString(cur)
+	defer C.free_string(ptr)
+	cparser := C.xmlCreateDocParserCtxt(C.to_xmlcharptr(ptr))
+	return makeParser(cparser)
+}
+
 // xmlCtxtReadDoc
 func (p *Parser) ReadDoc(input string, url string, encoding string, options ParserOption) *Document {
 	ptri := C.CString(input)
