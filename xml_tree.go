@@ -587,9 +587,47 @@ func (node *Node) Unlink() {
 	C.xmlUnlinkNode(node.Ptr)
 }
 
-// xmlUnsetProp
-func (node *Node) UnsetProp(name string) {
+// xmlUnsetNsProp
+func (node *Node) UnsetNsProp(ns *Namespace, name string) int {
 	ptr := C.CString(name)
 	defer C.free_string(ptr)
-	C.xmlUnsetProp(node.Ptr, C.to_xmlcharptr(ptr))
+	cint := C.xmlUnsetNsProp(node.Ptr, ns.Ptr, C.to_xmlcharptr(ptr))
+	return int(cint)
 }
+
+// xmlUnsetProp
+func (node *Node) UnsetProp(name string) int {
+	ptr := C.CString(name)
+	defer C.free_string(ptr)
+	cint := C.xmlUnsetProp(node.Ptr, C.to_xmlcharptr(ptr))
+	return int(cint)
+}
+
+// xmlValidateNCName
+func ValidateNCName(value string, space int) int {
+	ptr := C.CString(value)
+	defer C.free_string(ptr)
+	return int(C.xmlValidateNCName(C.to_xmlcharptr(ptr), C.int(space)))
+}
+
+// xmlValidateNMToken
+func ValidateNMToken(value string, space int) int {
+	ptr := C.CString(value)
+	defer C.free_string(ptr)
+	return int(C.xmlValidateNMToken(C.to_xmlcharptr(ptr), C.int(space)))
+}
+
+// xmlValidateName
+func ValidateName(value string, space int) int {
+	ptr := C.CString(value)
+	defer C.free_string(ptr)
+	return int(C.xmlValidateName(C.to_xmlcharptr(ptr), C.int(space)))
+}
+
+// xmlValidateQName
+func ValidateQName(value string, space int) int {
+	ptr := C.CString(value)
+	defer C.free_string(ptr)
+	return int(C.xmlValidateQName(C.to_xmlcharptr(ptr), C.int(space)))
+}
+

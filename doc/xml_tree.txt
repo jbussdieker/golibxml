@@ -150,9 +150,9 @@
 // * xmlTextConcat
 // * xmlTextMerge
 // * xmlUnlinkNode
-// xmlUnsetNsProp
+// * xmlUnsetNsProp
 // * xmlUnsetProp
-// xmlValidateNCName
-// xmlValidateNMToken
-// xmlValidateName
-// xmlValidateQName
+// * xmlValidateNCName
+// * xmlValidateNMToken
+// * xmlValidateName
+// * xmlValidateQName
