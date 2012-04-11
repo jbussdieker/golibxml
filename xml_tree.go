@@ -160,6 +160,16 @@ func (cur *Node) AddSibling(elem Node) *Node {
 	return makeNode(C.xmlAddSibling(cur.Ptr, elem.Ptr))
 }
 
+// xmlBufferAdd
+func (buffer *Buffer) Add(str[] byte) int {
+	return int(C.xmlBufferAdd(buffer.Ptr, (*C.xmlChar)(unsafe.Pointer(&str[0])), C.int(len(str))))
+}
+
+// xmlBufferAddHead
+func (buffer *Buffer) AddHead(str[] byte) int {
+	return int(C.xmlBufferAddHead(buffer.Ptr, (*C.xmlChar)(unsafe.Pointer(&str[0])), C.int(len(str))))
+}
+
 // xmlBufferCat/xmlBufferCCat
 func (buffer *Buffer) Cat(str string) int {
 	ptr := C.CString(str)

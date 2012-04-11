@@ -4,8 +4,8 @@
 // * xmlAddPrevSibling
 // * xmlAddSibling
 // xmlAttrSerializeTxtContent
-// xmlBufferAdd
-// xmlBufferAddHead
+// * xmlBufferAdd
+// * xmlBufferAddHead
 // * xmlBufferCCat
 // * xmlBufferCat
 // * xmlBufferContent
