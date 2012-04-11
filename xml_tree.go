@@ -9,6 +9,7 @@ static inline xmlChar *to_xmlcharptr(const char *s) { return (xmlChar *)s; }
 static inline char *to_charptr(const xmlChar *s) { return (char *)s; }
 */
 import "C"
+import "unsafe"
 
 ////////////////////////////////////////////////////////////////////////////////
 // TYPES/STRUCTS
@@ -59,6 +60,23 @@ const (
 ////////////////////////////////////////////////////////////////////////////////
 // PRIVATE FUNCTIONS
 ////////////////////////////////////////////////////////////////////////////////
+
+func makeDoc(doc C.xmlDocPtr) *Document {
+	if doc == nil {
+		return nil
+	}
+	return &Document{
+		Ptr:  doc,
+		Node: &Node{C.xmlNodePtr(unsafe.Pointer(doc))},
+	}
+}
+
+func makeDtd(dtd C.xmlDtdPtr) *Dtd {
+	if dtd == nil {
+		return nil
+	}
+	return &Dtd{dtd}
+}
 
 func makeNode(node C.xmlNodePtr) *Node {
 	if node == nil {
@@ -181,7 +199,7 @@ func (doc *Document) Copy(recursive int) *Document {
 
 // xmlCopyDtd
 func (dtd *Dtd) Copy() *Dtd {
-	return &Dtd{C.xmlCopyDtd(dtd.Ptr)}
+	return makeDtd(C.xmlCopyDtd(dtd.Ptr))
 }
 
 // xmlCopyNamespace
@@ -390,7 +408,8 @@ func (doc *Document) NewDtd(name string, ExternalID string, SystemID string) *Dt
 	defer C.free_string(ptre)
 	ptrs := C.CString(SystemID)
 	defer C.free_string(ptrs)
-	return &Dtd{C.xmlNewDtd(doc.Ptr, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptre), C.to_xmlcharptr(ptrs))}
+	cdtd := C.xmlNewDtd(doc.Ptr, C.to_xmlcharptr(ptrn), C.to_xmlcharptr(ptre), C.to_xmlcharptr(ptrs))
+	return makeDtd(cdtd)
 }
 
 // xmlNewNode

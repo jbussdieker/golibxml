@@ -59,28 +59,11 @@ type Parser struct {
 // PRIVATE FUNCTIONS
 ////////////////////////////////////////////////////////////////////////////////
 
-func makeDoc(doc C.xmlDocPtr) *Document {
-	if doc == nil {
-		return nil
-	}
-	return &Document{
-		Ptr:  doc,
-		Node: &Node{C.xmlNodePtr(unsafe.Pointer(doc))},
-	}
-}
-
 func makeParser(parser C.xmlParserCtxtPtr) *Parser {
 	if parser == nil {
 		return nil
 	}
 	return &Parser{parser}
-}
-
-func makeDtd(dtd C.xmlDtdPtr) *Dtd {
-	if dtd == nil {
-		return nil
-	}
-	return &Dtd{dtd}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
