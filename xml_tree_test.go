@@ -106,17 +106,11 @@ func TestBufferContent(t *testing.T) {
 	}
 }
 
-//
-// Advanced/Combo tests
-func TestNewDocAdv(t *testing.T) {
+func TestNewDoc(t *testing.T) {
 	doc := NewDoc("1.0")
 	defer doc.Free()
-	buffer := NewBuffer()
-	result := doc.NodeDump(buffer, doc.Node, 0, 0)
-
-	if result != 39 {
-		println("Result Size:", result)
-		println("Result:", buffer.Content())
+	result := doc.String()
+	if result != "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" {
 		t.Fail()
 	}
 }
@@ -126,12 +120,8 @@ func TestNewNode(t *testing.T) {
 	defer doc.Free()
 	node := NewNode(nil, "div")
 	doc.AddChild(node)
-	buffer := NewBuffer()
-	result := doc.NodeDump(buffer, doc.Node, 0, 0)
-
-	if result != 46 {
-		println("Result Size:", result)
-		println("Result:", buffer.Content())
+	result := node.String()
+	if result != "<div/>" {
 		t.Fail()
 	}
 }
@@ -141,12 +131,8 @@ func TestNewComment(t *testing.T) {
 	defer doc.Free()
 	comment := doc.NewComment("this is a comment")
 	doc.AddChild(comment)
-	buffer := NewBuffer()
-	result := doc.NodeDump(buffer, doc.Node, 0, 0)
-
-	if result != 64 {
-		println("Result Size:", result)
-		println("Result:", buffer.Content())
+	result := comment.String()
+	if result != "<!--this is a comment-->" {
 		t.Fail()
 	}
 }
