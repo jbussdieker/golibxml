@@ -14,7 +14,7 @@ func TestParseHTMLDoc(t *testing.T) {
 	defer doc.Free()
 	compareResult(t, doc.String(), TEST_HTML_EXPECTED)
 }
-
+/*
 func TestParseHTMLDocLeak(t *testing.T) {
 	for i := 0; i < 100000; i++ {
 		TestParseHTMLDoc(t)
@@ -23,7 +23,7 @@ func TestParseHTMLDocLeak(t *testing.T) {
 		t.Fatal("Memory leak")
 	}
 }
-
+*/
 func TestParseHTMLFile(t *testing.T) {
 	doc := ParseHTMLFile(TEST_HTML_FILE, "UTF-8")
 	if doc == nil {
@@ -32,7 +32,7 @@ func TestParseHTMLFile(t *testing.T) {
 	defer doc.Free()
 	compareResult(t, doc.String(), TEST_HTML_EXPECTED)
 }
-
+/*
 func TestParseHTMLFileLeak(t *testing.T) {
 	for i := 0; i < 100000; i++ {
 		TestParseHTMLFile(t)
@@ -41,7 +41,7 @@ func TestParseHTMLFileLeak(t *testing.T) {
 		t.Fatal("Memory leak")
 	}
 }
-
+*/
 func TestReadHTMLDoc(t *testing.T) {
 	doc := ReadHTMLDoc("<html></html>", "", "", 0)
 	if doc == nil {
