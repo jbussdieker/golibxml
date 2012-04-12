@@ -24,4 +24,4 @@ golibxml is a simple wrapper for libxml. The goal is to avoid any extra magic so
 
 ## libxml/memory
 
-0% (0/19)
+26.31% (5/19)
