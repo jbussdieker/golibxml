@@ -21,3 +21,7 @@ golibxml is a simple wrapper for libxml. The goal is to avoid any extra magic so
 ## libxml/xpath
 
 50% (21/42)
+
+## libxml/memory
+
+0% (0/19)
