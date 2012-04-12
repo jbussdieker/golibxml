@@ -1,11 +1,13 @@
 package main
 
-import "golibxml"
+import "os"
+
+import . "golibxml"
 
 func example1Func(filename string) {
     doc := ReadFile(filename, "", 0);
 
-    if (doc == NULL) {
+    if doc == nil {
         println("Failed to parse", filename);
 		return;
     }
@@ -17,7 +19,7 @@ func main() {
         os.Exit(1)
 	}
 
-    example1Func(os.Args(1))
+    example1Func(os.Args[1])
 
     /*
      * Cleanup function for the XML library.

@@ -1,10 +1,10 @@
 // xmlGcMemGet
 // xmlGcMemSetup
-// xmlInitMemory
+// * xmlInitMemory
 // xmlMallocAtomicLoc
 // xmlMallocLoc
-// xmlMemBlocks
-// xmlMemDisplay
+// * xmlMemBlocks
+// * xmlMemDisplay
 // xmlMemDisplayLast
 // xmlMemFree
 // xmlMemGet
@@ -13,7 +13,7 @@
 // xmlMemSetup
 // xmlMemShow
 // xmlMemStrdupLoc
-// xmlMemUsed
-// xmlMemoryDump
+// * xmlMemUsed
+// * xmlMemoryDump
 // xmlMemoryStrdup
 // xmlReallocLoc
