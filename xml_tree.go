@@ -550,6 +550,53 @@ func (node *Node) PreviousSibling() *Node {
 	return makeNode(C.xmlPreviousElementSibling(node.Ptr))
 }
 
+// xmlRemoveProp
+func RemoveAttribute(attr *Attribute) int {
+	return int(C.xmlRemoveProp(attr.Ptr))
+}
+
+// xmlReplaceNode
+func (old *Node) Replace(cur *Node) *Node {
+	return makeNode(C.xmlReplaceNode(old.Ptr, cur.Ptr))
+}
+
+// xmlSaveFile
+func (doc *Document) SaveFile(filename string) int {
+	ptr := C.CString(filename)
+	defer C.free_string(ptr)
+	return int(C.xmlSaveFile(ptr, doc.Ptr))
+}
+
+// xmlSaveFileEnc
+func (doc *Document) SaveFileEnc(filename string, encoding string) int {
+	ptrf := C.CString(filename)
+	defer C.free_string(ptrf)
+	ptre := C.CString(encoding)
+	defer C.free_string(ptre)
+	return int(C.xmlSaveFileEnc(ptrf, doc.Ptr, ptre))
+}
+
+// xmlSaveFormatFile
+func (doc *Document) SaveFormatFile(filename string, format int) int {
+	ptr := C.CString(filename)
+	defer C.free_string(ptr)
+	return int(C.xmlSaveFormatFile(ptr, doc.Ptr, C.int(format)))
+}
+
+// xmlSaveFormatFileEnc
+func (doc *Document) SaveFormatFileEnc(filename string, encoding string, format int) int {
+	ptrf := C.CString(filename)
+	defer C.free_string(ptrf)
+	ptre := C.CString(encoding)
+	defer C.free_string(ptre)
+	return int(C.xmlSaveFormatFileEnc(ptrf, doc.Ptr, ptre, C.int(format)))
+}
+
+// xmlSetBufferAllocationScheme
+func SetAllocationScheme(scheme AllocationScheme) {
+	C.xmlSetBufferAllocationScheme(C.xmlBufferAllocationScheme(scheme))
+}
+
 // xmlSetCompressMode
 func SetCompressionLevel(level int) {
 	C.xmlSetCompressMode(C.int(level))

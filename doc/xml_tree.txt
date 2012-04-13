@@ -125,17 +125,17 @@
 // xmlNodeSetSpacePreserve
 // * xmlPreviousElementSibling
 // xmlReconciliateNs
-// xmlRemoveProp
-// xmlReplaceNode
-// xmlSaveFile
-// xmlSaveFileEnc
+// * xmlRemoveProp
+// * xmlReplaceNode
+// * xmlSaveFile
+// * xmlSaveFileEnc
 // xmlSaveFileTo
-// xmlSaveFormatFile
-// xmlSaveFormatFileEnc
+// * xmlSaveFormatFile
+// * xmlSaveFormatFileEnc
 // xmlSaveFormatFileTo
 // xmlSearchNs
 // xmlSearchNsByHref
-// xmlSetBufferAllocationScheme
+// * xmlSetBufferAllocationScheme
 // * xmlSetCompressMode
 // * xmlSetDocCompressMode
 // xmlSetListDoc
