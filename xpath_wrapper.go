@@ -25,18 +25,3 @@ func (obj *XPathObject) Results() chan *Node {
 	return channel
 }
 
-func (obj *XPathObject) Type() XpathObjectType {
-	return XpathObjectType(obj.Ptr._type)
-}
-
-func (obj *XPathObject) NodeSet() *NodeSet {
-	return makeNodeSet(obj.Ptr.nodesetval)
-}
-
-func (nodeset *NodeSet) Size() int {
-	return int(nodeset.Ptr.nodeNr)
-}
-
-func (nodeset *NodeSet) Item(index int) *Node {
-	return makeNode(C.fetchNode(nodeset.Ptr, C.int(index)))
-}
