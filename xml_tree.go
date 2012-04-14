@@ -7,6 +7,7 @@ package golibxml
 #include <libxml/tree.h>
 
 static inline void free_string(char* s) { free(s); }
+static inline void free_xmlstring(xmlChar* s) { free(s); }
 static inline xmlChar *to_xmlcharptr(const char *s) { return (xmlChar *)s; }
 static inline char *to_charptr(const xmlChar *s) { return (char *)s; }
 */
@@ -362,6 +363,7 @@ func (node *Node) LastChild() *Node {
 // xmlGetNodePath
 func (node *Node) Path() string {
 	cstr := C.xmlGetNodePath(node.Ptr)
+	defer C.free_xmlstring(cstr)
 	return C.GoString(C.to_charptr(cstr))
 }
 

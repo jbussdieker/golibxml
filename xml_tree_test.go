@@ -169,6 +169,17 @@ func TestNewNode(t *testing.T) {
 	}
 }
 
+func TestNewNodePath(t *testing.T) {
+	doc := NewDoc("1.0")
+	defer doc.Free()
+	node := NewNode(nil, "div")
+	doc.AddChild(node)
+	result := node.Path()
+	if result != "/div" {
+		t.Fatal("Expected: /div Got:", node.Path())
+	}
+}
+
 func TestNewComment(t *testing.T) {
 	doc := NewDoc("1.0")
 	defer doc.Free()
