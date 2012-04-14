@@ -45,6 +45,10 @@ func (node *Node) Next() *Node {
 	return makeNode(_Ctype_xmlNodePtr(unsafe.Pointer(node.Ptr.next)))
 }
 
+func (elem ElementType) GoString() string {
+	return elem.String()
+}
+
 func (elem ElementType) String() string {
 	switch (elem) {
 		case XML_ELEMENT_NODE:
