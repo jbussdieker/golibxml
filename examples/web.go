@@ -34,17 +34,11 @@ func testapp(webctx *web.Context, val string) (render string) {
 	defer result.Free()
 
 	// Display results
-	if result.Type() == 1 {
-		nodeset := result.NodeSet()
-		for i := 0; i < nodeset.Size(); i++ {
-			node := nodeset.Item(i)
-			render += fmt.Sprintln("Name:", node.Name(), "<br>")
-			render += fmt.Sprintln("Type:", node.Type(), "<br>")
-			render += fmt.Sprintln("Path:", node.Path(), "<br>")
-			render += fmt.Sprintln("<br><code>", html.EscapeString(node.String()), "</code><br><br>")
-		}
-	} else {
-		render += "Unsupported result type"
+	for node := range result.Results() {
+		render += fmt.Sprintln("Name:", node.Name(), "<br>")
+		render += fmt.Sprintln("Type:", node.Type(), "<br>")
+		render += fmt.Sprintln("Path:", node.Path(), "<br>")
+		render += fmt.Sprintln("<br><code>", html.EscapeString(node.String()), "</code><br><br>")
 	}
 
 	return
@@ -54,6 +48,6 @@ func main() {
 	var port int
 	flag.IntVar(&port, "port", 9999, "Port to run server on")
 	flag.Parse()
-	web.Get("/(.*)", testapp)
-	web.Run(fmt.Sprintf("0.0.0.0:%d", port))
+    web.Get("/(.*)", testapp)
+    web.Run(fmt.Sprintf("0.0.0.0:%d", port))
 }
