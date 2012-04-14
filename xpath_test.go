@@ -30,3 +30,18 @@ func TestNewXPathContext(t *testing.T) {
 
 }
 
+func TestNewXPathSearch(t *testing.T) {
+	doc := ParseDoc("<catalog>asdf</catalog>")
+	if doc == nil {
+		t.Fail()
+	}
+	defer doc.Free()
+	ctx := NewXPathContext(doc)
+	xpath := ctx.Eval("//*")
+	if xpath == nil {
+		t.Fail()
+	}
+	//t.Log(xpath.GetNodeSet().Ptr)
+	t.Log(xpath.ConvertString().String())
+}
+

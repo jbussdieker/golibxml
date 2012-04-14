@@ -33,6 +33,24 @@ type NodeSet struct {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// CONSTANTS/ENUM
+////////////////////////////////////////////////////////////////////////////////
+
+type XpathObjectType int
+const (
+	XPATH_UNDEFINED XpathObjectType = 0
+	XPATH_NODESET = 1
+	XPATH_BOOLEAN = 2
+	XPATH_NUMBER = 3
+	XPATH_STRING = 4
+	XPATH_POINT = 5
+	XPATH_RANGE = 6
+	XPATH_LOCATIONSET = 7
+	XPATH_USERS = 8
+	XPATH_XSLT_TREE = 9 //: An XSLT value tree, non modifiable
+)
+
+////////////////////////////////////////////////////////////////////////////////
 // PRIVATE FUNCTIONS
 ////////////////////////////////////////////////////////////////////////////////
 func makeXpath(ptr C.xmlXPathCompExprPtr) *XPath {
@@ -49,6 +67,13 @@ func makeXpathObj(ptr C.xmlXPathObjectPtr) *XPathObject {
 	return &XPathObject{ptr}
 }
 
+func makeNodeSet(ptr C.xmlNodeSetPtr) *NodeSet {
+	if ptr == nil {
+		return nil
+	}
+	return &NodeSet{ptr}
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // INTERFACE
 ////////////////////////////////////////////////////////////////////////////////
@@ -60,7 +85,7 @@ func (obj *XPathObject) CastToNumber() float32 {
 }
 
 // xmlXPathCastToString
-func (obj *XPathObject) CastToString() string {
+func (obj *XPathObject) String() string {
 	cstr := C.xmlXPathCastToString(obj.Ptr)
 	defer C.free(unsafe.Pointer(cstr))
 	return C.GoString(C.to_charptr(cstr))
@@ -162,7 +187,7 @@ func NewXPathContext(doc *Document) *XPathContext {
 
 // xmlXPathNodeSetCreate
 func NodeSetCreate(node *Node) *NodeSet {
-	return &NodeSet{C.xmlXPathNodeSetCreate(node.Ptr)}
+	return makeNodeSet(C.xmlXPathNodeSetCreate(node.Ptr))
 }
 
 // xmlXPathObjectCopy
