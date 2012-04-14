@@ -3,6 +3,17 @@ package golibxml
 import "testing"
 import "syscall"
 
+type ElementTypeTestCase struct {
+	got ElementType
+	expected string
+}
+
+var element_type_tests[] ElementTypeTestCase = []ElementTypeTestCase{
+	{ XML_ELEMENT_NODE, "Node" },
+	{ XML_ATTRIBUTE_NODE, "Attribute" },
+	{ XML_TEXT_NODE, "Text" },
+}
+
 func getRSS() uint64 {
 	rusage := &syscall.Rusage{}
 	ret := syscall.Getrusage(0, rusage)
@@ -166,5 +177,13 @@ func TestNewComment(t *testing.T) {
 	result := comment.String()
 	if result != "<!--this is a comment-->" {
 		t.Fail()
+	}
+}
+
+func TestElementTypeString(t *testing.T) {
+	for _, test := range element_type_tests {
+		if test.got.String() != test.expected {
+			t.Fatal("Testing node type:", test.got, "got:", test.got.String(), "expected:", test.expected)
+		}
 	}
 }
