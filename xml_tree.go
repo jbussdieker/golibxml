@@ -1,3 +1,5 @@
+//
+// Package golibxml is a simple wrapper for libxml2.
 package golibxml
 
 /*
