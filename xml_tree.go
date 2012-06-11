@@ -3,7 +3,8 @@
 package golibxml
 
 /*
-#cgo pkg-config: libxml-2.0
+#cgo CFLAGS: -I../../clibs/include/libxml2
+#cgo LDFLAGS: -L../../clibs/lib -lxml2
 #include <libxml/tree.h>
 
 static inline void free_string(char* s) { free(s); }

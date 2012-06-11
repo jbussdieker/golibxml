@@ -1,7 +1,6 @@
 package golibxml
 
 /*
-#cgo pkg-config: libxml-2.0
 #include <libxml/xpath.h>
 
 static inline void free_string(char* s) { free(s); }
