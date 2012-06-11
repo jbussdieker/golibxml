@@ -1,7 +1,7 @@
 package golibxml
 
 import "testing"
-import "syscall"
+//import "syscall"
 
 type ElementTypeTestCase struct {
 	got ElementType
@@ -15,11 +15,13 @@ var element_type_tests[] ElementTypeTestCase = []ElementTypeTestCase{
 }
 
 func getRSS() uint64 {
+/*
 	rusage := &syscall.Rusage{}
 	ret := syscall.Getrusage(0, rusage)
 	if ret == nil && rusage.Maxrss > 0 {
 		return uint64(rusage.Maxrss)
 	}
+*/
 	return 0
 }
 
