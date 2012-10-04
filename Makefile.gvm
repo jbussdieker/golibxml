@@ -1,4 +1,0 @@
-all:
-	gb -i
-clean:
-	gb -c
