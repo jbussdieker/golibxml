@@ -50,7 +50,7 @@ func TestNewBufferLeak(t *testing.T) {
 		buffer = testNewBuffer(t)
 		buffer.Free()
 	}
-	if getRSS() > 4000 {
+	if getRSS() > 5000 {
 		t.Fatal("Memory leak")
 	}
 }
@@ -69,7 +69,7 @@ func TestNewBufferSizeLeak(t *testing.T) {
 		buffer = NewBufferSize(1024)
 		buffer.Free()
 	}
-	if getRSS() > 4000 {
+	if getRSS() > 5000 {
 		t.Fatal("Memory leak")
 	}
 }
