@@ -45,6 +45,42 @@ func (node *Node) Next() *Node {
 	return makeNode(_Ctype_xmlNodePtr(unsafe.Pointer(node.Ptr.next)))
 }
 
+func (node *Node) Attributes() *Attribute {
+	return makeAttribute(_Ctype_xmlAttrPtr(unsafe.Pointer(node.Ptr.properties)))
+}
+
+func (node *Node) Namespace() *Namespace {
+	return makeNamespace(_Ctype_xmlNsPtr(unsafe.Pointer(node.Ptr.ns)))
+}
+
+func (attr *Attribute) Type() ElementType {
+	return ElementType(attr.Ptr._type)
+}
+
+func (attr *Attribute) Name() string {
+	return C.GoString(C.to_charptr(attr.Ptr.name))
+}
+
+func (attr *Attribute) Children() *Node {
+	return makeNode(_Ctype_xmlNodePtr(unsafe.Pointer(attr.Ptr.children)))
+}
+
+func (attr *Attribute) Next() *Attribute {
+	return makeAttribute(_Ctype_xmlAttrPtr(unsafe.Pointer(attr.Ptr.next)))
+}
+
+func (attr *Attribute) Namespace() *Namespace {
+	return makeNamespace(_Ctype_xmlNsPtr(unsafe.Pointer(attr.Ptr.ns)))
+}
+
+func (ns *Namespace) Href() string {
+	return C.GoString(C.to_charptr(ns.Ptr.href))
+}
+
+func (ns *Namespace) Prefix() string {
+	return C.GoString(C.to_charptr(ns.Ptr.prefix))
+}
+
 func (elem ElementType) GoString() string {
 	return elem.String()
 }
