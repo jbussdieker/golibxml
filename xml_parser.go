@@ -171,6 +171,13 @@ func (p *Parser) Parse() int {
 	return int(C.xmlParseDocument(p.Ptr))
 }
 
+func (p *Parser) MyDoc() *Document {
+	if docptr := p.Ptr.myDoc; docptr != nil {
+		return makeDoc(docptr)
+	}
+	return nil
+}
+
 // xmlParseEntity
 func ParseEntity(filename string) *Document {
 	ptr := C.CString(filename)
