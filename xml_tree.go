@@ -532,7 +532,9 @@ func (doc *Document) NodeDump(buf *Buffer, cur *Node, level int, format int) int
 
 // xmlNodeGetContent
 func (node *Node) GetContent() string {
-	return C.GoString(C.to_charptr(C.xmlNodeGetContent(node.Ptr)))
+	content := C.to_charptr(C.xmlNodeGetContent(node.Ptr))
+	defer C.free_string(content)
+	return C.GoString(content)
 }
 
 // xmlNodeSetContent
