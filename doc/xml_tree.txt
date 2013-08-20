@@ -116,7 +116,7 @@
 // xmlNodeGetSpacePreserve
 // xmlNodeIsText
 // xmlNodeListGetRawString
-// xmlNodeListGetString
+// * xmlNodeListGetString
 // xmlNodeSetBase
 // * xmlNodeSetContent
 // xmlNodeSetContentLen
