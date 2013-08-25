@@ -1,0 +1,86 @@
+// * xmlFreeTextReader
+// xmlNewTextReader
+// xmlNewTextReaderFilename
+// xmlReaderForDoc
+// xmlReaderForFd
+// xmlReaderForFile
+// xmlReaderForIO
+// * xmlReaderForMemory
+// xmlReaderNewDoc
+// xmlReaderNewFd
+// xmlReaderNewFile
+// xmlReaderNewIO
+// xmlReaderNewMemory
+// xmlReaderNewWalker
+// xmlReaderWalker
+// xmlTextReaderAttributeCount
+// xmlTextReaderBaseUri
+// xmlTextReaderByteConsumed
+// xmlTextReaderClose
+// xmlTextReaderConstBaseUri
+// xmlTextReaderConstEncoding
+// * xmlTextReaderConstLocalName
+// * xmlTextReaderConstName
+// * xmlTextReaderConstNamespaceUri
+// * xmlTextReaderConstPrefix
+// xmlTextReaderConstString
+// xmlTextReaderConstValue
+// xmlTextReaderConstXmlLang
+// xmlTextReaderConstXmlVersion
+// xmlTextReaderCurrentDoc
+// xmlTextReaderCurrentNode
+// * xmlTextReaderDepth
+// xmlTextReaderExpand
+// * xmlTextReaderGetAttribute
+// xmlTextReaderGetAttributeNo
+// xmlTextReaderGetAttributeNs
+// xmlTextReaderGetErrorHandler
+// xmlTextReaderGetParserColumnNumber
+// xmlTextReaderGetParserLineNumber
+// xmlTextReaderGetParserProp
+// xmlTextReaderGetRemainder
+// xmlTextReaderHasAttributes
+// xmlTextReaderHasValue
+// xmlTextReaderIsDefault
+// xmlTextReaderIsEmptyElement
+// xmlTextReaderIsNamespaceDecl
+// xmlTextReaderIsValid
+// xmlTextReaderLocalName
+// xmlTextReaderLocatorBaseURI
+// xmlTextReaderLocatorLineNumber
+// xmlTextReaderLookupNamespace
+// xmlTextReaderMoveToAttribute
+// xmlTextReaderMoveToAttributeNo
+// xmlTextReaderMoveToAttributeNs
+// xmlTextReaderMoveToElement
+// * xmlTextReaderMoveToFirstAttribute
+// * xmlTextReaderMoveToNextAttribute
+// xmlTextReaderName
+// xmlTextReaderNamespaceUri
+// * xmlTextReaderNext
+// xmlTextReaderNextSibling
+// * xmlTextReaderNodeType
+// xmlTextReaderNormalization
+// xmlTextReaderPrefix
+// xmlTextReaderPreserve
+// xmlTextReaderPreservePattern
+// xmlTextReaderQuoteChar
+// * xmlTextReaderRead
+// xmlTextReaderReadAttributeValue
+// xmlTextReaderReadInnerXml
+// xmlTextReaderReadOuterXml
+// xmlTextReaderReadState
+// * xmlTextReaderReadString
+// xmlTextReaderRelaxNGSetSchema
+// xmlTextReaderRelaxNGValidate
+// xmlTextReaderRelaxNGValidateCtxt
+// xmlTextReaderSchemaValidate
+// xmlTextReaderSchemaValidateCtxt
+// xmlTextReaderSetErrorHandler
+// xmlTextReaderSetParserProp
+// xmlTextReaderSetSchema
+// xmlTextReaderSetStructuredErrorHandler
+// xmlTextReaderSetup
+// xmlTextReaderStandalone
+// * xmlTextReaderValue
+// xmlTextReaderXmlLang
