@@ -532,7 +532,22 @@ func (doc *Document) NodeDump(buf *Buffer, cur *Node, level int, format int) int
 
 // xmlNodeGetContent
 func (node *Node) GetContent() string {
-	return C.GoString(C.to_charptr(C.xmlNodeGetContent(node.Ptr)))
+	content := C.to_charptr(C.xmlNodeGetContent(node.Ptr))
+	defer C.free_string(content)
+	return C.GoString(content)
+}
+
+// xmlNodeListGetString
+func (node *Node) ListGetString(inLine bool) string {
+	ptr := node.Ptr
+	docptr := C.xmlDocPtr((*C.xmlDoc)(ptr.doc))
+	cInLine := C.int(0)
+	if inLine {
+		cInLine = C.int(1)
+	}
+	str := C.to_charptr(C.xmlNodeListGetString(docptr, ptr, cInLine))
+	defer C.free_string(str)
+	return C.GoString(str)
 }
 
 // xmlNodeSetContent
