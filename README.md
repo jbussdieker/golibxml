@@ -1,6 +1,7 @@
 # golibxml
 
 [![Build Status](https://secure.travis-ci.org/jbussdieker/golibxml.png)](http://travis-ci.org/jbussdieker/golibxml)
+[ ![Codeship Status for jbussdieker/golibxml](https://www.codeship.io/projects/6cacc690-201e-0132-5414-2ecc71115a88/status)](https://www.codeship.io/projects/35887)
 
 golibxml is a simple wrapper for libxml. The goal is to avoid any extra magic so that a more friendly library can be written to sit on top of this one.
 
