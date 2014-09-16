@@ -1,0 +1,9 @@
+:tddium:
+  :golang:
+    :golang_version: 1.2.1
+  :hooks:                                  
+    :worker_setup: echo "No per-worker setup in simplest case"
+    :post_setup: go install myprogram
+    :post_build: echo "Deploy to appengine here"
+  :tests:
+    - go test
