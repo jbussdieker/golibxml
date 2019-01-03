@@ -19,7 +19,7 @@ func (doc *Document) String() string {
 }
 
 func (node *Node) Document() *Document {
-	return makeDoc(_Ctype_xmlDocPtr(unsafe.Pointer(node.Ptr.doc)))
+	return makeDoc(C.xmlDocPtr(unsafe.Pointer(node.Ptr.doc)))
 }
 
 func (node *Node) String() string {
@@ -30,7 +30,7 @@ func (node *Node) String() string {
 }
 
 func (node *Node) Children() *Node {
-	return makeNode(_Ctype_xmlNodePtr(unsafe.Pointer(node.Ptr.children)))
+	return makeNode(C.xmlNodePtr(unsafe.Pointer(node.Ptr.children)))
 }
 
 func (node *Node) Type() ElementType {
@@ -42,15 +42,15 @@ func (node *Node) Name() string {
 }
 
 func (node *Node) Next() *Node {
-	return makeNode(_Ctype_xmlNodePtr(unsafe.Pointer(node.Ptr.next)))
+	return makeNode(C.xmlNodePtr(unsafe.Pointer(node.Ptr.next)))
 }
 
 func (node *Node) Attributes() *Attribute {
-	return makeAttribute(_Ctype_xmlAttrPtr(unsafe.Pointer(node.Ptr.properties)))
+	return makeAttribute(C.xmlAttrPtr(unsafe.Pointer(node.Ptr.properties)))
 }
 
 func (node *Node) Namespace() *Namespace {
-	return makeNamespace(_Ctype_xmlNsPtr(unsafe.Pointer(node.Ptr.ns)))
+	return makeNamespace(C.xmlNsPtr(unsafe.Pointer(node.Ptr.ns)))
 }
 
 func (attr *Attribute) Type() ElementType {
@@ -62,15 +62,15 @@ func (attr *Attribute) Name() string {
 }
 
 func (attr *Attribute) Children() *Node {
-	return makeNode(_Ctype_xmlNodePtr(unsafe.Pointer(attr.Ptr.children)))
+	return makeNode(C.xmlNodePtr(unsafe.Pointer(attr.Ptr.children)))
 }
 
 func (attr *Attribute) Next() *Attribute {
-	return makeAttribute(_Ctype_xmlAttrPtr(unsafe.Pointer(attr.Ptr.next)))
+	return makeAttribute(C.xmlAttrPtr(unsafe.Pointer(attr.Ptr.next)))
 }
 
 func (attr *Attribute) Namespace() *Namespace {
-	return makeNamespace(_Ctype_xmlNsPtr(unsafe.Pointer(attr.Ptr.ns)))
+	return makeNamespace(C.xmlNsPtr(unsafe.Pointer(attr.Ptr.ns)))
 }
 
 func (ns *Namespace) Href() string {
@@ -86,14 +86,13 @@ func (elem ElementType) GoString() string {
 }
 
 func (elem ElementType) String() string {
-	switch (elem) {
-		case XML_ELEMENT_NODE:
-			return "Node"
-		case XML_ATTRIBUTE_NODE:
-			return "Attribute"
-		case XML_TEXT_NODE:
-			return "Text"
+	switch elem {
+	case XML_ELEMENT_NODE:
+		return "Node"
+	case XML_ATTRIBUTE_NODE:
+		return "Attribute"
+	case XML_TEXT_NODE:
+		return "Text"
 	}
 	return "Unknown Type"
 }
-
