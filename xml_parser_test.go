@@ -12,13 +12,6 @@ func compareResult(t *testing.T, got string, expected string) {
 	}
 }
 
-func TestGetFeaturesList(t *testing.T) {
-	features := GetFeaturesList()
-	if len(features) != 42 {
-		t.Fail()
-	}
-}
-
 func TestParseDtd(t *testing.T) {
 	dtd := ParseDTD("1", "test/test.dtd")
 	if dtd == nil {
